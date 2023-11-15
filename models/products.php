@@ -50,9 +50,8 @@ class Products extends ServicePdo
         $productsByCategory['products'] = $products;
         return $productsByCategory;
     }
-    public function getAmountProduct($id)
-    {
-        $sql = "SELECT * PRODUCTS WHERE ID_CATEGORY = $id";
-    }
+
+
+    // ....
 }
 $products = new Products("products");

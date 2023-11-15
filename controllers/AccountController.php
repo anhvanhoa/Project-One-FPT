@@ -2,5 +2,101 @@
 function controller_account($req)
 {
     $categories = $req->categoriesService->findAll();
-    return view("account", ["categories" => $categories]);
+    $user = $_SESSION['user'];
+    if (isset($_POST['update'])) {
+        $idUser = $user['id'];
+        $email = $_POST['email'];
+        $birthday = $_POST['birthday'];
+        $fullName = $_POST['full-name'];
+        $tell = $_POST['tell'];
+        $address = $_POST['address'];
+        $image = uploadImage($_FILES['avatar']);
+        $isSuccess = $req->usersService->update($image, $email, $birthday, $fullName, $address, $tell, $idUser);
+        if ($isSuccess)  $user = $_SESSION['user'] = $req->usersService->findOne($idUser);
+    }
+    return view("account", ["categories" => $categories, 'user' => $user]);
+}
+
+function controller_login($req)
+{
+    $error = '';
+    if (isset($_POST['login'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $user = $req->usersService->login($email, $password);
+        if (is_array($user)) {
+            $_SESSION['user'] = $user;
+            header('location: /');
+        } else $error = 'Email hoặc mật khẩu không đúng !';
+    }
+    return view("login", ['error' => $error]);
+}
+
+function controller_register($req)
+{
+    $error = '';
+    if (isset($_POST['register'])) {
+        $fullName = $_POST['full-name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirmPassword  = $_POST['confirm-password'];
+        if ($password != $confirmPassword) $error = 'xác nhận mật khẩu không chính xác !';
+        $uniqueEmail = $req->usersService->uniqueEmailOrTell($email);
+        if ($uniqueEmail) $error = 'Email đã tồn tại !';
+        if (strlen($password) < 6) $error = 'Mật khẩu phải lớn hơn 6 ký tự';
+        if (!$error) {
+            $req->usersService->register($email, $password, $fullName);
+            header('location: /?act=login');
+        }
+    }
+    return view("register", ["error" => $error]);
+}
+
+function controller_forgot_password($req)
+{
+    $error = "";
+    if (isset($_POST['forgot'])) {
+        $email = $_POST['email'];
+        $uniqueEmail = $req->usersService->uniqueEmailOrTell($email);
+        if (!$uniqueEmail) $error = 'Email không tồn tại !';
+        else {
+            $subject = 'the subject';
+            $message = 'hello';
+            $headers = 'From: webmaster@example.com'       . "\r\n" .
+                'Reply-To: webmaster@example.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+            mail($email, $subject, $message, $headers);
+        }
+    }
+    return view("forgotPassword", ['error' => $error]);
+}
+
+function controller_logout($req)
+{
+    if (isset($_POST['logout'])) {
+        $_SESSION['user'] = null;
+        header('location: /');
+    }
+}
+function controller_change_pass($req)
+{
+    $error = '';
+    if (isset($_POST['update-pass'])) {
+        $passCurrent = $_POST['pass-current'];
+        $passNew = $_POST['pass'];
+        $passConfirm = $_POST['pass-confirm'];
+        if ($passCurrent !== $_SESSION['user']['password']) $error = 'Mật khẩu hiện tại không đúng !!';
+        if (strlen($passNew) < 6) $error = 'Mật khẩu phải lớn hơn 6 ký tự !!';
+        if ($passNew != $passConfirm) $error = 'Mật khẩu không trùng khớp !!';
+        if (!$error) {
+            $idUser = $_SESSION['user']['id'];
+            $isSuccess = $req->usersService->changePass($passNew, $idUser);
+            if ($isSuccess) {
+                $_SESSION['user'] = $req->usersService->findOne($idUser);
+                header('location: /');
+            } else $error = 'Không thành công !!';
+        }
+    }
+    $categories = $req->categoriesService->findAll();
+    return view("changePassword", ["categories" => $categories, "error" => $error]);
 }

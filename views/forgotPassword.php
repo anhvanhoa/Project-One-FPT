@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập | Nhà Xinh</title>
+    <title>Quên mật khẩu | Nhà Xinh</title>
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -14,7 +14,7 @@
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <img class="mx-auto h-12 w-auto rounded-sm" src="/asset/images/logo.jpg" alt="Your Company" />
             <h2 class="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
-                Đăng nhập
+                Quên mật khẩu ?
             </h2>
         </div>
 
@@ -27,35 +27,23 @@
                     <?= $error ?>
                 </div>
             </div>
-            <form class="space-y-6" action="?act=login" method="POST">
+            <form class="space-y-6" action="?act=forgot-password" method="POST">
                 <div>
                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
                     <div class="mt-2">
                         <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
                     </div>
                 </div>
-
                 <div>
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                        <div class="text-sm">
-                            <a href="?act=forgot-password" class="font-semibold text-indigo-600 hover:text-indigo-500">Quên mật khẩu?</a>
-                        </div>
-                    </div>
-                    <div class="mt-2">
-                        <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
-                    </div>
-                </div>
-
-                <div>
-                    <button type="submit" name="login" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Đăng nhập
+                    <button type="submit" name="forgot" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Gửi email
                     </button>
                 </div>
             </form>
 
-            <p class="mt-10 text-center text-sm text-gray-500">
-                Đã có tài khoản?
+            <p class="mt-10 text-center text-gray-500">
+                <a href="?act=login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Đăng Nhập</a>
+                <span>||</span>
                 <a href="?act=register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Đăng ký</a>
             </p>
         </div>

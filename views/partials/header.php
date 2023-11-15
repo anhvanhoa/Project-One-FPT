@@ -40,7 +40,7 @@
     </div>
 </div>
 <header class="relative bg-white">
-    <div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+    <div class="relative z-10 isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
         <div class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
             <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
         </div>
@@ -58,7 +58,7 @@
         <div class="flex flex-1 justify-end">
         </div>
     </div>
-    <nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <nav aria-label="Top" class="bg-white relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="border-b border-gray-200">
             <div class="flex h-16 items-center">
                 <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
@@ -92,21 +92,44 @@
                 </div>
 
                 <div class="ml-auto flex items-center">
-                    <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                    <div class="hidden lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 <?= isset($_SESSION['user']) ? 'lg:hidden' : 'lg:flex' ?>">
                         <a href="/?act=login" class="text-base font-medium text-gray-700 hover:text-gray-800">Đăng nhập</a>
                         <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
                         <a href="/?act=register" class="text-base font-medium text-gray-700 hover:text-gray-800">Đăng ký</a>
                     </div>
+                    <div class="relative text-left group hidden <?= isset($_SESSION['user']) ? 'lg:inline-block' : 'lg:hidden' ?>">
+                        <div>
+                            <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white py-2 text-base font-semibold text-gray-900 group" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                <p class="group-hover:text-indigo-500 text-gray-600 pr-1">
+                                    <?= $_SESSION['user']['full_name'] ?>
+                                </p>
+                                <svg class="group-hover:text-indigo-500 text-gray-400" class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <g fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="12" cy="6" r="4" />
+                                        <path d="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5Z" />
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="group-hover:block hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none after:content[''] after:absolute after:w-36 after:h-5 after:-top-4 after:right-0" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div class="py-1" role="none">
+                                <a href="?act=account" class="text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Tài khoản</a>
+                                <a href="?act=change-password" class="text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Đổi mật khẩu</a>
+                                <form method="POST" action="?act=logout" role="none">
+                                    <button name="logout" type="submit" class="text-red-500 hover:bg-red-50 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Đăng xuất</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Search -->
                     <div class="flex lg:ml-6">
-                        <a href="#" class="p-2 text-gray-400 hover:text-gray-500">
+                        <button id="btn-search" class="p-2 text-gray-400 hover:text-gray-500">
                             <span class="sr-only">Search</span>
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                             </svg>
-                        </a>
+                        </button>
                     </div>
-
                     <!-- Cart -->
                     <div class="ml-4 flow-root lg:ml-6">
                         <a href="/?act=cart" class="group -m-2 flex items-center p-2">
@@ -121,4 +144,14 @@
             </div>
         </div>
     </nav>
+    <div>
+        <div id="search" class="-z-10 top-0 transition-all border-t bg-white border-gray-200 shadow-md absolute left-1/2 -translate-x-1/2 w-full h-14 max-w-7xl flex items-center px-8 gap-3">
+            <input class="rounded-md bg-white h-10 flex-1 pl-2" type="text" placeholder="Tìm kiếm">
+            <button type="button" class="py-2 text-white bg-blue-600 hover:bg-blue-500 focus:ring-4 font-medium rounded-md text-sm px-5 focus:outline-none">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+            </button>
+        </div>
+    </div>
 </header>

@@ -14,8 +14,8 @@
 <body>
     <div class="bg-white">
         <?php include('partials/header.php') ?>
-        <div class="relative isolate bg-cover bg-bottom bg-[url('/asset/images/banner.jpg')] h-[500px]">
-            <div class="bg-black/30 absolute inset-0 flex flex-col items-center justify-center w-full px-72">
+        <div class="relative isolate bg-cover bg-bottom bg-[url('/asset/images/banner.jpg')] h-[550px]">
+            <div class="bg-black/30 absolute inset-0 flex flex-col items-center justify-center w-full px-10 lg:px-96">
                 <div class="text-center">
                     <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
                         Thiết kế nội thất Nhà Xinh

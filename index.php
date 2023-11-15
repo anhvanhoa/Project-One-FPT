@@ -6,12 +6,26 @@ function bootstrap()
     include("./database/service.php");
     include("./models/categories.php");
     include("./models/products.php");
-    $req = new Req($categories, $products);
+    include("./models/users.php");
+    $act = '';
+    $user = isset($_SESSION['user']) ? true : false;
+    $req = new Req($categories, $products, $users);
     if (!isset($_GET['act'])) $act = check_path('');
     else $act = check_path($_GET['act']);
     foreach ($routes as $route) {
-        if ($act == $route['path']) {
-            return $route['view']($req);
+        if ($act == $route['path'] && $user) {
+            if ($route['role'] == 2) {
+                header('location: /');
+            } else {
+                return $route['view']($req);
+            }
+        }
+        if ($act == $route['path'] && !$user) {
+            if ($route['role'] != 1) {
+                return $route['view']($req);
+            } else {
+                header('location: /');
+            }
         }
     }
 }

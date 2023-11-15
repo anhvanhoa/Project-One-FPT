@@ -17,12 +17,13 @@ function check_path($path)
     }
     return '';
 }
-function route($path, $fun)
+function route($path, $fun, $role = 0)
 {
     array_push($_SESSION['paths'], $path);
     return [
         "view" => $fun,
         "path" => $path,
+        "role" => $role
     ];
 }
 
@@ -30,9 +31,25 @@ class Req
 {
     public $categoriesService;
     public $productsService;
-    public function __construct($categoriesService, $productsService)
+    public $usersService;
+    public function __construct($categoriesService, $productsService, $usersService)
     {
         $this->categoriesService = $categoriesService;
         $this->productsService = $productsService;
+        $this->usersService = $usersService;
     }
+}
+
+function error()
+{
+    header('location: /');
+}
+
+function uploadImage($file)
+{
+    $name = $file['name'];
+    $tmp = $file['tmp_name'];
+    $path = './asset/images/';
+    $isSuccess = move_uploaded_file($tmp, $path . $name);
+    return $isSuccess ? $name : '';
 }
