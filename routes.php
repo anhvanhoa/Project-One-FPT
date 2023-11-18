@@ -16,6 +16,7 @@ $routes = [
     route('', "controller_home"),
     route('products', "controller_product"),
     route('product', "controller_detail_product"),
+    route('search', "controller_search"),
 
     route('login', "controller_login", 2),
     route('forgot-password', "controller_forgot_password", 2),
@@ -24,5 +25,8 @@ $routes = [
     route('logout', "controller_logout", 1),
     route('change-password', "controller_change_pass", 1),
     route('cart', "controller_cart", 1),
+    route('delete-cart', "controller_delete_cart", 1),
+    route('add-cart', "controller_add_cart", 1),
+    route('checkout', "controller_checkout", 1),
     route('account', "controller_account", 1),
 ];

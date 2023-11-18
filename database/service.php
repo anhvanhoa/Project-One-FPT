@@ -30,4 +30,15 @@ class ServicePdo
             throw $th;
         }
     }
+
+    public function deleteOne($id)
+    {
+        try {
+            $dbName = $this->dbName;
+            $sql = "DELETE FROM $dbName WHERE ID = $id";
+            return $this->pdo->exec($sql);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

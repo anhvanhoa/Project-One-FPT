@@ -13,6 +13,13 @@
 
 <body>
     <div class="bg-white">
+        <div id="sticky-banner" tabindex="-1" class="hidden border-orange-400 bg-orange-100 fixed bottom-0 start-0 z-50 justify-between w-full p-4 border-t">
+            <div class="flex items-center mx-auto">
+                <p class="flex items-center text-base text-orange-600 font-semibold">
+                    <span id="message-error"></span>
+                </p>
+            </div>
+        </div>
         <?php include('partials/header.php') ?>
         <main>
             <div class="bg-white">
@@ -54,15 +61,15 @@
                                     }
                                     ?>
                                 </div>
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next btn-next-img"></div>
+                                <div class="swiper-button-prev btn-prev-img"></div>
                             </div>
                             <h1 class="mt-4 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
                                 <?= $name_product ?>
                             </h1>
                         </div>
                         <!-- Options -->
-                        <div class="mt-4 lg:row-span-3 lg:mt-0 lg:sticky lg:top-5 lg:h-screen">
+                        <div class="mt-4 lg:row-span-3 lg:mt-0 lg:sticky lg:top-24 lg:h-screen">
                             <h2 class="sr-only">Product information</h2>
                             <div class="flex items-end gap-5">
                                 <p class="text-3xl tracking-tight text-gray-900 font-medium"><?= number_format($price, 0, '.', '.') ?> &#8363;</p>
@@ -88,7 +95,7 @@
                                     <a href="#reviews" class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"><?= count($reviews) ?> đánh giá</a>
                                 </div>
                             </div>
-                            <form class="mt-10">
+                            <form class="mt-10" method="POST" action="">
                                 <div>
                                     <h3 class="font-medium text-gray-900">Màu sắc</h3>
                                     <fieldset class="mt-4">
@@ -97,10 +104,10 @@
                                             <?php foreach ($product_details as $value) {
                                                 extract($value)
                                             ?>
-                                                <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-400">
+                                                <label data-id="<?= $id ?>" class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-400">
                                                     <input type="radio" name="color-choice" value="<?= $amount ?>" class="sr-only" aria-labelledby="color-choice-0-label" />
                                                     <span id="color-choice-0-label" class="sr-only">White</span>
-                                                    <span aria-hidden="true" style="background-color: #<?= $color ?>;" class="h-8 w-8 rounded-full border border-black border-opacity-10"></span>
+                                                    <span aria-hidden="true" style="background-color: #<?= $code_color ?>;" class="h-8 w-8 rounded-full border border-black border-opacity-10"></span>
                                                 </label>
                                             <?php
                                             }
@@ -129,6 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <input type="hidden" name="product-detail">
                                 <div class="mt-8">
                                     <h3 class=" font-medium text-gray-900">Vật liệu</h3>
                                     <p><?= $material ?></p>
@@ -140,7 +148,8 @@
                                         <p><?= $size ?></p>
                                     </div>
                                 </div>
-                                <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                <input type="hidden" name="amount" value='1'>
+                                <button name="add-cart" type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                     Thêm giỏ hàng
                                 </button>
                             </form>
@@ -161,7 +170,7 @@
                             }
                             ?>
                             <div>
-                                <div class="swiper mySwiper">
+                                <div class="swiper mySwiper-1">
                                     <div class="swiper-wrapper">
                                         <?php
                                         for ($i = 0; $i < count($product_suggests); $i += 3) {
@@ -192,20 +201,21 @@
                                                     <?php
                                                     }
                                                     ?>
-
                                                 </div>
                                             </div>
                                         <?php
                                         }
                                         ?>
                                     </div>
+                                    <div class="swiper-button-next btn-next-pro"></div>
+                                    <div class="swiper-button-prev btn-prev-pro"></div>
                                 </div>
                             </div>
                             <div id="reviews" class="mt-8">
                                 <section class="bg-white antialiased">
                                     <div class="mx-auto">
                                         <div class="flex justify-between items-center mb-6">
-                                            <h2 class="text-lg lg:text-xl font-bold text-gray-900">Đánh giá (20)</h2>
+                                            <h2 class="text-lg lg:text-xl font-bold text-gray-900">Đánh giá <?= count($reviews) ?></h2>
                                         </div>
                                         <form class="mb-6">
                                             <div class="flex gap-x-6">
@@ -280,14 +290,18 @@
         <?php include('partials/footer.php') ?>
     </div>
     <script>
-        const chooseColors = document.querySelectorAll('input[name="color-choice"]');
+        const chooseColors = document.querySelectorAll('input[name="color-choice"]'),
+            btnAddCart = document.querySelector('button[name="add-cart"]'),
+            inputProductDetail = document.querySelector('input[name="product-detail"]');
         const plus = document.querySelector('#plus'),
             amount = document.querySelector('#amount'),
+            inputAmount = document.querySelector('input[name="amount"]'),
             minus = document.querySelector('#minus');
         let amountBuy = 1;
         amountBuy = amount.dataset.max;
         chooseColors.forEach((item) => {
             const parent = item.parentElement;
+            let idPro = parent.dataset.id;
             item.onclick = () => {
                 amountBuy = item.value;
                 if (Number(amount.innerText) > item.value) amount.innerText = item.value;
@@ -295,10 +309,12 @@
                 if (choice || parent == choice) {
                     choice.classList.remove('ring-offset-1');
                     choice.classList.remove('ring-2');
+                    inputProductDetail.value = '';
                     if (parent == choice) return;
                 }
                 parent.classList.add('ring-offset-1');
                 parent.classList.add('ring-2');
+                inputProductDetail.value = idPro;
             };
         });
 
@@ -332,29 +348,62 @@
 
         plus.onclick = () => {
             if (Number(amount.innerText) >= amountBuy) return;
-            amount.innerText = Number(amount.innerText) + 1;
+            inputAmount.value = amount.innerText = Number(amount.innerText) + 1;
         };
 
         minus.onclick = () => {
             if (Number(amount.innerText) <= 1) return;
             amount.innerText = Number(amount.innerText) - 1;
+            inputAmount.value = Number(amount.innerText) - 1;
         };
+
+        const stickyBanner = document.querySelector('#sticky-banner'),
+            messageError2 = stickyBanner.querySelector('#message-error');
+        btnAddCart.onclick = (e) => {
+            if (!inputProductDetail.value) {
+                e.preventDefault();
+                stickyBanner.classList.toggle('hidden');
+                stickyBanner.classList.toggle('flex');
+                messageError2.innerHTML = "Vui lòng chọn sản phẩm";
+                setTimeout(() => {
+                    stickyBanner.classList.toggle('hidden');
+                    stickyBanner.classList.toggle('flex');
+                    messageError.innerHTML = "";
+                }, 2000);
+            }
+        }
+        if (messageError2.innerText) {
+            stickyBanner.classList.toggle('hidden');
+            stickyBanner.classList.toggle('flex');
+            setTimeout(() => {
+                stickyBanner.classList.toggle('hidden');
+                stickyBanner.classList.toggle('flex');
+                messageError2.innerHTML = "";
+            }, 2000);
+        }
     </script>
     <script src="/asset/js/swiper-bundle.min.js"></script>
     <script>
-        var swiper = new Swiper('.mySwiper', {
+        new Swiper('.mySwiper', {
             slidesPerView: 1,
             spaceBetween: 30,
             keyboard: {
                 enabled: true,
             },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
+            navigation: {
+                nextEl: '.btn-next-img',
+                prevEl: '.btn-prev-img',
+            },
+        });
+        new Swiper('.mySwiper-1', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            keyboard: {
+                enabled: true,
             },
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: '.btn-next-pro',
+                prevEl: '.btn-prev-pro',
             },
         });
     </script>

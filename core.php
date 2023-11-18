@@ -32,11 +32,20 @@ class Req
     public $categoriesService;
     public $productsService;
     public $usersService;
-    public function __construct($categoriesService, $productsService, $usersService)
-    {
+    public $vouchersService;
+    public $cartsService;
+    public function __construct(
+        Categories $categoriesService,
+        Products $productsService,
+        Users $usersService,
+        Vouchers $vouchersService,
+        cartsDetail $cartsService
+    ) {
         $this->categoriesService = $categoriesService;
         $this->productsService = $productsService;
         $this->usersService = $usersService;
+        $this->vouchersService = $vouchersService;
+        $this->cartsService = $cartsService;
     }
 }
 

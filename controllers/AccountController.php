@@ -1,5 +1,5 @@
 <?php
-function controller_account($req)
+function controller_account(Req $req)
 {
     $categories = $req->categoriesService->findAll();
     $user = $_SESSION['user'];
@@ -17,7 +17,7 @@ function controller_account($req)
     return view("account", ["categories" => $categories, 'user' => $user]);
 }
 
-function controller_login($req)
+function controller_login(Req $req)
 {
     $error = '';
     if (isset($_POST['login'])) {
@@ -25,6 +25,8 @@ function controller_login($req)
         $password = $_POST['password'];
         $user = $req->usersService->login($email, $password);
         if (is_array($user)) {
+            $countCart = $req->cartsService->countProductInCart($user['id_cart']);
+            $user['count_cart'] = $countCart[0];
             $_SESSION['user'] = $user;
             header('location: /');
         } else $error = 'Email hoặc mật khẩu không đúng !';
@@ -32,7 +34,7 @@ function controller_login($req)
     return view("login", ['error' => $error]);
 }
 
-function controller_register($req)
+function controller_register(Req $req)
 {
     $error = '';
     if (isset($_POST['register'])) {
@@ -52,7 +54,7 @@ function controller_register($req)
     return view("register", ["error" => $error]);
 }
 
-function controller_forgot_password($req)
+function controller_forgot_password(Req $req)
 {
     $error = "";
     if (isset($_POST['forgot'])) {
@@ -71,14 +73,14 @@ function controller_forgot_password($req)
     return view("forgotPassword", ['error' => $error]);
 }
 
-function controller_logout($req)
+function controller_logout(Req $req)
 {
     if (isset($_POST['logout'])) {
         $_SESSION['user'] = null;
         header('location: /');
     }
 }
-function controller_change_pass($req)
+function controller_change_pass(Req $req)
 {
     $error = '';
     if (isset($_POST['update-pass'])) {

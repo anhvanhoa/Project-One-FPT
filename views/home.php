@@ -7,18 +7,17 @@
     <title>Nội thất Nhà Xinh | Nội thất cao cấp</title>
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/asset/js/main.js" defer></script>
     <link rel="stylesheet" href="/asset/css/swiper-bundle.min.css" />
 </head>
 
 <body>
     <div class="bg-white">
         <?php include('partials/header.php') ?>
-        <div class="relative isolate bg-cover bg-bottom bg-[url('/asset/images/banner.jpg')] h-[550px]">
-            <div class="bg-black/30 absolute inset-0 flex flex-col items-center justify-center w-full px-10 lg:px-96">
+        <div class="my-3 max-w-7xl mx-auto relative isolate bg-cover bg-bottom bg-[url('/asset/images/banner.jpg')] h-[500px] rounded-xl">
+            <div class="bg-black/30 absolute inset-0 flex flex-col items-center justify-center w-full px-10 lg:px-80 rounded-xl">
                 <div class="text-center">
                     <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-                        Thiết kế nội thất Nhà Xinh
+                        Thiết kế nội thất
                     </h1>
                     <p class="mt-6 text-lg leading-8 text-white">
                         Với kinh nghiệm hơn 23 năm trong lĩnh vực thiết kế và hoàn thiện nội thất cùng đội ngũ thiết
@@ -27,11 +26,45 @@
                 </div>
             </div>
         </div>
-        <div class="bg-gray-100">
+
+        <div style="background-image: url(/asset/images/sale.jpg);" class="bg-gray-100">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-16">
-                    <h2 class="text-2xl font-bold text-gray-900">Sản phẩm bán chạy</h2>
+                    <h2 class="text-3xl font-bold text-white">Sản phẩm bán chạy</h2>
                     <?php include('components/selling.php') ?>
+                </div>
+            </div>
+        </div>
+        <!-- component -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-8 mx-4 px-2">
+            <?php
+            foreach ($vouchers as $voucher) {
+                extract($voucher);
+            ?>
+                <div class="container mx-auto first:hidden last:hidden lg:first:block xl:last:block">
+                    <div class="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-6 px-5 rounded-lg shadow-md relative">
+                        <h3 class="font-semibold mb-4">Giảm <?= $discount ?>% cho khi thanh toán hóa đơn.</h3>
+                        <div class="text-sm flex items-center justify-center space-x-2 mb-2">
+                            <span id="cpnCode" class="border-dashed border text-white px-4 py-2 rounded-l uppercase"><?= $code ?></span>
+                        </div>
+                        <p class="text-xs">Từ <?= $start ?> || đến <?= $end ?></p>
+                        <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6"></div>
+                        <div class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6"></div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
+        </div>
+
+        <div class="bg-white">
+            <div class="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-7xl lg:px-4">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900">Sản phẩm gợi ý</h2>
+                <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                    <?php include('components/product.php') ?>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-6 rounded">Loading</button>
                 </div>
             </div>
         </div>
@@ -58,17 +91,6 @@
                 <div class="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mt-10">
                     <img src="/asset/images/store-1.jpg" alt="Walnut card tray with white powder coated steel divider and 3 punchout holes." class="rounded-lg bg-gray-100 aspect-video object-cover" />
                     <img src="/asset/images/store-3.jpg" alt="Side of walnut card tray with card groove and recessed card area." class="rounded-lg bg-gray-100 aspect-video object-cover" />
-                </div>
-            </div>
-        </div>
-        <div class="bg-white">
-            <div class="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-7xl lg:px-8">
-                <h2 class="text-2xl font-bold tracking-tight text-gray-900">Sản phẩm gợi ý</h2>
-                <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                    <?php include('components/product.php') ?>
-                </div>
-                <div class="flex justify-center mt-8">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-6 rounded">Loading</button>
                 </div>
             </div>
         </div>

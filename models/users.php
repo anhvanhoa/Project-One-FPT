@@ -7,6 +7,11 @@ class Users extends  ServicePdo
         $dbName = $this->dbName;
         $sql = "SELECT * FROM $dbName WHERE EMAIL = '$email' AND PASSWORD = '$password'";
         $user = $this->pdo->query($sql)->fetch();
+        if ($user) {
+            $sqlCart = "SELECT id FROM CARTS WHERE ID_USER = " . $user['id'];
+            $cartUser = $this->pdo->query($sqlCart)->fetch();
+            $user['id_cart'] = $cartUser['id'];
+        }
         if ($user && $user['email'] === $email && $password === $user['password']) return $user;
         return false;
     }
@@ -16,7 +21,11 @@ class Users extends  ServicePdo
         $sql = "INSERT INTO 
                 $dbName(email, password, full_name)
                 VALUES('$email', '$password','$fullName')";
-        return $this->pdo->exec($sql);
+        $user = $this->pdo->exec($sql);
+        $idUser = $user['id'];
+        $sqlCart = "INSERT INTO CARTS(id_user) VALUES($idUser)";
+        $this->pdo->exec($sqlCart);
+        return $user;
     }
 
     public function uniqueEmailOrTell($emailOrTell, $type = 'email')
