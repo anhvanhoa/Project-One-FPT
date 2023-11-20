@@ -8,8 +8,16 @@ class Users extends  ServicePdo
         $sql = "SELECT * FROM $dbName WHERE EMAIL = '$email' AND PASSWORD = '$password'";
         $user = $this->pdo->query($sql)->fetch();
         if ($user) {
-            $sqlCart = "SELECT id FROM CARTS WHERE ID_USER = " . $user['id'];
+            $idUser = $user['id'];
+            $sqlCart = "INSERT INTO CARTS(id_user) VALUES($idUser)";
+            $this->pdo->exec($sqlCart);
+            $sqlCart = "SELECT id FROM CARTS WHERE ID_USER =  $idUser";
             $cartUser = $this->pdo->query($sqlCart)->fetch();
+            // if (!$cartUser) {
+            //     $idUser = $user['id'];
+            //     $sqlCart = "INSERT INTO CARTS(id_user) VALUES($idUser)";
+            //     $cartUser = $this->pdo->exec($sqlCart);
+            // }
             $user['id_cart'] = $cartUser['id'];
         }
         if ($user && $user['email'] === $email && $password === $user['password']) return $user;
@@ -22,9 +30,6 @@ class Users extends  ServicePdo
                 $dbName(email, password, full_name)
                 VALUES('$email', '$password','$fullName')";
         $user = $this->pdo->exec($sql);
-        $idUser = $user['id'];
-        $sqlCart = "INSERT INTO CARTS(id_user) VALUES($idUser)";
-        $this->pdo->exec($sqlCart);
         return $user;
     }
 
@@ -55,6 +60,13 @@ class Users extends  ServicePdo
         $dbName = $this->dbName;
         $sql = "UPDATE $dbName SET PASSWORD = '$pass' WHERE ID = $id";
         return $this->pdo->prepare($sql)->execute();
+    }
+    public function getAccountsByRole($role = 1)
+    {
+        $dbName = $this->dbName;
+        if ($role == 1) $sql = "SELECT * FROM $dbName WHERE ROLE = 0";
+        if ($role == 2)  $sql = "SELECT * FROM $dbName WHERE ROLE <> $role ORDER BY ROLE DESC";
+        return $this->pdo->query($sql)->fetchAll();
     }
     // handle
 }

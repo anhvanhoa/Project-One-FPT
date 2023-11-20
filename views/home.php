@@ -42,7 +42,7 @@
                 extract($voucher);
             ?>
                 <div class="container mx-auto first:hidden last:hidden lg:first:block xl:last:block">
-                    <div class="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-6 px-5 rounded-lg shadow-md relative">
+                    <div class="bg-gradient-to-br from-[#FEAB1D] to-green-500 text-white text-center py-6 px-5 rounded-lg shadow-md relative">
                         <h3 class="font-semibold mb-4">Giảm <?= $discount ?>% cho khi thanh toán hóa đơn.</h3>
                         <div class="text-sm flex items-center justify-center space-x-2 mb-2">
                             <span id="cpnCode" class="border-dashed border text-white px-4 py-2 rounded-l uppercase"><?= $code ?></span>

@@ -41,4 +41,47 @@ class ServicePdo
             throw $th;
         }
     }
+
+    public function insertOne($arrColum = [])
+    {
+        try {
+            $dbName = $this->dbName;
+            $sql = "INSERT INTO ";
+            $sqlFirst = [];
+            $sqlLast = [];
+            foreach ($arrColum as $key => $value) {
+                array_push($sqlFirst, $key);
+                array_push($sqlLast, $value);
+            }
+            $sqlFirst = join(',', $sqlFirst);
+            $values = "";
+            foreach ($sqlLast as $i => $value) {
+                if ($i == 0) $values .= "'$value'";
+                else $values .= ",'$value'";
+            }
+            $sql .=  "$dbName($sqlFirst) VALUES($values)";
+            // echo $sql;
+            return $this->pdo->exec($sql);
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+    public function updateOne($arrColum = [], $id)
+    {
+        try {
+            $dbName = $this->dbName;
+            $sqlFirst = "";
+            $i = 0;
+            foreach ($arrColum as $key => $value) {
+                if ($i === 0) {
+                    $i++;
+                    $sqlFirst .= "$key = '$value'";
+                } else $sqlFirst .= ", $key = '$value'";
+            }
+            $sql = "UPDATE $dbName SET $sqlFirst WHERE ID = $id";
+            return $this->pdo->exec($sql);
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
 }

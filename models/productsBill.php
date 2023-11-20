@@ -1,5 +1,5 @@
 <?php
-class Categories extends  ServicePdo
+class ProductsBill extends  ServicePdo
 {
     public function analytic()
     {
@@ -9,4 +9,4 @@ class Categories extends  ServicePdo
     }
     // handle
 }
-$categories = new Categories("categories");
+$productsBill = new ProductsBill("products_bill");

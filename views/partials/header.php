@@ -97,6 +97,7 @@
                             <div class="py-1" role="none">
                                 <a href="?act=account" class="text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Tài khoản</a>
                                 <a href="?act=change-password" class="text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Đổi mật khẩu</a>
+                                <a href="?act=orders" class="text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Đơn hàng</a>
                                 <form method="POST" action="?act=logout" role="none">
                                     <button name="logout" type="submit" class="text-red-500 hover:bg-red-50 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Đăng xuất</button>
                                 </form>

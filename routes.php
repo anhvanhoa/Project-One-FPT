@@ -4,6 +4,7 @@ include("./controllers/HomeController.php");
 include("./controllers/ProductsController.php");
 include("./controllers/CartController.php");
 include("./controllers/AccountController.php");
+include("./controllers/OrderController.php");
 
 /* 
     Role
@@ -24,9 +25,11 @@ $routes = [
 
     route('logout', "controller_logout", 1),
     route('change-password', "controller_change_pass", 1),
+    route('orders', "controller_orders", 1),
     route('cart', "controller_cart", 1),
     route('delete-cart', "controller_delete_cart", 1),
     route('add-cart', "controller_add_cart", 1),
     route('checkout', "controller_checkout", 1),
+    route('success-order', "controller_success_order", 1),
     route('account', "controller_account", 1),
 ];
