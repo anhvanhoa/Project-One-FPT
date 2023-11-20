@@ -4,17 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?= $category['name_category'] ?> - Nhà Xinh</title>
+    <title><?= $keyword ?> - Nhà Xinh</title>
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
-    <!-- <link rel="stylesheet" href="/asset/css/style.css" /> -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
     <?php include('partials/header.php') ?>
-    <div class="px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
-        <div style="background-image: url(/asset/images/<?= $category['image'] ?>);" class="bg-cover h-[400px] mt-4 rounded-xl bg-center"></div>
-    </div>
     <div class="bg-white">
         <div>
             <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
@@ -30,7 +26,6 @@
                                 </svg>
                             </button>
                         </div>
-
                         <!-- Filters -->
                         <form class="mt-4 border-t border-gray-200">
                             <h3 class="sr-only">Categories</h3>
@@ -195,7 +190,7 @@
             </div>
             <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex items-baseline justify-between border-b border-gray-200 pb-3 pt-8">
-                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">Danh mục - <?= $category['name_category'] ?></h1>
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">Từ khóa - <?= $keyword ?></h1>
                 </div>
                 <section aria-labelledby="products-heading" class="pb-12 pt-6">
                     <h2 id="products-heading" class="sr-only">Products</h2>
@@ -205,19 +200,19 @@
                             <h3 class="sr-only">Categories</h3>
                             <ul role="list" class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=new">Mới nhất</a>
+                                    <a href="?act=search&keyword=<?= $keyword ?>&sort=new">Mới nhất</a>
                                 </li>
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=selling">Bán chạy</a>
+                                    <a href="?act=search&keyword=<?= $keyword ?>&sort=selling">Bán chạy</a>
                                 </li>
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=price-asc">Giá từ thấp đến cao</a>
+                                    <a href="?act=search&keyword=<?= $keyword ?>&sort=price-asc">Giá từ thấp đến cao</a>
                                 </li>
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=price-desc">Giá từ cao đến thấp</a>
+                                    <a href="?act=search&keyword=<?= $keyword ?>&sort=price-desc">Giá từ cao đến thấp</a>
                                 </li>
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=discount">Giảm giá sâu</a>
+                                    <a href="?act=search&keyword=<?= $keyword ?>&sort=discount">Giảm giá sâu</a>
                                 </li>
                             </ul>
                             <form id="filter">
@@ -318,7 +313,7 @@
                     </div>
                     <div class="flex item-center">
                         <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                            <a href="/?act=products&id=<?= $_GET['id'] ?>&page=<?= $products_page['current_page'] - 1 ?>" class="<?= $products_page['current_page'] == 1 ? 'pointer-events-none' : '' ?> relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                            <a href="/?act=products&id=<?= $keyword ?>&page=<?= $products_page['current_page'] - 1 ?>" class="<?= $products_page['current_page'] == 1 ? 'pointer-events-none' : '' ?> relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                                 <span class="sr-only">Previous</span>
                                 <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
@@ -330,12 +325,12 @@
                                     $default = "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0";
                                     $active = "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
                             ?>
-                                    <a style="" href="/?act=products&id=<?= $_GET['id'] ?>&page=<?= $i  ?>" aria-current="page" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold <?= $products_page['current_page'] == $i  ? $active : $default ?>"> <?= $i ?> </a>
+                                    <a style="" href="/?act=products&id=<?= $keyword ?>&page=<?= $i  ?>" aria-current="page" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold <?= $products_page['current_page'] == $i  ? $active : $default ?>"> <?= $i ?> </a>
                             <?php
                                 }
                             }
                             ?>
-                            <a href="/?act=products&id=<?= $_GET['id'] ?>&page=<?= $products_page['current_page'] + 1 ?>" class="<?= $products_page['current_page'] == $products_page['page'] ? 'pointer-events-none' : '' ?> relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                            <a href="/?act=products&id=<?= $keyword ?>&page=<?= $products_page['current_page'] + 1 ?>" class="<?= $products_page['current_page'] == $products_page['page'] ? 'pointer-events-none' : '' ?> relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                                 <span class="sr-only">Next</span>
                                 <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />

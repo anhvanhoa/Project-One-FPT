@@ -38,12 +38,12 @@
                                     <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
                                         <img src="/asset/images/<?= $thumbnail ?>" alt="<?= $name_product ?>" class="h-full w-full object-cover object-center" />
                                     </div>
-                                    <div class="pl-1 mt-2">
-                                        <h3 class="text-lg">
-                                            <?= number_format($price, 0, ",", ".") ?> &#8363;
-                                        </h3>
-                                        <p class="font-semibold text-xl text-gray-900">
+                                    <div class="pl-1 mt-2 text-white">
+                                        <h3 class="font-semibold text-xl">
                                             <?= $name_product ?>
+                                        </h3>
+                                        <p class="text-lg ">
+                                            <?= number_format($price, 0, ",", ".") ?> &#8363;
                                         </p>
                                     </div>
                                 </a>
