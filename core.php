@@ -1,4 +1,5 @@
 <?php
+include('utils.php');
 $_SESSION['paths'] = [];
 function view($view, $values = [])
 {
@@ -34,31 +35,23 @@ class Req
     public $usersService;
     public $vouchersService;
     public $cartsService;
+    public $billsService;
+    public $productsBillService;
     public function __construct(
         Categories $categoriesService,
         Products $productsService,
         Users $usersService,
         Vouchers $vouchersService,
-        cartsDetail $cartsService
+        CartsDetail $cartsService,
+        Bills $billsService,
+        ProductsBill $productsBillService,
     ) {
         $this->categoriesService = $categoriesService;
         $this->productsService = $productsService;
         $this->usersService = $usersService;
         $this->vouchersService = $vouchersService;
         $this->cartsService = $cartsService;
+        $this->billsService = $billsService;
+        $this->productsBillService = $productsBillService;
     }
-}
-
-function error()
-{
-    header('location: /');
-}
-
-function uploadImage($file)
-{
-    $name = $file['name'];
-    $tmp = $file['tmp_name'];
-    $path = './asset/images/';
-    $isSuccess = move_uploaded_file($tmp, $path . $name);
-    return $isSuccess ? $name : '';
 }
