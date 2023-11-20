@@ -30,4 +30,19 @@ class ServicePdo
             throw $th;
         }
     }
+    function pdo_execute($sql){
+        $sql_args=array_slice(func_get_args(),1);
+        try{
+            $conn=connect();
+            $stmt=$conn->prepare($sql);
+            $stmt->execute($sql_args);
+    
+        }
+        catch(PDOException $e){
+            throw $e;
+        }
+        finally{
+            unset($conn);
+        }
+    }
 }

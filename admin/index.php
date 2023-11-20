@@ -15,7 +15,9 @@ function bootstrap()
     foreach ($routes as $route) {
         if ($act == $route['path'] && $role == 1) {
             return $route['view']($req);
-        } else header("Location: /");
+        } else {
+            // header("Location: /");
+        }
     }
 }
 

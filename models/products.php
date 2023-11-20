@@ -1,4 +1,5 @@
 <?php
+// require "../database/service.php";
 class Products extends ServicePdo
 {
     public function getSelling()
@@ -51,6 +52,65 @@ class Products extends ServicePdo
         return $productsByCategory;
     }
 
+    public function delete_products()
+    {
+        if (isset($_GET['id']) && ($_GET['id']) > 0) {
+            $sql = "delete from products where id =" . $_GET['id'];
+            $this->pdo->exec($sql);
+        }
+    }
+
+    public function addProducts(
+        $name_product,
+        $description,
+        $price,
+        $material,
+        $thumbnail,
+        $created_at,
+        $id_category
+    ) {
+
+        $sql = "INSERT INTO `products` (`name_product`, `description`, `price`,
+           `material`, `thumbnail` , `created_at` , `id_category`) 
+            VALUES ('$name_product', '$description','$price', '$material',
+            '$thumbnail' , '$created_at' , '$id_category');";
+        $this->pdo->exec($sql);
+    }
+    public function getProduct()
+    {
+
+        // if (isset($_GET['id']) && $_GET['id'] > 0) {
+
+
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : $_POST['id'];
+
+        $sql = "SELECT * FROM products WHERE id = $id";
+        $product = $this->pdo->query($sql)->fetch();
+
+     
+        return $product;
+    }
+    public function editProduct(
+        $id,
+        $name_product,
+        $description,
+        $price,
+        $material,
+        $thumbnail,
+        $created_at,
+        $id_category
+    ) {
+        $sql = "UPDATE products 
+        SET name_product = '$name_product',
+            description = '$description',
+            price = '$price',
+            material = '$material',
+            thumbnail = '$thumbnail',
+            id_category = '$id_category'
+        WHERE id = $id";
+        $this->pdo->exec($sql);
+        header("Location: ?act=products");
+    }
 
     // ....
 }

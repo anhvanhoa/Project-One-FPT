@@ -68,48 +68,55 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white hover:bg-gray-50 ">
-                                <td class="w-4 p-4">
-                                    <div class="flex items-center">
-                                        <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded focus:ring-blue-500  ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2  border-gray-600">
-                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                    </div>
-                                </td>
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                    1
-                                </th>
-                                <td class="px-6 py-4">
-                                    Silver
-                                </td>
-                                <td class="px-6 py-4">
-                                    sofa-1.jpg
-                                </td>
-                                <td class="px-6 py-4">
-                                    Silver
-                                </td>
-                                <td class="px-6 py-4">
-                                    sofa-1.jpg
-                                </td>
-                                <td class="px-6 py-4">
-                                    Silver
-                                </td>
-                                <td class="px-6 py-4">
-                                    sofa-1.jpg
-                                </td>
-                                <td class="px-6 py-4">
-                                    Silver
-                                </td>
-                                <td class="px-6 py-4">
-                                    sofa-1.jpg
-                                </td>
-                                <td class="px-6 py-4">
-                                    sofa-1.jpg
-                                </td>
-                                <td class="flex items-center px-6 py-4">
-                                    <a href="/admin?act=edit-category" class="font-medium text-blue-600  hover:underline">Edit</a>
-                                    <a href="#" class="font-medium text-red-600 hover:underline ms-3">Remove</a>
-                                </td>
-                            </tr>
+                            <?php
+                            foreach ($products as $product) {
+                            ?>
+                                <tr class="bg-white hover:bg-gray-50 ">
+                                    <td class="w-4 p-4">
+                                        <div class="flex items-center">
+                                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded focus:ring-blue-500  ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2  border-gray-600">
+                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                        </div>
+                                    </td>
+
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        <?= $product['id'] ?>
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        <?= $product['name_product'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <img src="../../<?= $product['thumbnail'] ?>" width="200px" alt="">
+                                     </td>
+                                    <td class="px-6 py-4">
+                                        <?= $product['price'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?= $product['origin_price'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?= $product['description'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?= $product['material'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?= $product['sold'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <?= $product['created_at'] ?>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                    <?= $product['id'] ?>
+                                    </td>
+                                    <td class="flex items-center px-6 py-4">
+                                        <a href="/admin?act=edit-product&id=<?= $product['id'] ?>" class="font-medium text-blue-600  hover:underline">Edit</a>
+                                        <a href="?act=delete-product&id=<?= $product['id'] ?>" class="font-medium text-red-600 hover:underline ms-3">Remove</a>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>
