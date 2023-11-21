@@ -2,17 +2,55 @@
 function controller_categories(Req $req)
 {
     $categories = $req->categoriesService->findAll();
-    return viewAdmin("categories", ['categories'=>$categories]);
+    return viewAdmin("categories", ['categories' => $categories]);
+}
+function controller_add_category(Req $req)
+{
+    if (isset($_POST['btn-add']) &&  $_POST['name'] && $_FILES['image']['name']) {
+        $file = $_FILES['image'];
+        $name_category = $_POST['name'];
+        $image = uploadImage($file);
+        $category = $req->categoriesService->insertOne(['name_category' => $name_category, 'image' => $image]);
+        if ($category) header('location: ?act=categories');
+    }
+    return viewAdmin("addCategory");
+}
+function controller_update_category(Req $req)
+{
+    if (isset($_POST['update'])) {
+        $file = $_FILES['image'];
+        $id = $_POST['id'];
+        $name_category = $_POST['name'];
+        $image = uploadImage($file);
+        $category = $req->categoriesService->updateOne([
+            'name_category' => $name_category,
+            "image" => $image
+        ], $id);
+        if ($category) header('location: ?act=categories');
+        if (!$category) header("location: ?act=edit-category&id=$id");
+    }
+}
+function controller_edit_category(Req $req)
+{
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $category = $req->categoriesService->findOne($id);
+    }
+    return viewAdmin("editCategory", ['category' => $category]);
 }
 
-function controller_add_categories(Req $req)
+function controller_delete_category(Req $req)
 {
-
-    return viewAdmin("addCategory", []);
-}
-
-function controller_edit_categories(Req $req)
-{
-    
-    return viewAdmin("editCategory", []);
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $req->categoriesService->deleteOne($id);
+        header('location: ?act=categories');
+    }
+    if (isset($_POST['delete-many'])) {
+        $ids = $_POST['category-id'];
+        foreach ($ids as $id) {
+            $req->categoriesService->deleteOne($id);
+        }
+        header('location: ?act=categories');
+    }
 }

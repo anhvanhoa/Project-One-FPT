@@ -20,7 +20,7 @@
         </header>
         <main class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <div>
-                <!-- <form action="" method="POST">
+                <form action="" method="POST">
                     <div class="mt-6 border-t border-gray-100">
                         <dl class="divide-y divide-gray-100">
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -93,11 +93,11 @@
                             </div>
                         </dl>
                     </div>
-                </form> -->
+                </form>
             </div>
         </main>
     </div>
-    <!-- <script>
+    <script>
         const edits = document.querySelectorAll('#edit-input');
         edits.forEach(ele => {
             ele.onclick = () => {
@@ -108,7 +108,7 @@
                 ele.previousElementSibling.classList.toggle('pointer-events-none');
             }
         })
-    </script> -->
+    </script>
 </body>
 
 </html>
