@@ -12,7 +12,13 @@ function controller_account(Req $req)
         $address = $_POST['address'];
         $image = uploadImage($_FILES['avatar']);
         $isSuccess = $req->usersService->update($image, $email, $birthday, $fullName, $address, $tell, $idUser);
-        if ($isSuccess)  $user = $_SESSION['user'] = $req->usersService->findOne($idUser);
+        if ($isSuccess) {
+            $count_cart = $_SESSION['user']['count_cart'];
+            $id_cart = $_SESSION['user']['id_cart'];
+            $user = $_SESSION['user'] = $req->usersService->findOne($idUser);
+            $_SESSION['user']['count_cart'] =  $count_cart;
+            $_SESSION['user']['id_cart'] =  $id_cart;
+        }
     }
     return view("account", ["categories" => $categories, 'user' => $user]);
 }

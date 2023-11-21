@@ -1,4 +1,36 @@
-<nav class="bg-gray-800">
+<?php $navigates = [
+    [
+        'id' => 1,
+        'name' => 'Trang chủ',
+        'link' => ''
+    ],
+    [
+        'id' => 2,
+        'name' => 'Danh mục',
+        'link' => 'categories'
+    ],
+    [
+        'id' => 3,
+        'name' => 'Sản phẩm',
+        'link' => 'products'
+    ],
+    [
+        'id' => 4,
+        'name' => 'Tài khoản',
+        'link' => 'accounts'
+    ],
+    [
+        'id' => 5,
+        'name' => 'vouchers',
+        'link' => 'vouchers'
+    ],
+    [
+        'id' => 6,
+        'name' => 'Đơn hàng',
+        'link' => 'bills'
+    ],
+] ?>
+<nav class="bg-gray-800 sticky top-0 z-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
@@ -9,19 +41,22 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="admin" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Trang chủ</a>
-                        <a href="/admin?act=categories" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Danh mục</a>
-                        <a href="/admin?act=products" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Sản phẩm</a>
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Đơn hàng</a>
-                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Reports</a>
+                        <?php
+                        foreach ($navigates as $navigate) {
+                            extract($navigate);
+                            $isActive = isset($_GET['act']) && $_GET['act'] == $link ? 'bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white';
+                        ?>
+                            <a href="/admin?act=<?= $link ?>" class="<?= $isActive ?> text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page"><?= $name ?></a>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
             <div class="hidden md:block">
                 <div class="ml-4 flex items-center md:ml-6">
                     <p class="text-white"><?= $_SESSION['user']['full_name'] ?></p>
-                    <div class="relative ml-3">
+                    <div class="relative ml-3 flex gap-4 items-center">
                         <div>
                             <button type="button" class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="absolute -inset-1.5"></span>
@@ -29,6 +64,14 @@
                                 <img class="h-8 w-8 rounded-full" src="/asset/images/<?= $_SESSION['user']['avatar'] ? $_SESSION['user']['avatar'] : 'avatar-default.jpg' ?>" alt="">
                             </button>
                         </div>
+                        <form action="/?act=logout" method="POST">
+                            <button name="logout" type="submit" class="text-red-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12 3.25a.75.75 0 0 1 0 1.5a7.25 7.25 0 0 0 0 14.5a.75.75 0 0 1 0 1.5a8.75 8.75 0 1 1 0-17.5Z" />
+                                    <path fill="currentColor" d="M16.47 9.53a.75.75 0 0 1 1.06-1.06l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H10a.75.75 0 0 1 0-1.5h8.19l-1.72-1.72Z" />
+                                </svg>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -49,7 +92,6 @@
             </div>
         </div>
     </div>
-
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="hidden md:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">

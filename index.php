@@ -10,9 +10,11 @@ function bootstrap()
     include("./models/users.php");
     include("./models/vouchers.php");
     include("./models/cartsDetail.php");
+    include("./models/bills.php");
+    include("./models/productsBill.php");
     $act = '';
     $user = isset($_SESSION['user']) ? true : false;
-    $req = new Req($categories, $products, $users, $vouchers, $cartsDetail);
+    $req = new Req($categories, $products, $users, $vouchers, $cartsDetail, $bills, $productsBill);
     if (!isset($_GET['act'])) $act = check_path('');
     else $act = check_path($_GET['act']);
     foreach ($routes as $route) {

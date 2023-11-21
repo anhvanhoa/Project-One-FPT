@@ -34,12 +34,18 @@
                                 <div class="mt-8">
                                     <div class="flow-root">
                                         <ul role="list" class="-my-6 divide-y divide-gray-200">
+                                            <?php if (count($carts) == 0) { ?>
+                                                <h4 class="py-8 text-center text-red-600 font-semibold">Giỏi hàng trống</h4>
+                                            <?php
+                                            }
+                                            ?>
                                             <?php
                                             foreach ($carts as $cart) {
                                                 extract($cart);
                                             ?>
                                                 <li class="flex py-6">
-                                                    <input id="checkbox-<?= $id ?>" type="checkbox" name="id-product-detail[]" value="<?= $id ?>" class="mr-4 w-4" />
+                                                    <input id="checkbox-<?= $id ?>" type="checkbox" name="id-cart-detail[]" value="<?= $id ?>" class="mr-4 w-4" />
+                                                    <input type="checkbox" hidden name="amount-buy[]" value="<?= $amount_buy ?>" />
                                                     <label for="checkbox-<?= $id ?>" class="h-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                         <img src="/asset/images/<?= $image ?>" alt="<?= $name_product ?>" class="h-full w-full aspect-square object-contain object-center" />
                                                     </label>
@@ -85,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="mt-6 flex gap-5">
-                                <button name="btn-delete" type="submit" class="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700">Xóa</button>
+                                <button name="btn-delete" type="submit" class="flex items-center justify-center rounded-md border border-transparent bg-red-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700">Xóa</button>
                                 <button name="btn-checkout" type="submit" class="flex flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Thanh toán</button>
                             </div>
                         </form>
@@ -96,14 +102,17 @@
         <?php include('partials/footer.php') ?>
     </div>
     <script>
-        const inputChecks = document.querySelectorAll('input[name="id-product-detail[]"]');
+        const inputChecks = document.querySelectorAll('input[name="id-cart-detail[]"]');
         const stickyBanner = document.querySelector('#sticky-banner'),
             messageError2 = stickyBanner.querySelector('#message-error');
         const btnDelete = document.querySelector('button[name="btn-delete"]'),
             form = document.querySelector('#form-cart'),
             btnCheckout = document.querySelector('button[name="btn-checkout"]');
-        btnDelete.onmouseenter = () => form.action = '?act=delete-cart'
-        btnCheckout.onmouseenter = () => form.action = '?act=checkout'
+        btnDelete.onmouseenter = () => form.action = '?act=delete-cart';
+        btnCheckout.onmouseenter = () => form.action = '?act=checkout';
+        inputChecks.forEach(item => {
+            item.onchange = () => item.nextElementSibling.checked = item.checked;
+        })
         form.onsubmit = (e) => {
             let isCheck = false
             inputChecks.forEach(item => {
