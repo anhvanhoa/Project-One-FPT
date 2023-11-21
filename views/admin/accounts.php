@@ -54,7 +54,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <!-- <tbody>
+                            <tbody>
                                 <tr class="bg-white hover:bg-gray-50 ">
                                     <td class="w-4 p-4">
                                     </td>
@@ -110,7 +110,7 @@
                                 <?php
                                 }
                                 ?>
-                            </tbody> -->
+                            </tbody>
                         </table>
                     </div>
                 </form>
@@ -130,7 +130,7 @@
                                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                         <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Xóa danh mục</h3>
                                         <div class="mt-2">
-                                            <p class="text-sm text-gray-500">Bạn có chắc chắn muốn xóa danh mục: .</p>
+                                            <p class="text-sm text-gray-500">Bạn có chắc chắn muốn xóa tài khoản.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@
             </div>
 
         </main>
-        <!-- <script>
+        <script>
             const checkboxAll = document.getElementById("checkbox-all-search");
             const overlay = document.getElementById("overlay");
             const content = document.getElementById("content");
@@ -180,7 +180,7 @@
                 content.classList.toggle('translate-y-0');
                 content.classList.toggle('sm:scale-100');
             }
-        </script> -->
+        </script>
     </div>
 </body>
 
