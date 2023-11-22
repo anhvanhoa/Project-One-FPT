@@ -28,25 +28,30 @@ function getRole($role = 0)
 function getStatus($status = 1)
 {
     switch ($status) {
-        case 4:
+        case 5:
             return [
                 'name' => 'Giao thành công',
                 'color' => 'text-green-700 ring-green-600/20 bg-green-50',
             ];
-        case 3:
+        case 4:
             return [
                 'name' => 'Vận chuyển',
                 'color' => 'text-purple-700 ring-purple-700/10 bg-purple-50',
             ];
-        case 2:
+        case 3:
             return [
                 'name' => 'Đóng gói',
                 'color' => 'text-yellow-800 ring-yellow-600/20 bg-yellow-50',
             ];
-        case 1:
+        case 2:
             return [
                 'name' => 'Chờ xác nhận',
                 'color' => 'text-blue-700 ring-blue-700/10 bg-blue-50',
+            ];
+        case 1:
+            return [
+                'name' => 'Đặt hàng',
+                'color' => 'text-green-700 ring-green-600/20 bg-green-50',
             ];
         default:
             return [

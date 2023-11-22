@@ -1,10 +1,10 @@
 <?php
 class ProductsBill extends  ServicePdo
 {
-    public function analytic()
+    public function getProductsByBill($idBill)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT $dbName.name_category, COUNT(PRODUCTS.ID) as count_product FROM $dbName Left JOIN PRODUCTS ON PRODUCTS.ID_CATEGORY = $dbName.ID GROUP BY $dbName.ID";
+        $sql = "SELECT id_product_detail, amount_buy FROM $dbName WHERE ID_BILL = $idBill";
         return $this->pdo->query($sql)->fetchAll();
     }
     // handle

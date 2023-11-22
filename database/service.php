@@ -61,7 +61,8 @@ class ServicePdo
             }
             $sql .=  "$dbName($sqlFirst) VALUES($values)";
             // echo $sql;
-            return $this->pdo->exec($sql);
+            $isSuccess = $this->pdo->exec($sql);
+            return $isSuccess ?  $this->pdo->lastInsertId() : 0;
         } catch (\Throwable $th) {
             return $th;
         }

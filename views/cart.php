@@ -58,13 +58,20 @@
                                                                 <p class="ml-4"><?= number_format($price, 0, '.', '.') ?> &#8363;</p>
                                                             </div>
                                                             <div class="flex items-center gap-1">
-                                                                <p class="mt-1 text-sm w-6 h-6 rounded-lg" style="background-color: #<?= $code_color ?>;"></p>
+                                                                <p class="mt-1 text-sm w-4 h-4 rounded-lg" style="background-color: #<?= $code_color ?>;"></p>
                                                                 <p class="text-sm capitalize"><?= $color ?></p>
                                                             </div>
                                                         </div>
                                                         <div class="flex flex-1 items-end justify-between text-sm">
-                                                            <p class="text-gray-500">Số lượng: <?= $amount_buy ?></p>
-                                                            <a href="?act=delete-cart&id=<?= $id ?>" class="font-medium text-red-600 hover:text-red-400">
+                                                            <div class="flex">
+                                                                <div class="flex items-center justify-between bg-gray-100 mt-4 rounded-md text-sm px-1 py-0.5">
+                                                                    <input min="1" max="<?= $amount ?>" id='amount' class="pl-1 min-w-10 max-w-[50px]" type="number" value="<?= $amount_buy ?>">
+                                                                    <a data-id="<?= $id ?>" href="#" class="text-gray-600 cursor-pointer hover:text-indigo-600 p-1">
+                                                                        Xác nhận
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <a href="?act=delete-cart&id=<?= $id ?>" class="px-2 font-medium text-red-600 hover:text-red-400">
                                                                 Xóa
                                                             </a>
                                                         </div>
@@ -90,7 +97,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="mt-6 flex gap-5">
+                            <div id="action" class="mt-6 flex gap-5 pointer-events-none opacity-70">
                                 <button name="btn-delete" type="submit" class="flex items-center justify-center rounded-md border border-transparent bg-red-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700">Xóa</button>
                                 <button name="btn-checkout" type="submit" class="flex flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Thanh toán</button>
                             </div>
@@ -103,6 +110,8 @@
     </div>
     <script>
         const inputChecks = document.querySelectorAll('input[name="id-cart-detail[]"]');
+        const btnAction = document.getElementById('action');
+        const amounts = document.querySelectorAll('#amount');
         const stickyBanner = document.querySelector('#sticky-banner'),
             messageError2 = stickyBanner.querySelector('#message-error');
         const btnDelete = document.querySelector('button[name="btn-delete"]'),
@@ -111,8 +120,38 @@
         btnDelete.onmouseenter = () => form.action = '?act=delete-cart';
         btnCheckout.onmouseenter = () => form.action = '?act=checkout';
         inputChecks.forEach(item => {
-            item.onchange = () => item.nextElementSibling.checked = item.checked;
+            item.onchange = () => {
+                item.nextElementSibling.checked = item.checked;
+                checkInput();
+            };
         })
+        amounts.forEach(amount => {
+            amount.onfocus = () => {
+                let amount_buy = amount.value;
+                amount.onblur = () => {
+                    if (!amount.value || amount.value == 0) {
+                        amount.value = amount_buy;
+                    } else {
+                        const id = amount.nextElementSibling.dataset.id;
+                        amount.nextElementSibling.href = `?act=cart&amount=${amount.value}&id=${id}`
+                    }
+                }
+            }
+        })
+
+        function checkInput() {
+            let check = false;
+            inputChecks.forEach(item => {
+                if (item.checked) check = true;
+            })
+            if (check) {
+                btnAction.classList.remove('pointer-events-none');
+                btnAction.classList.remove('opacity-70');
+            } else {
+                btnAction.classList.add('pointer-events-none');
+                btnAction.classList.add('opacity-70');
+            }
+        }
         form.onsubmit = (e) => {
             let isCheck = false
             inputChecks.forEach(item => {

@@ -1,6 +1,13 @@
 <?php
 function controller_cart(Req $req)
 {
+    if (isset($_GET['id']) && isset($_GET['amount']) && $_GET['amount'] && $_GET['id']) {
+        $id = $_GET['id'];
+        $amountBuy = $_GET['amount'];
+        $req->cartsService->updateOne([
+            'amount_buy' => $amountBuy,
+        ], $id);
+    }
     $cartUser = ['total' => 0];
     $categories = $req->categoriesService->findAll();
     $idCart = $_SESSION['user']['id_cart'];
@@ -99,8 +106,8 @@ function controller_success_order(Req $req)
             $info[$key] = json_decode($_POST[$key]);
         } else $info[$key] = $_POST[$key];
     }
-    $isSuccess = $req->billsService->insertOne($info);
-    if ($isSuccess) {
+    $idBill = $req->billsService->insertOne($info);
+    if ($idBill) {
         foreach ($carts as $value) {
             $product = $req->cartsService->getProductById($value->id_cart_detail);
             $req->cartsService->deleteOne($value->id_cart_detail);
@@ -108,7 +115,11 @@ function controller_success_order(Req $req)
             $idCart = $_SESSION['user']['id_cart'];
             $carts = $req->cartsService->getAllProductInCart($idCart);
             $_SESSION['user']['count_cart'] = $req->cartsService->countProductInCart($idCart)[0];
-            $req->productsBillService->insertOne(['id_product_detail' => $idProductDetail, 'amount_buy' => $value->amount_buy]);
+            $req->productsBillService->insertOne([
+                'id_product_detail' => $idProductDetail,
+                'amount_buy' => $value->amount_buy,
+                "id_bill" => $idBill
+            ]);
         }
     }
     return view("successOrder", ["categories" => $categories]);

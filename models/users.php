@@ -9,15 +9,14 @@ class Users extends  ServicePdo
         $user = $this->pdo->query($sql)->fetch();
         if ($user) {
             $idUser = $user['id'];
-            $sqlCart = "INSERT INTO CARTS(id_user) VALUES($idUser)";
-            $this->pdo->exec($sqlCart);
             $sqlCart = "SELECT id FROM CARTS WHERE ID_USER =  $idUser";
             $cartUser = $this->pdo->query($sqlCart)->fetch();
-            // if (!$cartUser) {
-            //     $idUser = $user['id'];
-            //     $sqlCart = "INSERT INTO CARTS(id_user) VALUES($idUser)";
-            //     $cartUser = $this->pdo->exec($sqlCart);
-            // }
+            if (!$cartUser) {
+                $idUser = $user['id'];
+                $sqlCart = "INSERT INTO CARTS(id_user) VALUES($idUser)";
+                $this->pdo->exec($sqlCart);
+                $cartUser = $this->pdo->query($sqlCart)->fetch();
+            }
             $user['id_cart'] = $cartUser['id'];
         }
         if ($user && $user['email'] === $email && $password === $user['password']) return $user;

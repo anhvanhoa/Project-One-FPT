@@ -76,6 +76,14 @@ class Products extends ServicePdo
         $productsSearch['products'] = $products;
         return $productsSearch;
     }
+    public function getProductDetailInBill($id)
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT name_product, price, code_color, color, image
+        FROM $dbName JOIN PRODUCTS_DETAIL ON PRODUCTS_DETAIL.ID_PRODUCT = $dbName.ID 
+        WHERE PRODUCTS_DETAIL.ID = $id";
+        return $this->pdo->query($sql)->fetch();
+    }
     // ....
 }
 $products = new Products("products");

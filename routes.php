@@ -26,6 +26,7 @@ $routes = [
     route('logout', "controller_logout", 1),
     route('change-password', "controller_change_pass", 1),
     route('orders', "controller_orders", 1),
+    route('order', "controller_order_detail", 1),
     route('cart', "controller_cart", 1),
     route('delete-cart', "controller_delete_cart", 1),
     route('add-cart', "controller_add_cart", 1),
