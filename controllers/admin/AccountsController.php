@@ -63,13 +63,17 @@ function controller_delete_account(Req $req)
 {
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $req->usersService->deleteOne($id);
+        // $req->usersService->deleteOne($id);
+        // fix
+        $req->usersService->updateOne(['is_deleted' => true], $id);
+        //end fix
         header('location: ?act=accounts');
     }
     if (isset($_POST['delete-many'])) {
         $ids = $_POST['user-id'];
         foreach ($ids as $id) {
-            $req->usersService->deleteOne($id);
+            // $req->usersService->deleteOne($id);
+            $req->usersService->updateOne(['is_deleted' => true], $id);
         }
         header('location: ?act=accounts');
     }

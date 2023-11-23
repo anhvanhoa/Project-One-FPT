@@ -11,19 +11,18 @@
 
 <body>
     <div class="min-h-full">
-        <?php include('partials/header.php') ?>
+        <?php include(dirname(__FILE__) . "/../partials/header.php") ?>
         <header class="bg-white shadow">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Quản lý tài khoản</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Quản lý danh mục</h1>
             </div>
         </header>
         <main>
             <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                <form action="?act=delete-account" method="POST">
+                <form action="?act=delete-category" method="POST">
                     <div class="flex mb-4">
-                        <a href="/admin?act=add-account" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thêm tài khoản</a>
-                        <button type="submit" name="delete-many" class="text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cấm</button>
-                        <button type="submit" name="delete-many" class="text-white bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thùng rác</button>
+                        <a href="/admin?act=categories" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Danh sách danh mục</a>
+                        <button type="submit" name="delete-many" class="text-white bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Khôi phục</button>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -42,13 +41,7 @@
                                         Tên
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Email
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Tell
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Role
+                                        Hình ảnh
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Hành động
@@ -56,56 +49,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="bg-white hover:bg-gray-50 ">
-                                    <td class="w-4 p-4">
-                                    </td>
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        <?= $user['full_name'] ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?= $user['email'] ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?= $user['tell'] ?>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <?= getRole($user['role']) ?>
-                                    </td>
-                                    <td class="flex items-center px-6 py-4">
-                                        <a href="/admin?act=detail-account&id=<?= $user['id'] ?>" class="font-medium text-blue-600  hover:underline">Chi tiết</a>
-                                    </td>
-                                </tr>
                                 <?php
-                                foreach ($accounts as $account) {
-                                    extract($account);
+                                foreach ($categories as $category) {
+                                    extract($category);
                                 ?>
                                     <tr class="bg-white hover:bg-gray-50 ">
                                         <td class="w-4 p-4">
                                             <div class="flex items-center">
-                                                <input value="<?= $id ?>" name="user-id[]" id="checkbox-<?= $id ?>" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded focus:ring-blue-500  ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2  border-gray-600">
+                                                <input value="<?= $id ?>" name="category-id[]" id="checkbox-<?= $id ?>" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded focus:ring-blue-500  ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2  border-gray-600">
                                                 <label for="checkbox-<?= $id ?>" class="sr-only">checkbox</label>
                                             </div>
                                         </td>
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            <?= $role != 2 ? $id : 'Root' ?>
+                                            <?= $id ?>
                                         </th>
                                         <td class="px-6 py-4">
-                                            <?= $full_name ?>
+                                            <?= $name_category ?>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <?= $email ?>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <?= $tell ?>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <?= getRole($role) ?>
+                                            <?= $image ?>
                                         </td>
                                         <td class="flex items-center px-6 py-4">
-                                            <a href="/admin?act=detail-account&id=<?= $id ?>" class="font-medium text-blue-600  hover:underline">Chi tiết</a>
-                                            <button type="button" id="delete" data-id="<?= $id ?>" class="font-medium text-red-600 hover:underline ms-3">Cấm</button>
+                                            <a href="/admin?act=edit-category&id=<?= $id ?>" class="font-medium text-blue-600  hover:underline">Khôi phụ</a>
+                                            <!-- <button type="button" id="delete-category" data-id="<?= $id ?>" class="font-medium text-red-600 hover:underline ms-3">Ẩn</button> -->
                                         </td>
                                     </tr>
                                 <?php
@@ -129,15 +95,15 @@
                                         </svg>
                                     </div>
                                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Cấm tài khoản</h3>
+                                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Ẩn danh mục</h3>
                                         <div class="mt-2">
-                                            <p class="text-sm text-gray-500">Bạn có chắc chắn muốn cấm tài khoản này ?</p>
+                                            <p class="text-sm text-gray-500">Bạn có chắc chắn muốn ẩn danh mục này ?</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <a id="agree" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Cấm</a>
+                                <a id="agree" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Ẩn</a>
                                 <button id="cancel" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Hủy</button>
                             </div>
                         </div>
@@ -152,12 +118,12 @@
             const content = document.getElementById("content");
             const cancel = document.getElementById("cancel");
             const agree = document.getElementById("agree");
-            const checkboxCategories = document.querySelectorAll("input[name='user-id[]']");
+            const checkboxCategories = document.querySelectorAll("input[name='category-id[]']");
             checkboxAll.onchange = () => checkboxCategories.forEach(ele => ele.checked = checkboxAll.checked);
-            const btnDeletes = document.querySelectorAll('#delete')
+            const btnDeletes = document.querySelectorAll('#delete-category')
             btnDeletes.forEach(item => {
                 item.onclick = (e) => {
-                    const link = "?act=delete-account&id=" + e.target.dataset.id;
+                    const link = "?act=delete-category&id=" + e.target.dataset.id;
                     agree.href = link;
                     overlay.classList.remove('hidden')
                     overlay.classList.toggle('opacity-0')

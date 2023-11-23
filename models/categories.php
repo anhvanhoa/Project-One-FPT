@@ -1,6 +1,12 @@
 <?php
 class Categories extends  ServicePdo
 {
+    public function getAll($is_deleted = FALSE)
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = '$is_deleted'";
+        return $this->pdo->query($sql)->fetchAll();
+    }
     public function analytic()
     {
         $dbName = $this->dbName;

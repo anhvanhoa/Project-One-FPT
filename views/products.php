@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?= $category['name_category'] ?> - Nhà Xinh</title>
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
+    <title><?= $typeProduct['name_category'] ?> - Nhà Xinh</title>
     <!-- <link rel="stylesheet" href="/asset/css/style.css" /> -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -13,7 +13,7 @@
 <body>
     <?php include('partials/header.php') ?>
     <div class="px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
-        <div style="background-image: url(/asset/images/<?= $category['image'] ?>);" class="bg-cover h-[400px] mt-4 rounded-xl bg-center"></div>
+        <div style="background-image: url(/asset/images/<?= $typeProduct['image'] ?>);" class="bg-cover h-[400px] mt-4 rounded-xl bg-center"></div>
     </div>
     <div class="bg-white">
         <div>
@@ -195,7 +195,7 @@
             </div>
             <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex items-baseline justify-between border-b border-gray-200 pb-3 pt-8">
-                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">Danh mục - <?= $category['name_category'] ?></h1>
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">Danh mục - <?= $typeProduct['name_category'] ?></h1>
                 </div>
                 <section aria-labelledby="products-heading" class="pb-12 pt-6">
                     <h2 id="products-heading" class="sr-only">Products</h2>
@@ -205,22 +205,24 @@
                             <h3 class="sr-only">Categories</h3>
                             <ul role="list" class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=new">Mới nhất</a>
+                                    <a href="?act=products&id=<?= $typeProduct['id'] ?>&sort=new">Mới nhất</a>
                                 </li>
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=selling">Bán chạy</a>
+                                    <a href="?act=products&id=<?= $typeProduct['id'] ?>&sort=selling">Bán chạy</a>
                                 </li>
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=price-asc">Giá từ thấp đến cao</a>
+                                    <a href="?act=products&id=<?= $typeProduct['id'] ?>&sort=price-asc">Giá từ thấp đến cao</a>
                                 </li>
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=price-desc">Giá từ cao đến thấp</a>
+                                    <a href="?act=products&id=<?= $typeProduct['id'] ?>&sort=price-desc">Giá từ cao đến thấp</a>
                                 </li>
                                 <li>
-                                    <a href="?act=products&id=<?= $category['id'] ?>&sort=discount">Giảm giá sâu</a>
+                                    <a href="?act=products&id=<?= $typeProduct['id'] ?>&sort=discount">Giảm giá sâu</a>
                                 </li>
                             </ul>
                             <form id="filter">
+                                <input type="hidden" name="act" value="products">
+                                <input type="hidden" name="id" value="<?= $typeProduct['id'] ?>">
                                 <div class="border-b border-gray-200 py-6">
                                     <h3 class="-my-3 flow-root">
                                         <!-- Expand/collapse section button -->
@@ -231,15 +233,16 @@
                                     <!-- Filter section, show/hide based on section state. -->
                                     <div class="pt-6" id="filter-section-0">
                                         <div class="space-y-4">
-                                            <?php foreach ($sortPrices as $key => $sortPrice) {
-                                            ?>
-                                                <div class="flex items-center">
-                                                    <input id="filter-price-<?= $key ?>" name="price[]" value="<?= $sortPrice ?>" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                    <label for="filter-price-<?= $key ?>" class="ml-3 text-sm text-gray-600"><?= $sortPrice ?></label>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
+                                            <div class="flex gap-x-4 items-center">
+                                                <p class="w-1/12">Từ</p>
+                                                <input min="<?= $price['min_price'] ?>" value="<?= $price['min'] ?>" name="price-min" class="bg-gray-100 pl-2 rounded-md py-1" type="number" placeholder="5.000.000">
+                                                &#8363;
+                                            </div>
+                                            <div class="flex gap-x-4 items-center">
+                                                <p class="w-1/12">Đến</p>
+                                                <input max="<?= $price['max_price'] ?>" value="<?= $price['max'] ?>" name="price-max" class="bg-gray-100 pl-2 rounded-md py-1" type="number" placeholder="8.000.000">
+                                                &#8363;
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -251,26 +254,17 @@
                                     </h3>
                                     <div class="pt-6" id="filter-section-1">
                                         <div class="space-y-4">
-                                            <div class="flex items-center">
-                                                <input id="filter-category-0" name="category" value="new-arrivals" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                <label for="filter-category-0" class="ml-3 text-sm text-gray-600">New Arrivals</label>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <input id="filter-category-1" name="category" value="sale" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                <label for="filter-category-1" class="ml-3 text-sm text-gray-600">Sale</label>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <input id="filter-category-2" name="category" value="travel" type="checkbox" checked class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                <label for="filter-category-2" class="ml-3 text-sm text-gray-600">Travel</label>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <input id="filter-category-3" name="category" value="organization" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                <label for="filter-category-3" class="ml-3 text-sm text-gray-600">Organization</label>
-                                            </div>
-                                            <div class="flex items-center">
-                                                <input id="filter-category-4" name="category" value="accessories" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                <label for="filter-category-4" class="ml-3 text-sm text-gray-600">Accessories</label>
-                                            </div>
+                                            <?php
+                                            foreach ($materials as $key => $materia) {
+                                                extract($materia);
+                                            ?>
+                                                <div class="flex items-center">
+                                                    <input id="filter-category-<?= $key ?>" name="material[]" value="<?= $material ?>" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                                    <label for="filter-category-<?= $key ?>" class="ml-3 text-sm text-gray-600 truncate"><?= $material ?></label>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                 </div>

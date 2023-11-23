@@ -23,6 +23,7 @@
                     <div class="flex mb-4">
                         <a href="/admin?act=add-category" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thêm danh mục</a>
                         <button type="submit" name="delete-many" class="text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Xóa</button>
+                        <a href="?act=bin-categories" class="text-white bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thùng rác</a>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -71,7 +72,7 @@
                                         </td>
                                         <td class="flex items-center px-6 py-4">
                                             <a href="/admin?act=edit-category&id=<?= $id ?>" class="font-medium text-blue-600  hover:underline">Sửa</a>
-                                            <button type="button" id="delete-category" data-id="<?= $id ?>" class="font-medium text-red-600 hover:underline ms-3">Xóa</button>
+                                            <button type="button" id="delete-category" data-id="<?= $id ?>" class="font-medium text-red-600 hover:underline ms-3">Ẩn</button>
                                         </td>
                                     </tr>
                                 <?php
@@ -95,15 +96,15 @@
                                         </svg>
                                     </div>
                                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Xóa danh mục</h3>
+                                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Ẩn danh mục</h3>
                                         <div class="mt-2">
-                                            <p class="text-sm text-gray-500">Bạn có chắc chắn muốn xóa danh mục: .</p>
+                                            <p class="text-sm text-gray-500">Bạn có chắc chắn muốn ẩn danh mục này ?</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <a id="agree" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Xóa</a>
+                                <a id="agree" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Ẩn</a>
                                 <button id="cancel" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Hủy</button>
                             </div>
                         </div>

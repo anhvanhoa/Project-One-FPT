@@ -37,6 +37,8 @@
                             </div>
                             <div class="border-2 rounded-[14px] border-red-600">
                                 <img src="/asset/images/<?= $category['image'] ?>" alt="" class="h-40 rounded-xl w-full">
+                                <!-- fix -->
+                                <input type="hidden" value="<?= $category['image'] ?>" name="image-old">
                             </div>
                             <div class="flex items-center justify-center border rounded-[14px] border-indigo-600">
                                 <p class="font-semibold text-3xl">?</p>

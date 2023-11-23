@@ -7,9 +7,10 @@ class Products extends ServicePdo
         $sql = "SELECT * FROM $dbName ORDER BY SOLD DESC LIMIT 0,9";
         return $this->pdo->query($sql)->fetchAll();
     }
-    public function getProductsLimit($limit = 9)
+    public function getProductsLimit($page = 1)
     {
         $dbName = $this->dbName;
+        $limit = $page * 9;
         $sql = "SELECT * FROM $dbName ORDER BY ID DESC LIMIT 0,$limit";
         return $this->pdo->query($sql)->fetchAll();
     }
@@ -36,9 +37,16 @@ class Products extends ServicePdo
         $product['images'] = $images;
         return $product;
     }
-    public function getProductsByCategory($id, $page = 1, $sort = 'new')
+    public function getProductsByCategory($id, $page = 1, $sort = 'new', $max, $min, $material = '')
     {
         $dbName = $this->dbName;
+        $sqlFilter = '';
+        if ($max && $min) {
+            $sqlFilter .= "AND PRICE BETWEEN $min AND $max";
+        }
+        if ($material) {
+            $sqlFilter .= "AND MATERIAL IN ($material)";
+        }
         $sqlSort = 'ID DESC';
         if ($sort == 'selling') $sqlSort = 'SOLD DESC';
         if ($sort == 'price-asc') $sqlSort = 'PRICE ASC';
@@ -51,7 +59,7 @@ class Products extends ServicePdo
         $productsByCategory['page'] = $countProduct['page'];
         $limit = $page * 9;
         $minimum =  $limit  - 9;
-        $sql = "SELECT * FROM $dbName WHERE ID_CATEGORY = $id ORDER BY $sqlSort LIMIT $minimum, $limit";
+        $sql = "SELECT * FROM $dbName WHERE ID_CATEGORY = $id $sqlFilter ORDER BY $sqlSort LIMIT $minimum, $limit";
         $products = $this->pdo->query($sql)->fetchAll();
         $productsByCategory['products'] = $products;
         return $productsByCategory;
@@ -83,6 +91,16 @@ class Products extends ServicePdo
         FROM $dbName JOIN PRODUCTS_DETAIL ON PRODUCTS_DETAIL.ID_PRODUCT = $dbName.ID 
         WHERE PRODUCTS_DETAIL.ID = $id";
         return $this->pdo->query($sql)->fetch();
+    }
+
+    public function getFilter($id)
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT max(PRICE) as max_price, min(PRICE) as min_price FROM $dbName WHERE ID_CATEGORY = $id";
+        $result['price'] = $this->pdo->query($sql)->fetch();
+        $sqlMaterial = "SELECT DISTINCT material FROM $dbName WHERE ID_CATEGORY = $id";
+        $result['material'] = $this->pdo->query($sqlMaterial)->fetchAll();
+        return $result;
     }
     // ....
 }

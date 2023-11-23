@@ -16,7 +16,7 @@ class ServicePdo
             $sql = "SELECT * FROM $dbName";
             return $this->pdo->query($sql)->fetchAll();
         } catch (\Throwable $th) {
-            throw $th;
+            return $th;
         }
     }
 
@@ -27,7 +27,7 @@ class ServicePdo
             $sql = "SELECT * FROM $dbName WHERE ID = $id";
             return $this->pdo->query($sql)->fetch();
         } catch (\Throwable $th) {
-            throw $th;
+            return $th;
         }
     }
 
@@ -38,7 +38,7 @@ class ServicePdo
             $sql = "DELETE FROM $dbName WHERE ID = $id";
             return $this->pdo->exec($sql);
         } catch (\Throwable $th) {
-            throw $th;
+            return $th;
         }
     }
 

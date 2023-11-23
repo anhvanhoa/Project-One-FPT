@@ -127,7 +127,7 @@
             </div>
         </div>
     </nav>
-    <div title="Voucher" class="z-10 fixed bottom-5 -rotate-12 left-3 bg-purple-600 p-3 rounded-[50%]">
+    <div title="Voucher" class="z-10 fixed bottom-5 -rotate-12 left-3 bg-indigo-600 p-3 rounded-[50%]">
         <a href="#">
             <img src="/asset/images/git.png" alt="" class="w-12 animate-bounce">
         </a>

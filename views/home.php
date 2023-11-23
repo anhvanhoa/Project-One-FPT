@@ -43,7 +43,7 @@
                 extract($voucher);
             ?>
                 <div class="container mx-auto first:hidden last:hidden lg:first:block xl:last:block">
-                    <div class="bg-gradient-to-br from-[#FEAB1D] to-green-500 text-white text-center py-6 px-5 rounded-lg shadow-md relative">
+                    <div class="bg-gradient-to-br from-indigo-600 to-indigo-400 text-white text-center py-6 px-5 rounded-lg shadow-md relative">
                         <h3 class="font-semibold mb-4">Giảm <?= $discount ?>% cho khi thanh toán hóa đơn.</h3>
                         <div class="text-sm flex items-center justify-center space-x-2 mb-2">
                             <span id="cpnCode" class="border-dashed border text-white px-4 py-2 rounded-l uppercase"><?= $code ?></span>
@@ -65,7 +65,7 @@
                     <?php include('components/product.php') ?>
                 </div>
                 <div class="flex justify-center mt-8">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white py-1 px-6 rounded">Loading</button>
+                    <a href="?limit=<?= $page + 1 ?>" class="bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-6 rounded">Tải thêm</a>
                 </div>
             </div>
         </div>

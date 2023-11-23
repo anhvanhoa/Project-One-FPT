@@ -5,12 +5,29 @@ function controller_product(Req $req)
     $sort = isset($_GET['sort']) ? $_GET['sort'] : '';
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     if (!$id) error();
-    $sortPrices = ['5M - 10M', '10M - 20M', '20M - 30M', 'Hơn 30M'];
+    $filter = $req->productsService->getFilter($id);
+    $price = $filter['price'];
+    $material = $filter['material'];
+    $max = isset($_GET['price-max']) ? $_GET['price-max'] : '';
+    $min = isset($_GET['price-min']) ? $_GET['price-min'] : '';
+    $mater = isset($_GET['material']) ? $_GET['material'] : [];
+    $strMaterial = join("','", $mater);
+    $strMaterial = "'$strMaterial'";
+    if (count($mater) <= 0) $strMaterial = '';
+    $price['max'] = $max;
+    $price['min'] = $min;
     $categories = $req->categoriesService->findAll();
     $category = $req->categoriesService->findOne($id);
-    $products_page = $req->productsService->getProductsByCategory($id, $page, $sort);
+    $products_page = $req->productsService->getProductsByCategory($id, $page, $sort, $max, $min, $strMaterial);
     $products = $products_page['products'];
-    return view("products", ["categories" => $categories, "products" => $products, 'category' => $category, 'products_page' => $products_page, 'sortPrices' => $sortPrices]);
+    return view("products", [
+        'typeProduct' => $category,
+        "categories" => $categories,
+        "products" => $products,
+        'products_page' => $products_page,
+        'price' => $price,
+        'materials' => $material
+    ]);
 }
 
 function controller_detail_product(Req $req)

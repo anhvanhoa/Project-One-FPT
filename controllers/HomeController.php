@@ -1,11 +1,18 @@
 <?php
 function controller_home(Req $req)
 {
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $categories = $req->categoriesService->findAll();
-    $products = $req->productsService->findAll();
+    $products = $req->productsService->getProductsLimit($page);
     $productsSelling = $req->productsService->getSelling();
     $vouchers = $req->vouchersService->getVouchersNew();
-    return view("home", ["categories" => $categories, "productsSelling" => $productsSelling, "products" => $products, 'vouchers' => $vouchers]);
+    return view("home", [
+        "categories" => $categories,
+        "productsSelling" => $productsSelling,
+        "products" => $products,
+        'vouchers' => $vouchers,
+        'page' => $page
+    ]);
 }
 
 function controller_search(Req $req)
@@ -17,5 +24,11 @@ function controller_search(Req $req)
     $categories = $req->categoriesService->findAll();
     $products_page = $req->productsService->searchProduct($keyword, $page, $sort);
     $products = $products_page['products'];
-    return view("search", ['categories' => $categories, 'sortPrices' => $sortPrices, 'keyword' => $keyword, "products" => $products, 'products_page' => $products_page]);
+    return view("search", [
+        'categories' => $categories,
+        'sortPrices' => $sortPrices,
+        'keyword' => $keyword,
+        "products" => $products,
+        'products_page' => $products_page
+    ]);
 }

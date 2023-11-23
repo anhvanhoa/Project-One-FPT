@@ -64,7 +64,7 @@ class Users extends  ServicePdo
     {
         $dbName = $this->dbName;
         if ($role == 1) $sql = "SELECT * FROM $dbName WHERE ROLE = 0";
-        if ($role == 2)  $sql = "SELECT * FROM $dbName WHERE ROLE <> $role ORDER BY ROLE DESC";
+        if ($role == 2)  $sql = "SELECT * FROM $dbName WHERE ROLE <> $role AND IS_DELETED = FALSE ORDER BY ROLE DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
     // handle

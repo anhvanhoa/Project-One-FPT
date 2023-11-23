@@ -13,6 +13,7 @@ $routes = [
     route('edit-product', "controller_edit_products"),
     route('add-detail-product', "controller_add_product_detail"),
     route('categories', "controller_categories"),
+    route('bin-categories', "controller_bin_categories"),
     route('add-category', "controller_add_category"),
     route('edit-category', "controller_edit_category"),
     route('update-category', "controller_update_category"),
