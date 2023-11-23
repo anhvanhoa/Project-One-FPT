@@ -4,6 +4,7 @@ include("../controllers/admin/HomeController.php");
 include("../controllers/admin/ProductsController.php");
 include("../controllers/admin/CategoriesController.php");
 include("../controllers/admin/AccountsController.php");
+// include("../controllers/admin/BillsController.php");
 
 
 $routes = [
@@ -22,5 +23,7 @@ $routes = [
     route('add-account', "controller_add_account"),
     route('detail-account', "controller_detail_account"),
     route('delete-account', "controller_delete_account"),
+    route('bills', "controller_bills"),
+    route('detail-bill', "controller_detail_bill"),
     // route('logout', "controller_logout"),
 ];

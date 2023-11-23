@@ -1,7 +1,8 @@
 <?php
 function controller_products(Req $req)
 {
-    return viewAdmin("products", []);
+    $products = $req->productsService->findAll();
+    return viewAdmin("products", ['products' => $products]);
 }
 function controller_add_products(Req $req)
 {

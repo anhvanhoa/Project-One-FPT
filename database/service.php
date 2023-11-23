@@ -13,7 +13,7 @@ class ServicePdo
     {
         try {
             $dbName = $this->dbName;
-            $sql = "SELECT * FROM $dbName";
+            $sql = "SELECT * FROM $dbName ORDER BY ID DESC";
             return $this->pdo->query($sql)->fetchAll();
         } catch (\Throwable $th) {
             return $th;
