@@ -4,7 +4,8 @@ include("../controllers/admin/HomeController.php");
 include("../controllers/admin/ProductsController.php");
 include("../controllers/admin/CategoriesController.php");
 include("../controllers/admin/AccountsController.php");
-// include("../controllers/admin/BillsController.php");
+include("../controllers/admin/BillsController.php");
+include("../controllers/admin/VouchersController.php");
 
 
 $routes = [
@@ -25,5 +26,8 @@ $routes = [
     route('delete-account', "controller_delete_account"),
     route('bills', "controller_bills"),
     route('detail-bill', "controller_detail_bill"),
+    route('vouchers', "controller_vouchers"),
+    route('add-voucher', "controller_add_voucher"),
+    route('edit-voucher', "controller_edit_voucher"),
     // route('logout', "controller_logout"),
 ];
