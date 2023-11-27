@@ -82,7 +82,8 @@
                                     <div class="flex items-center">
                                         <p class="pr-2"><?= (float)$avg_star ?></p>
                                         <?php
-                                        for ($i = 1; $i <= 5; $i++) {
+                                        for ($i = 0; $i < 5; $i++) {
+                                            $avg_star = floor((float)$avg_star);
                                         ?>
                                             <svg class="<?= $i < $avg_star ? 'text-orange-500' : 'text-gray-200' ?> h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
@@ -107,7 +108,7 @@
                                                 <label data-id="<?= $id ?>" class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-400">
                                                     <input type="radio" name="color-choice" value="<?= $amount ?>" class="sr-only" aria-labelledby="color-choice-0-label" />
                                                     <span id="color-choice-0-label" class="sr-only">White</span>
-                                                    <span aria-hidden="true" style="background-color: #<?= $code_color ?>;" class="h-8 w-8 rounded-full border border-black border-opacity-10"></span>
+                                                    <span aria-hidden="true" style="background-color: <?= $code_color ?>;" class="h-8 w-8 rounded-full border border-black border-opacity-10"></span>
                                                 </label>
                                             <?php
                                             }
@@ -184,7 +185,7 @@
                                                     ?>
                                                         <div class="group relative">
                                                             <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-white lg:aspect-none group-hover:opacity-75 shadow-md">
-                                                                <img src="/asset/images/<?= $thumbnail ?>" alt="<?= $name_product ?>" class="h-full w-full object-contain object-center lg:h-full lg:w-full" />
+                                                                <img src="/asset/images/<?= $thumbnail ?>" alt="<?= $name_product ?>" class="h-full w-full aspect-video object-cover object-center lg:h-full lg:w-full" />
                                                             </div>
                                                             <div class="mt-4">
                                                                 <div>
@@ -217,42 +218,50 @@
                                         <div class="flex justify-between items-center mb-6">
                                             <h2 class="text-lg lg:text-xl font-bold text-gray-900">Đánh giá <?= count($reviews) ?></h2>
                                         </div>
-                                        <form class="mb-6">
-                                            <div class="flex gap-x-6">
-                                                <div class="flex-1 py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
-                                                    <label for="comment" class="sr-only">Your comment</label>
-                                                    <input type="hidden" name="stars" required>
-                                                    <textarea id="comment" name="content" rows="6" class="resize-none px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Viết đánh giá ....." required></textarea>
-                                                </div>
-                                                <div>
-                                                    <div class="flex space-x-1">
-                                                        <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                            <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                                                        </svg>
-                                                    </div>
-                                                    <p class="text-red-600 text-sm" id="message-error"></p>
-                                                </div>
-                                            </div>
-                                            <button type="submit" id="review" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center bg-sky-500 rounded-lg text-white">
-                                                Đánh giá
-                                            </button>
-                                            <button type="reset" name="cancel-review" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center bg-gray-200 rounded-lg">
-                                                Hủy
-                                            </button>
-                                        </form>
                                         <?php
+                                        if ($isReview) {
+                                        ?>
+                                            <form class="mb-6" action="?act=review" method="POST">
+                                                <div class="flex gap-x-6">
+                                                    <div class="flex-1 py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200">
+                                                        <label for="comment" class="sr-only">Your comment</label>
+                                                        <input type="hidden" name="stars" required>
+                                                        <input type="hidden" name="id-product" value="<?= $productDetail['id'] ?>">
+                                                        <textarea id="comment" name="content" rows="6" class="resize-none px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none" placeholder="Viết đánh giá ....." required></textarea>
+                                                    </div>
+                                                    <div>
+                                                        <div class="flex space-x-1">
+                                                            <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            <svg id='star' class="text-gray-200 cursor-pointer h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </div>
+                                                        <p class="text-red-600 text-sm" id="message-error"></p>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" name="btn-review" id="review" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center bg-sky-500 rounded-lg text-white">
+                                                    Đánh giá
+                                                </button>
+                                                <button type="reset" name="cancel-review" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center bg-gray-200 rounded-lg">
+                                                    Hủy
+                                                </button>
+                                            </form>
+                                        <?php
+                                        }
+                                        ?>
+                                        <?php
+                                        if (empty($reviews)) echo "Không có đánh giá";
                                         foreach ($reviews as $review) {
                                             extract($review);
                                         ?>

@@ -37,6 +37,9 @@ class Req
     public $cartsService;
     public $billsService;
     public $productsBillService;
+    public $productsDetailService;
+    public $imagesService;
+    public $reviewsService;
     public function __construct(
         Categories $categoriesService,
         Products $productsService,
@@ -45,6 +48,9 @@ class Req
         CartsDetail $cartsService,
         Bills $billsService,
         ProductsBill $productsBillService,
+        ProductDetail $productsDetailService,
+        Images $imagesService,
+        Reviews $reviewsService,
     ) {
         $this->categoriesService = $categoriesService;
         $this->productsService = $productsService;
@@ -53,5 +59,8 @@ class Req
         $this->cartsService = $cartsService;
         $this->billsService = $billsService;
         $this->productsBillService = $productsBillService;
+        $this->productsDetailService = $productsDetailService;
+        $this->imagesService = $imagesService;
+        $this->reviewsService = $reviewsService;
     }
 }

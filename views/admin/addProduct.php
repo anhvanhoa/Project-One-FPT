@@ -19,72 +19,55 @@
         </header>
         <main>
             <div class="mx-auto px-4 max-w-6xl py-6 sm:px-6 lg:px-8">
-                <form action="?act=add-product" method="POST">
+                <form action="?act=add-product" method="POST" enctype="multipart/form-data">
                     <div class="space-y-12">
                         <div class="border-b border-gray-900/10 pb-12">
                             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div class="col-span-6 border-b border-gray-900/10 pb-12">
                                     <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                         <div class="sm:col-span-3">
-                                            <label class="block text-sm font-medium leading-6 text-gray-900">Giá bán</label>
+                                            <label class="block text-sm font-medium leading-6 text-gray-900">Tên sản phẩm</label>
                                             <div class="mt-2">
-                                                <input type="number" name="price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input required type="text" name="name-product" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                         <div class="sm:col-span-3">
                                             <label class="block text-sm font-medium leading-6 text-gray-900">Giá bán</label>
                                             <div class="mt-2">
-                                                <input type="number" name="price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input required type="number" name="price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                         <div class="sm:col-span-3">
                                             <label class="block text-sm font-medium leading-6 text-gray-900">Giá gốc</label>
                                             <div class="mt-2">
-                                                <input type="number" name="origin-price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input required type="number" name="origin-price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                         <div class="sm:col-span-3">
                                             <label class="block text-sm font-medium leading-6 text-gray-900">Vật liệu</label>
                                             <div class="mt-2">
-                                                <input type="text" name="material" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input required type="text" name="material" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                         <div class="sm:col-span-3">
                                             <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Ngày đăng</label>
                                             <div class="mt-2">
-                                                <input type="date" name="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input required type="date" name="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                         <div class="sm:col-span-3">
                                             <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Danh mục</label>
                                             <div class="mt-2">
-                                                <select name="id-category" class="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                                    <option>United States</option>
+                                                <select required name="id-category" class="pl-2 block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                    <?php
+                                                    foreach ($categories as $category) {
+                                                        extract($category)
+                                                    ?>
+                                                        <option value="<?= $id ?>"><?= $name_category ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
                                                 </select>
-                                            </div>
-                                        </div>
-                                        <div class="sm:col-span-2">
-                                            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Ngày đăng</label>
-                                            <div class="mt-2">
-                                                <input type="date" name="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
-                                            </div>
-                                        </div>
-                                        <div class="sm:col-span-2">
-                                            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Ngày đăng</label>
-                                            <div class="mt-2">
-                                                <input type="date" name="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
-                                            </div>
-                                        </div>
-                                        <div class="sm:col-span-1">
-                                            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Ngày đăng</label>
-                                            <div class="mt-2">
-                                                <input type="date" name="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
-                                            </div>
-                                        </div>
-                                        <div class="sm:col-span-1">
-                                            <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Ngày đăng</label>
-                                            <div class="mt-2">
-                                                <input type="date" name="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +75,7 @@
                                 <div class="col-span-full">
                                     <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Mô tả</label>
                                     <div class="mt-2">
-                                        <textarea id="about" name="description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                        <textarea required id="about" name="description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-span-full">
@@ -101,39 +84,32 @@
                                         <div class="w-1/2 justify-center flex items-center text-sm leading-6 text-gray-600">
                                             <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                 <span>Tải ảnh lên</span>
-                                                <input id="file-upload" name="thumbnail" type="file" class="sr-only pl-2">
+                                                <input required id="file-upload" name="thumbnail" type="file" class="sr-only pl-2">
                                             </label>
                                         </div>
-                                        <img class="w-1/2 h-72 object-cover" src="https://source.unsplash.com/random" alt="">
+                                        <img class="w-1/2 h-72 object-cover" id="image" alt="">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="border-b border-gray-900/10 pb-12">
-                            <div class="space-y-10">
-                                <fieldset>
-                                    <div class="space-y-6">
-                                        <div class="relative flex gap-x-3">
-                                            <div class="flex h-6 items-center">
-                                                <input id="comments" name="comments" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 pl-2">
-                                            </div>
-                                            <div class="text-sm leading-6">
-                                                <label for="comments" class="font-medium text-gray-900">Công khai</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
                             </div>
                         </div>
                     </div>
                     <div class="mt-6 flex items-center justify-end gap-x-6">
                         <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Hủy</button>
-                        <button name="add-product" type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Lưu</button>
+                        <button name="add-product" type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Tiếp tục</button>
                     </div>
                 </form>
             </div>
         </main>
     </div>
 </body>
+<script>
+    const inputFile = document.querySelector('input[type="file"]');
+    const image = document.querySelector('#image');
+    inputFile.onchange = (e) => {
+        const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
+        image.src = url;
+    }
+</script>
 
 </html>

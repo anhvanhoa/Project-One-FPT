@@ -1,7 +1,7 @@
 <?php
 function controller_orders(Req $req)
 {
-    $categories = $req->categoriesService->findAll();
+    $categories = $req->categoriesService->getAll();
     $idUser = $_SESSION['user']['id'];
     $bills = $req->billsService->getBillByUser($idUser);
     return view("orders", ["categories" => $categories, 'bills' => $bills]);
@@ -11,7 +11,7 @@ function controller_order_detail(Req $req)
 {
     $listStatus = [1, 2, 3, 4, 5];
     isset($_GET['id']) ? $id = $_GET['id'] : header('location: /');
-    $categories = $req->categoriesService->findAll();
+    $categories = $req->categoriesService->getAll();
     $bill = $req->billsService->findOne($id);
     $productBills = $req->productsBillService->getProductsByBill($bill['id']);
     $products = [];
@@ -28,4 +28,15 @@ function controller_order_detail(Req $req)
         'products' => $products,
         'listStatus' => $listStatus
     ]);
+}
+
+function controller_cancel_order(Req $req)
+{
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $req->billsService->updateOne([
+            'status' => 0
+        ], $id);
+        header("location: ?act=order&id=$id");
+    } else header('location: /');
 }

@@ -14,7 +14,7 @@
         <?php include(dirname(__FILE__) . "/../partials/header.php") ?>
         <header class="bg-white shadow">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Quản lý danh mục</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Thùng rác danh mục</h1>
             </div>
         </header>
         <main>
@@ -70,8 +70,7 @@
                                             <?= $image ?>
                                         </td>
                                         <td class="flex items-center px-6 py-4">
-                                            <a href="/admin?act=edit-category&id=<?= $id ?>" class="font-medium text-blue-600  hover:underline">Khôi phụ</a>
-                                            <!-- <button type="button" id="delete-category" data-id="<?= $id ?>" class="font-medium text-red-600 hover:underline ms-3">Ẩn</button> -->
+                                            <a href="/admin?act=restore-category&id=<?= $id ?>" class="font-medium text-blue-600  hover:underline">Khôi phục</a>
                                         </td>
                                     </tr>
                                 <?php

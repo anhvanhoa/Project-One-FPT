@@ -60,11 +60,11 @@ class Users extends  ServicePdo
         $sql = "UPDATE $dbName SET PASSWORD = '$pass' WHERE ID = $id";
         return $this->pdo->prepare($sql)->execute();
     }
-    public function getAccountsByRole($role = 1)
+    public function getAccountsByRole($role = 1, $isDeleted = false)
     {
         $dbName = $this->dbName;
         if ($role == 1) $sql = "SELECT * FROM $dbName WHERE ROLE = 0";
-        if ($role == 2)  $sql = "SELECT * FROM $dbName WHERE ROLE <> $role AND IS_DELETED = FALSE ORDER BY ROLE DESC";
+        if ($role == 2)  $sql = "SELECT * FROM $dbName WHERE ROLE <> $role AND IS_DELETED = '$isDeleted' ORDER BY ROLE DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
     // handle

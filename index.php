@@ -12,9 +12,23 @@ function bootstrap()
     include("./models/cartsDetail.php");
     include("./models/bills.php");
     include("./models/productsBill.php");
+    include("./models/productsDetail.php");
+    include("./models/images.php");
+    include("./models/reviews.php");
     $act = '';
     $user = isset($_SESSION['user']) ? true : false;
-    $req = new Req($categories, $products, $users, $vouchers, $cartsDetail, $bills, $productsBill);
+    $req = new Req(
+        $categories,
+        $products,
+        $users,
+        $vouchers,
+        $cartsDetail,
+        $bills,
+        $productsBill,
+        $productsDetail,
+        $images,
+        $reviews,
+    );
     if (!isset($_GET['act'])) $act = check_path('');
     else $act = check_path($_GET['act']);
     foreach ($routes as $route) {

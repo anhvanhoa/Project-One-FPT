@@ -13,6 +13,14 @@
     <?php include('partials/header.php') ?>
     <div class="max-w-2xl mx-auto mt-8 mb-12">
         <form method="POST" action="?act=account" enctype="multipart/form-data">
+            <div id="alert-border-2" class="<?= $error ? 'flex' : 'hidden' ?> items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50" role="alert">
+                <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <div class="ms-3 text-sm font-medium">
+                    <?= $error ?>
+                </div>
+            </div>
             <div class="space-y-12">
                 <div class="border-b border-gray-900/10 pb-12">
                     <h2 class="text-2xl font-semibold leading-7 text-gray-900">Tài khoản</h2>
@@ -26,7 +34,7 @@
                                 <img id="avatar-user" src="/asset/images/<?= $user['avatar'] ? $user['avatar'] : 'avatar-default.jpg' ?>" class="w-16 aspect-square rounded-[50%]" alt="">
                                 <label for="avatar" class="cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                                     Thay đổi
-                                    <input type="file" name="avatar" hidden id="avatar">
+                                    <input accept="image/*" type="file" name="avatar" hidden id="avatar">
                                 </label>
                                 <p class="name-img"></p>
                             </div>

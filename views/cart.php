@@ -58,7 +58,7 @@
                                                                 <p class="ml-4"><?= number_format($price, 0, '.', '.') ?> &#8363;</p>
                                                             </div>
                                                             <div class="flex items-center gap-1">
-                                                                <p class="mt-1 text-sm w-4 h-4 rounded-lg" style="background-color: #<?= $code_color ?>;"></p>
+                                                                <p class="mt-1 text-sm w-4 h-4 rounded-lg" style="background-color: <?= $code_color ?>;"></p>
                                                                 <p class="text-sm capitalize"><?= $color ?></p>
                                                             </div>
                                                         </div>

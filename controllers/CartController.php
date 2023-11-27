@@ -9,7 +9,7 @@ function controller_cart(Req $req)
         ], $id);
     }
     $cartUser = ['total' => 0];
-    $categories = $req->categoriesService->findAll();
+    $categories = $req->categoriesService->getAll();
     $idCart = $_SESSION['user']['id_cart'];
     $carts = $req->cartsService->getAllProductInCart($idCart);
     $_SESSION['user']['count_cart'] = $req->cartsService->countProductInCart($idCart)[0];
@@ -53,7 +53,7 @@ function controller_checkout(Req $req)
         'code' => '',
         'carts' => []
     ];
-    $categories = $req->categoriesService->findAll();
+    $categories = $req->categoriesService->getAll();
     $user = $_SESSION['user'];
     $products = [];
     if (isset($_POST['btn-checkout']) && $_POST['id-cart-detail']) {
@@ -85,7 +85,7 @@ function controller_checkout(Req $req)
 
 function controller_success_order(Req $req)
 {
-    $categories = $req->categoriesService->findAll();
+    $categories = $req->categoriesService->getAll();
     $keys = [
         'total' => 0,
         'payment_method' => '',

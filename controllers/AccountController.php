@@ -1,7 +1,8 @@
 <?php
 function controller_account(Req $req)
 {
-    $categories = $req->categoriesService->findAll();
+    $error = '';
+    $categories = $req->categoriesService->getAll();
     $user = $_SESSION['user'];
     if (isset($_POST['update'])) {
         $idUser = $user['id'];
@@ -11,6 +12,7 @@ function controller_account(Req $req)
         $tell = $_POST['tell'];
         $address = $_POST['address'];
         $image = uploadImage($_FILES['avatar']);
+        if (!$image) $error = 'Định dạng file không đúng.';
         $isSuccess = $req->usersService->update($image, $email, $birthday, $fullName, $address, $tell, $idUser);
         if ($isSuccess) {
             $count_cart = $_SESSION['user']['count_cart'];
@@ -20,7 +22,7 @@ function controller_account(Req $req)
             $_SESSION['user']['id_cart'] =  $id_cart;
         }
     }
-    return view("account", ["categories" => $categories, 'user' => $user]);
+    return view("account", ["categories" => $categories, 'user' => $user, 'error' => $error]);
 }
 
 function controller_login(Req $req)
@@ -105,6 +107,6 @@ function controller_change_pass(Req $req)
             } else $error = 'Không thành công !!';
         }
     }
-    $categories = $req->categoriesService->findAll();
+    $categories = $req->categoriesService->getAll();
     return view("changePassword", ["categories" => $categories, "error" => $error]);
 }

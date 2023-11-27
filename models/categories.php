@@ -1,7 +1,7 @@
 <?php
 class Categories extends  ServicePdo
 {
-    public function getAll($is_deleted = FALSE)
+    public function getAll($is_deleted = false)
     {
         $dbName = $this->dbName;
         $sql = "SELECT * FROM $dbName WHERE IS_DELETED = '$is_deleted'";

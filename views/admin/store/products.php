@@ -11,23 +11,22 @@
 
 <body>
     <div class="min-h-full">
-        <?php include('partials/header.php') ?>
+        <?php include(dirname(__FILE__) . "/../partials/header.php") ?>
         <header class="bg-white shadow">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Quản lý danh mục</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Thùng rác sản phẩm</h1>
             </div>
         </header>
         <main>
-            <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                <form action="?act=delete-category" method="POST">
+            <form action="?act=delete-product" method="POST" id="form">
+                <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                     <div class="flex mb-4">
-                        <a href="/admin?act=add-category" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thêm danh mục</a>
+                        <a href="/admin?act=add-product" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thêm sản phẩm</a>
                         <button type="button" id="delete-many" class="text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ẩn</button>
                         <button type="submit" name="delete-many" class="hidden text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ẩn</button>
-                        <a href="?act=bin-categories" class="text-white bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thùng rác</a>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                                 <tr>
                                     <th scope="col" class="p-4">
@@ -46,34 +45,83 @@
                                         Hình ảnh
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Giá bán
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Giá gốc
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Mô tả
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Vật liệu
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Số lượn bán
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Ngày đăng
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Id danh mục
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 sticky right-0 bg-slate-300">
                                         Hành động
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                foreach ($categories as $category) {
-                                    extract($category);
+                                foreach ($products as $product) {
+                                    extract($product);
                                 ?>
                                     <tr class="bg-white hover:bg-gray-50 ">
                                         <td class="w-4 p-4">
                                             <div class="flex items-center">
-                                                <input value="<?= $id ?>" name="category-id[]" id="checkbox-<?= $id ?>" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded focus:ring-blue-500  ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2  border-gray-600">
-                                                <label for="checkbox-<?= $id ?>" class="sr-only">checkbox</label>
+                                                <input value="<?= $id ?>" name="product-id[]" id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded focus:ring-blue-500  ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2  border-gray-600">
+                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                             </div>
                                         </td>
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             <?= $id ?>
                                         </th>
-                                        <td class="px-6 py-4">
-                                            <?= $name_category ?>
+                                        <td class="px-6 py-4 truncate">
+                                            <?= $name_product ?>
+                                        </td>
+                                        <td class="px-6 py-4 truncate">
+                                            <?= $thumbnail ?>
+                                        </td>
+                                        <td class="px-6 py-4 truncate">
+                                            <?= number_format($price, 0, '.', '.') ?> &#8363;
+                                        </td>
+                                        <td class="px-6 py-4 truncate">
+                                            <?= number_format($origin_price, 0, '.', '.') ?> &#8363;
                                         </td>
                                         <td class="px-6 py-4">
-                                            <?= $image ?>
+                                            <p class="w-52 truncate">
+                                                <?= $description ?>
+                                            </p>
                                         </td>
-                                        <td class="flex items-center px-6 py-4">
-                                            <a href="/admin?act=edit-category&id=<?= $id ?>" class="font-medium text-blue-600  hover:underline">Sửa</a>
-                                            <button type="button" id="delete-category" data-id="<?= $id ?>" class="font-medium text-red-600 hover:underline ms-3">Ẩn</button>
+                                        <td class="px-6 py-4 truncate">
+                                            <p class="w-36 truncate">
+                                                <?= $material ?>
+                                            </p>
+                                        </td>
+                                        <td class="px-6 py-4 truncate">
+                                            <p class="w-24 truncate">
+                                                <?= $sold ?>
+                                            </p>
+                                        </td>
+                                        <td class="px-6 py-4 truncate">
+                                            <?= $created_at ?>
+                                        </td>
+                                        <td class="px-6 py-4 truncate">
+                                            <p class="w-24 truncate">
+                                                <?= $id_category ?>
+                                            </p>
+                                        </td>
+                                        <td class="flex items-center px-6 py-4 sticky right-0 bg-white border-l">
+                                            <a href="/admin?act=restore-product&id=<?= $id ?>" class="font-medium text-blue-600  hover:underline">Khôi phục</a>
                                         </td>
                                     </tr>
                                 <?php
@@ -82,8 +130,8 @@
                             </tbody>
                         </table>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
             <div id="overlay" class="hidden relative z-10 ease-out duration-300 opacity-0" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
                 <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -112,38 +160,23 @@
                     </div>
                 </div>
             </div>
-
         </main>
-        <script>
-            const checkboxAll = document.getElementById("checkbox-all-search");
-            const overlay = document.getElementById("overlay");
-            const content = document.getElementById("content");
-            const cancel = document.getElementById("cancel");
-            const agree = document.getElementById("agree");
-            const checkboxCategories = document.querySelectorAll("input[name='category-id[]']");
-            checkboxAll.onchange = () => checkboxCategories.forEach(ele => ele.checked = checkboxAll.checked);
-            const btnDeletes = document.querySelectorAll('#delete-category')
-            const btnDelete = document.querySelector('#delete-many')
-            const btnDeleteHidden = document.querySelector("button[name='delete-many']")
-            btnDeletes.forEach(item => {
-                item.onclick = (e) => {
-                    const link = "?act=delete-category&id=" + e.target.dataset.id;
-                    agree.href = link;
-                    overlay.classList.remove('hidden')
-                    overlay.classList.toggle('opacity-0')
-                    content.classList.toggle('opacity-0');
-                    content.classList.toggle('translate-y-4');
-                    content.classList.toggle('sm:translate-y-0');
-                    content.classList.toggle('sm:scale-95');
-                    content.classList.toggle('opacity-100');
-                    content.classList.toggle('translate-y-0');
-                    content.classList.toggle('sm:scale-100');
-                }
-            })
-            btnDelete.onclick = () => {
-                agree.onclick = () => {
-                    btnDeleteHidden.click()
-                }
+    </div>
+    <script>
+        const checkboxAll = document.getElementById("checkbox-all-search");
+        const overlay = document.getElementById("overlay");
+        const content = document.getElementById("content");
+        const cancel = document.getElementById("cancel");
+        const agree = document.getElementById("agree");
+        const checkboxProducts = document.querySelectorAll("input[name='product-id[]']");
+        const btnDelete = document.querySelector("#delete-many");
+        const btnDeleteHidden = document.querySelector("button[name='delete-many']");
+        checkboxAll.onchange = () => checkboxProducts.forEach(ele => ele.checked = checkboxAll.checked);
+        const btnDeletes = document.querySelectorAll('#delete-category')
+        btnDeletes.forEach(item => {
+            item.onclick = (e) => {
+                const link = "?act=delete-product&id=" + e.target.dataset.id;
+                agree.href = link;
                 overlay.classList.remove('hidden')
                 overlay.classList.toggle('opacity-0')
                 content.classList.toggle('opacity-0');
@@ -154,19 +187,33 @@
                 content.classList.toggle('translate-y-0');
                 content.classList.toggle('sm:scale-100');
             }
-            cancel.onclick = () => {
-                overlay.classList.toggle('hidden')
-                overlay.classList.toggle('opacity-0')
-                content.classList.toggle('opacity-0');
-                content.classList.toggle('translate-y-4');
-                content.classList.toggle('sm:translate-y-0');
-                content.classList.toggle('sm:scale-95');
-                content.classList.toggle('opacity-100');
-                content.classList.toggle('translate-y-0');
-                content.classList.toggle('sm:scale-100');
-            }
-        </script>
-    </div>
+        })
+        btnDelete.onclick = () => {
+            agree.onclick = () => {
+                btnDeleteHidden.click()
+            };
+            overlay.classList.remove('hidden')
+            overlay.classList.toggle('opacity-0')
+            content.classList.toggle('opacity-0');
+            content.classList.toggle('translate-y-4');
+            content.classList.toggle('sm:translate-y-0');
+            content.classList.toggle('sm:scale-95');
+            content.classList.toggle('opacity-100');
+            content.classList.toggle('translate-y-0');
+            content.classList.toggle('sm:scale-100');
+        }
+        cancel.onclick = () => {
+            overlay.classList.toggle('hidden')
+            overlay.classList.toggle('opacity-0')
+            content.classList.toggle('opacity-0');
+            content.classList.toggle('translate-y-4');
+            content.classList.toggle('sm:translate-y-0');
+            content.classList.toggle('sm:scale-95');
+            content.classList.toggle('opacity-100');
+            content.classList.toggle('translate-y-0');
+            content.classList.toggle('sm:scale-100');
+        }
+    </script>
 </body>
 
 </html>

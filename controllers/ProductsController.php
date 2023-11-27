@@ -16,7 +16,7 @@ function controller_product(Req $req)
     if (count($mater) <= 0) $strMaterial = '';
     $price['max'] = $max;
     $price['min'] = $min;
-    $categories = $req->categoriesService->findAll();
+    $categories = $req->categoriesService->getAll();
     $category = $req->categoriesService->findOne($id);
     $products_page = $req->productsService->getProductsByCategory($id, $page, $sort, $max, $min, $strMaterial);
     $products = $products_page['products'];
@@ -32,7 +32,14 @@ function controller_product(Req $req)
 
 function controller_detail_product(Req $req)
 {
+    $categories = $req->categoriesService->getAll();
+    $id = $_GET["id"];
+    if (!$id) error();
+    $productDetail = $req->productsService->getProductsDetail($id);
+    if (!$productDetail) error();
     if (isset($_POST['add-cart'])) {
+        $user = $_SESSION['user'];
+        if (!$user) header('location: ?act=login');
         $amount = $_POST['amount'];
         $idProduct = $_POST['product-detail'];
         $idCart = $_SESSION['user']['id_cart'];
@@ -43,9 +50,38 @@ function controller_detail_product(Req $req)
             header("location: ?" . $_SERVER['QUERY_STRING']);
         }
     }
-    $categories = $req->categoriesService->findAll();
-    $id = $_GET["id"];
-    if (!$id) error();
-    $productDetail = $req->productsService->getProductsDetail($id);
-    return view("detailProduct", ["categories" => $categories, "productDetail" => $productDetail]);
+    $review = false;
+    if (isset($_GET['review'])) {
+        $idReview = $_GET['review'];
+        $idUser = $_SESSION['user']['id'];
+        $productIds = $req->billsService->checkReview($idReview, $idUser);
+        if ($productIds) {
+            foreach ($productIds as $productId) {
+                extract($productId);
+                if ($id_product == $id && $status == 5) {
+                    $review = true;
+                }
+            }
+        }
+    }
+    return view("detailProduct", ["categories" => $categories, "productDetail" => $productDetail, 'isReview' => $review]);
+}
+
+function controller_review(Req $req)
+{
+    if (isset($_POST['btn-review'])) {
+        $content = $_POST['content'];
+        $stars = $_POST['stars'];
+        $created_at = date('Y-m-d');
+        $id_user = $_SESSION['user']['id'];
+        $id_product = $_POST['id-product'];
+        $req->reviewsService->insertOne([
+            'content' => $content,
+            'stars' => $stars,
+            'created_at' => $created_at,
+            'id_user' => $id_user,
+            'id_product' => $id_product,
+        ]);
+        header("location: ?act=product&id=$id_product");
+    }
 }

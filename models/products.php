@@ -4,14 +4,14 @@ class Products extends ServicePdo
     public function getSelling()
     {
         $dbName = $this->dbName;
-        $sql = "SELECT * FROM $dbName ORDER BY SOLD DESC LIMIT 0,9";
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false ORDER BY SOLD DESC LIMIT 0,9";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function getProductsLimit($page = 1)
     {
         $dbName = $this->dbName;
-        $limit = $page * 9;
-        $sql = "SELECT * FROM $dbName ORDER BY ID DESC LIMIT 0,$limit";
+        $limit = $page * 12;
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false ORDER BY ID DESC LIMIT 0,$limit";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function getProductsDetail($id)
@@ -19,6 +19,7 @@ class Products extends ServicePdo
         $dbName = $this->dbName;
         $sqlProduct = "SELECT * FROM CATEGORIES JOIN $dbName ON $dbName.id_category = CATEGORIES.ID WHERE $dbName.id = $id";
         $product = $this->pdo->query($sqlProduct)->fetch();
+        if (!$product) return $product;
         $sqlReviews = "SELECT * FROM REVIEWS JOIN USERS ON REVIEWS.ID_USER = USERS.ID  WHERE ID_PRODUCT = $id";
         $reviews = $this->pdo->query($sqlReviews)->fetchAll();
         $sqlImages = "SELECT IMAGES.image FROM $dbName JOIN PRODUCTS_DETAIL ON $dbName.ID = PRODUCTS_DETAIL.ID_PRODUCT JOIN IMAGES ON IMAGES.ID_PRODUCT_DETAIL = PRODUCTS_DETAIL.ID WHERE $dbName.ID = $id";
@@ -52,14 +53,14 @@ class Products extends ServicePdo
         if ($sort == 'price-asc') $sqlSort = 'PRICE ASC';
         if ($sort == 'price-desc') $sqlSort = 'PRICE DESC';
         if ($sort == 'discount') $sqlSort = '(ORIGIN_PRICE - PRICE) DESC ';
-        $sqlPage = "SELECT FLOOR(COUNT(ID) / 9) + 1 AS page  FROM $dbName WHERE ID_CATEGORY = $id";
+        $sqlPage = "SELECT FLOOR(COUNT(ID) / 9) + 1 AS page  FROM $dbName WHERE IS_DELETED = false AND ID_CATEGORY = $id";
         $countProduct = $this->pdo->query($sqlPage)->fetch();
         $productsByCategory = [];
         $productsByCategory['current_page'] = $page;
         $productsByCategory['page'] = $countProduct['page'];
         $limit = $page * 9;
         $minimum =  $limit  - 9;
-        $sql = "SELECT * FROM $dbName WHERE ID_CATEGORY = $id $sqlFilter ORDER BY $sqlSort LIMIT $minimum, $limit";
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND ID_CATEGORY = $id $sqlFilter ORDER BY $sqlSort LIMIT $minimum, $limit";
         $products = $this->pdo->query($sql)->fetchAll();
         $productsByCategory['products'] = $products;
         return $productsByCategory;
@@ -72,14 +73,14 @@ class Products extends ServicePdo
         if ($sort == 'price-asc') $sqlSort = 'PRICE ASC';
         if ($sort == 'price-desc') $sqlSort = 'PRICE DESC';
         if ($sort == 'discount') $sqlSort = '(ORIGIN_PRICE - PRICE) DESC';
-        $sqlPage = "SELECT FLOOR(COUNT(ID) / 9) + 1 AS page  FROM $dbName WHERE NAME_PRODUCT LIKE '%$keyword%'";
+        $sqlPage = "SELECT FLOOR(COUNT(ID) / 9) + 1 AS page  FROM $dbName WHERE IS_DELETED = false AND NAME_PRODUCT LIKE '%$keyword%'";
         $countProduct = $this->pdo->query($sqlPage)->fetch();
         $productsSearch = [];
         $productsSearch['current_page'] = $page;
         $productsSearch['page'] = $countProduct['page'];
         $limit = $page * 9;
         $minimum =  $limit  - 9;
-        $sql = "SELECT * FROM $dbName WHERE NAME_PRODUCT LIKE '%$keyword%' OR DESCRIPTION LIKE '%$keyword%' ORDER BY $sqlSort LIMIT $minimum, $limit";
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND NAME_PRODUCT LIKE '%$keyword%' OR DESCRIPTION LIKE '%$keyword%' ORDER BY $sqlSort LIMIT $minimum, $limit";
         $products = $this->pdo->query($sql)->fetchAll();
         $productsSearch['products'] = $products;
         return $productsSearch;
@@ -87,9 +88,9 @@ class Products extends ServicePdo
     public function getProductDetailInBill($id)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT name_product, price, code_color, color, image
+        $sql = "SELECT $dbName.ID as id, name_product, price, code_color, color, image
         FROM $dbName JOIN PRODUCTS_DETAIL ON PRODUCTS_DETAIL.ID_PRODUCT = $dbName.ID 
-        WHERE PRODUCTS_DETAIL.ID = $id";
+        WHERE $dbName.IS_DELETED = false AND PRODUCTS_DETAIL.ID = $id";
         return $this->pdo->query($sql)->fetch();
     }
 
@@ -98,9 +99,15 @@ class Products extends ServicePdo
         $dbName = $this->dbName;
         $sql = "SELECT max(PRICE) as max_price, min(PRICE) as min_price FROM $dbName WHERE ID_CATEGORY = $id";
         $result['price'] = $this->pdo->query($sql)->fetch();
-        $sqlMaterial = "SELECT DISTINCT material FROM $dbName WHERE ID_CATEGORY = $id";
+        $sqlMaterial = "SELECT DISTINCT material FROM $dbName WHERE $dbName.IS_DELETED = false AND ID_CATEGORY = $id";
         $result['material'] = $this->pdo->query($sqlMaterial)->fetchAll();
         return $result;
+    }
+    public function getAll($is_deleted = false)
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = '$is_deleted'";
+        return $this->pdo->query($sql)->fetchAll();
     }
     // ....
 }

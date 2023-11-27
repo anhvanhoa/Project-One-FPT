@@ -164,7 +164,7 @@
                     const getChartOptions = () => {
                         return {
                             series,
-                            colors: ["#1C64F2", "#16BDCA", "#9061F9"],
+                            colors: ["#1C64F2", "#16BDCA", "#9061F9", "#fcbf49", "#d62828", "#8338ec"],
                             labels,
                             chart: {
                                 height: 420,

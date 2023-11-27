@@ -6,6 +6,13 @@ function controller_accounts(Req $req)
     $accounts = $req->usersService->getAccountsByRole($user['role']);
     return viewAdmin('accounts', ['accounts' => $accounts, 'user' => $user]);
 }
+function controller_bin_account(Req $req)
+{
+    $idUser = $_SESSION['user']['id'];
+    $user = $req->usersService->findOne($idUser);
+    $accounts = $req->usersService->getAccountsByRole($user['role'], true);
+    return viewAdmin('store/accounts', ['accounts' => $accounts]);
+}
 function controller_detail_account(Req $req)
 {
     if (isset($_GET['id'])) {
@@ -77,6 +84,25 @@ function controller_delete_account(Req $req)
         }
         header('location: ?act=accounts');
     }
+}
+function controller_restore_account(Req $req)
+{
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        // $req->usersService->deleteOne($id);
+        // fix
+        $req->usersService->updateOne(['is_deleted' => false], $id);
+        //end fix
+        header('location: ?act=accounts');
+    }
+    // if (isset($_POST['delete-many'])) {
+    //     $ids = $_POST['user-id'];
+    //     foreach ($ids as $id) {
+    //         // $req->usersService->deleteOne($id);
+    //         $req->usersService->updateOne(['is_deleted' => true], $id);
+    //     }
+    //     header('location: ?act=accounts');
+    // }
 }
 
 function controller_logout(Req $req)

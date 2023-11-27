@@ -67,3 +67,18 @@ function controller_delete_category(Req $req)
         header('location: ?act=categories');
     }
 }
+function controller_restore_category(Req $req)
+{
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $req->categoriesService->updateOne(['is_deleted' => false], $id);
+        header('location: ?act=categories');
+    }
+    if (isset($_POST['delete-many'])) {
+        $ids = $_POST['category-id'];
+        foreach ($ids as $id) {
+            $req->categoriesService->updateOne(['is_deleted' => false], $id);
+        }
+        header('location: ?act=categories');
+    }
+}
