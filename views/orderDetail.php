@@ -15,7 +15,11 @@
     </div>
     <main class="mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-7xl lg:px-8">
         <div class="flex flex-col items-center border-b py-4 sm:flex-row bg-black/70 px-4 rounded-lg text-white">
-            <a href="#" class="text-xl font-semibold text-white">Mã đơn hàng: #<?= $bill['id'] ?></a>
+            <div>
+                <a href="#" class="text-lg font-semibold text-white">Mã đơn hàng: #<?= $bill['id'] ?></a>
+                <p class="text-sm">Thời gian bắt đầu: <?= $bill['date'] ?></p>
+                <p class="text-sm">Thời gian kết thúc: <?= $bill['end_date'] ?></p>
+            </div>
             <div class="mt-4 py-2 text-xs sm:mt-0 sm:ml-auto sm:text-base">
                 <div class="relative">
                     <ul class="relative flex w-full items-center justify-between space-x-2 sm:space-x-4">

@@ -74,7 +74,7 @@ function getStatus($status = 1)
         case 1:
             return [
                 'name' => 'Đặt hàng',
-                'color' => 'text-green-700 ring-green-600/20 bg-green-50',
+                'color' => 'text-sky-700 ring-sky-600/20 bg-sky-50',
             ];
         default:
             return [

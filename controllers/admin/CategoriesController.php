@@ -2,6 +2,9 @@
 function controller_categories(Req $req)
 {
     $categories = $req->categoriesService->getAll();
+    if (isset($_GET['q'])) {
+        $categories = $req->categoriesService->search($_GET['q']);
+    }
     return viewAdmin("categories", ['categories' => $categories]);
 }
 function controller_bin_categories(Req $req)

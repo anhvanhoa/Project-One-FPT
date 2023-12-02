@@ -13,8 +13,15 @@
     <div class="min-h-full">
         <?php include('partials/header.php') ?>
         <header class="bg-white shadow">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between">
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">Quản lý tài khoản</h1>
+                <div class="flex gap-4">
+                    <form action="">
+                        <input type="hidden" name='act' value="accounts" class="bg-gray-100 rounded-md px-2 py-2" placeholder="Tìn kiếm danh nục">
+                        <input type="search" name='q' class="bg-gray-100 rounded-md px-2 py-2" placeholder="Tìn kiếm tài khoản">
+                        <button type="submit" class="text-white bg-sky-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2">Tìm</button>
+                    </form>
+                </div>
             </div>
         </header>
         <main>
@@ -22,7 +29,8 @@
                 <form action="?act=delete-account" method="POST">
                     <div class="flex mb-4">
                         <a href="/admin?act=add-account" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thêm tài khoản</a>
-                        <button type="submit" name="delete-many" class="text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cấm</button>
+                        <button type="button" id="delete-many" class="text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cấm</button>
+                        <button type="submit" name="delete-many" class="hidden text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cấm</button>
                         <a href="?act=bin-accounts" class="text-white bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thùng rác</a>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -153,8 +161,10 @@
             const cancel = document.getElementById("cancel");
             const agree = document.getElementById("agree");
             const checkboxCategories = document.querySelectorAll("input[name='user-id[]']");
+            const btnDelete = document.querySelector("#delete-many");
             checkboxAll.onchange = () => checkboxCategories.forEach(ele => ele.checked = checkboxAll.checked);
             const btnDeletes = document.querySelectorAll('#delete')
+            const btnDeleteHidden = document.querySelector("button[name='delete-many']");
             btnDeletes.forEach(item => {
                 item.onclick = (e) => {
                     const link = "?act=delete-account&id=" + e.target.dataset.id;
@@ -170,6 +180,25 @@
                     content.classList.toggle('sm:scale-100');
                 }
             })
+            btnDelete.onclick = () => {
+                let isCheck = false;
+                checkboxCategories.forEach(ele => {
+                    if (ele.checked) isCheck = true;
+                });
+                if (!isCheck) return;
+                agree.onclick = () => {
+                    btnDeleteHidden.click()
+                };
+                overlay.classList.remove('hidden')
+                overlay.classList.toggle('opacity-0')
+                content.classList.toggle('opacity-0');
+                content.classList.toggle('translate-y-4');
+                content.classList.toggle('sm:translate-y-0');
+                content.classList.toggle('sm:scale-95');
+                content.classList.toggle('opacity-100');
+                content.classList.toggle('translate-y-0');
+                content.classList.toggle('sm:scale-100');
+            }
             cancel.onclick = () => {
                 overlay.classList.toggle('hidden')
                 overlay.classList.toggle('opacity-0')

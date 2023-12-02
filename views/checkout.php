@@ -42,7 +42,7 @@
                                             <span class="font-semibold"><?= $name_product ?></span>
                                             <span class="float-right text-gray-500 capitalize"><?= $color ?></span>
                                             <div class="flex justify-between">
-                                                <p class="text-lg font-semibold"><?= number_format($price, 0, '.', '.') ?> &#8363;</p>
+                                                <p class="text-lg font-semibold"><?= number_format($price * $amount_buy, 0, '.', '.') ?> &#8363;</p>
                                                 <p><?= $amount_buy ?></p>
                                             </div>
                                         </div>
@@ -96,9 +96,13 @@
                                 <button id="btn-code" class="w-1/5 rounded-md bg-gray-900 py-2 text-center font-medium text-white">Áp dụng</button>
                             </div>
                             <p class="ml-1 uppercase"><?= $cartUser['code'] ?></p>
+                            <p class="p-0.5 text-rose-500"><?= $error ?></p>
                             <div class="flex items-center justify-between mt-4">
                                 <p class="text-sm font-medium text-gray-900">Phương thức thanh toán:</p>
-                                <p class="font-semibold text-gray-900">Thanh toán khi nhận hàng</p>
+                                <select name="" id="" class="p-2 rounded-sm">
+                                    <option value="1">Thanh toán khi nhận hàng</option>
+                                    <option value="2">Chuyển khoản</option>
+                                </select>
                             </div>
                             <div class="mt-6 border-t border-b py-2">
                                 <div class="flex items-center justify-between">
@@ -129,7 +133,7 @@
                             <?php
                             }
                             ?>
-                            <button class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Đặt hàng</button>
+                            <button class="mt-4 mb-8 w-full rounded-md bg-sky-500 px-6 py-3 font-medium text-white">Đặt hàng</button>
                         </form>
                     </div>
                 </div>

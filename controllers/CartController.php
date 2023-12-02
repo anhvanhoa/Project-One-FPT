@@ -39,6 +39,7 @@ function controller_delete_cart(Req $req)
 }
 function controller_checkout(Req $req)
 {
+    $error = '';
     header('Cache-Control: no cache');
     $cartUser = [
         'total' => 0,
@@ -71,6 +72,9 @@ function controller_checkout(Req $req)
         if (isset($_GET['code-discount'])) {
             $code = $_GET['code-discount'];
             $voucher = $req->vouchersService->getVoucherByCode($code);
+            if (!$voucher) {
+                $error = "Mã giảm giá không hợp lệ";
+            }
             if ($voucher) {
                 $discount = $cartUser['total'] * $voucher['discount'] / 100;
                 $cartUser['total'] -= $discount;
@@ -80,7 +84,13 @@ function controller_checkout(Req $req)
             }
         }
     } else header('location: ?act=cart');
-    return view("checkout", ["categories" => $categories, 'user' => $user, 'products' => $products, 'cartUser' => $cartUser]);
+    return view("checkout", [
+        "categories" => $categories,
+        'user' => $user,
+        'products' => $products,
+        'cartUser' => $cartUser,
+        'error' => $error
+    ]);
 }
 
 function controller_success_order(Req $req)

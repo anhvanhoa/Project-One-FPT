@@ -12,19 +12,28 @@
 <body>
     <div class="min-h-full">
         <?php include('partials/header.php') ?>
-        <header class="bg-white shadow">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <header class="bg-white shadow ">
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex item-center justify-between">
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">Quản lý danh mục</h1>
+                <div class="flex gap-4">
+                    <form action="">
+                        <input type="hidden" name='act' value="categories" class="bg-gray-100 rounded-md px-2 py-2" placeholder="Tìn kiếm danh nục">
+                        <input type="search" name='q' class="bg-gray-100 rounded-md px-2 py-2" placeholder="Tìn kiếm danh nục">
+                        <button type="submit" class="text-white bg-sky-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2">Tìm</button>
+                    </form>
+                </div>
             </div>
         </header>
         <main>
             <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                 <form action="?act=delete-category" method="POST">
-                    <div class="flex mb-4">
-                        <a href="/admin?act=add-category" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thêm danh mục</a>
-                        <button type="button" id="delete-many" class="text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ẩn</button>
-                        <button type="submit" name="delete-many" class="hidden text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ẩn</button>
-                        <a href="?act=bin-categories" class="text-white bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thùng rác</a>
+                    <div class="flex justify-between mb-4">
+                        <div class="flex">
+                            <a href="/admin?act=add-category" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thêm danh mục</a>
+                            <button type="button" id="delete-many" class="text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ẩn</button>
+                            <button type="submit" name="delete-many" class="hidden text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ẩn</button>
+                            <a href="?act=bin-categories" class="text-white bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thùng rác</a>
+                        </div>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -141,6 +150,11 @@
                 }
             })
             btnDelete.onclick = () => {
+                let isCheck = false;
+                checkboxCategories.forEach(ele => {
+                    if (ele.checked) isCheck = true;
+                });
+                if (!isCheck) return;
                 agree.onclick = () => {
                     btnDeleteHidden.click()
                 }

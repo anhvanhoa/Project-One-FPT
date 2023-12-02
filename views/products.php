@@ -10,17 +10,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-100">
     <?php include('partials/header.php') ?>
     <div class="px-4 sm:px-6 lg:px-8 mx-auto max-w-7xl">
         <div style="background-image: url(/asset/images/<?= $typeProduct['image'] ?>);" class="bg-cover h-[400px] mt-4 rounded-xl bg-center"></div>
     </div>
-    <div class="bg-white">
+    <div class="bg-gray-100">
         <div>
             <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
                 <div class="fixed inset-0 bg-black bg-opacity-25"></div>
                 <div class="fixed inset-0 z-40 flex">
-                    <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+                    <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto py-4 pb-12 shadow-xl">
                         <div class="flex items-center justify-between px-4">
                             <h2 class="text-lg font-medium text-gray-900">Filters</h2>
                             <button type="button" class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400">
@@ -145,7 +145,7 @@
                             <div class="border-t border-gray-200 px-4 py-6">
                                 <h3 class="-mx-2 -my-3 flow-root">
                                     <!-- Expand/collapse section button -->
-                                    <button type="button" class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-2" aria-expanded="false">
+                                    <button type="button" class="flex w-full items-center justify-between px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-2" aria-expanded="false">
                                         <span class="font-medium text-gray-900">Size</span>
                                         <span class="ml-6 flex items-center">
                                             <!-- Expand icon, show/hide based on section open state. -->
@@ -226,7 +226,7 @@
                                 <div class="border-b border-gray-200 py-6">
                                     <h3 class="-my-3 flow-root">
                                         <!-- Expand/collapse section button -->
-                                        <button type="button" class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">
+                                        <button type="button" class="flex w-full items-center justify-between text-base py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">
                                             <span class="font-medium text-gray-900">Giá</span>
                                         </button>
                                     </h3>
@@ -235,12 +235,12 @@
                                         <div class="space-y-4">
                                             <div class="flex gap-x-4 items-center">
                                                 <p class="w-1/12">Từ</p>
-                                                <input min="<?= $price['min_price'] ?>" value="<?= $price['min'] ?>" name="price-min" class="bg-gray-100 pl-2 rounded-md py-1" type="number" placeholder="5.000.000">
+                                                <input min="<?= $price['min_price'] ?>" value="<?= $price['min'] ?>" name="price-min" class="bg-white pl-2 rounded-md py-1" type="number" placeholder="5.000.000">
                                                 &#8363;
                                             </div>
                                             <div class="flex gap-x-4 items-center">
                                                 <p class="w-1/12">Đến</p>
-                                                <input max="<?= $price['max_price'] ?>" value="<?= $price['max'] ?>" name="price-max" class="bg-gray-100 pl-2 rounded-md py-1" type="number" placeholder="8.000.000">
+                                                <input max="<?= $price['max_price'] ?>" value="<?= $price['max'] ?>" name="price-max" class="bg-white pl-2 rounded-md py-1" type="number" placeholder="8.000.000">
                                                 &#8363;
                                             </div>
                                         </div>
@@ -248,7 +248,7 @@
                                 </div>
                                 <div class="border-b border-gray-200 py-6">
                                     <h3 class="-my-3 flow-root">
-                                        <button type="button" class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-1" aria-expanded="false">
+                                        <button type="button" class="flex w-full items-center justify-between text-base py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-1" aria-expanded="false">
                                             <span class="font-medium text-gray-900">Vật liệu</span>
                                         </button>
                                     </h3>
@@ -276,24 +276,18 @@
 
                         <!-- Product grid -->
                         <div class="lg:col-span-3">
-                            <div class="bg-white">
+                            <div class="">
                                 <div class="mx-auto max-w-2xl px-4 py-6 sm:px-6 lg:max-w-7xl">
                                     <h2 class="sr-only">Products</h2>
                                     <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
+                                        <!-- <?php
+                                                // foreach ($products as $product) {
+                                                //     extract($product);
+                                                ?>
                                         <?php
-                                        foreach ($products as $product) {
-                                            extract($product);
-                                        ?>
-                                            <a href="?act=product&id=<?= $id ?>" class="group">
-                                                <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                                                    <img src="/asset/images/<?= $thumbnail ?>" />
-                                                </div>
-                                                <h3 class="mt-4 text-sm text-gray-700"><?= $name_product ?></h3>
-                                                <p class="mt-1 text-lg font-medium text-gray-900"><?= number_format($price, 0, '.', '.') ?> &#8363;</p>
-                                            </a>
-                                        <?php
-                                        }
-                                        ?>
+                                        // }
+                                        ?> -->
+                                        <?php include('components/product.php') ?>
                                     </div>
                                 </div>
                             </div>
@@ -310,7 +304,7 @@
                             trang
                         </p>
                     </div>
-                    <div class="flex item-center">
+                    <div class="flex item-center bg-white">
                         <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                             <a href="/?act=products&id=<?= $_GET['id'] ?>&page=<?= $products_page['current_page'] - 1 ?>" class="<?= $products_page['current_page'] == 1 ? 'pointer-events-none' : '' ?> relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                                 <span class="sr-only">Previous</span>

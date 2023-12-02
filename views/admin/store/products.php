@@ -22,19 +22,11 @@
                 <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
                     <div class="flex mb-4">
                         <a href="/admin?act=add-product" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Thêm sản phẩm</a>
-                        <button type="button" id="delete-many" class="text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ẩn</button>
-                        <button type="submit" name="delete-many" class="hidden text-white bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Ẩn</button>
                     </div>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                                 <tr>
-                                    <th scope="col" class="p-4">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded focus:ring-blue-500  ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2  border-gray-600">
-                                            <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                                        </div>
-                                    </th>
                                     <th scope="col" class="px-6 py-3">
                                         Id
                                     </th>
@@ -76,12 +68,6 @@
                                     extract($product);
                                 ?>
                                     <tr class="bg-white hover:bg-gray-50 ">
-                                        <td class="w-4 p-4">
-                                            <div class="flex items-center">
-                                                <input value="<?= $id ?>" name="product-id[]" id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded focus:ring-blue-500  ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2  border-gray-600">
-                                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                            </div>
-                                        </td>
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             <?= $id ?>
                                         </th>
@@ -162,7 +148,7 @@
             </div>
         </main>
     </div>
-    <script>
+    <!-- <script>
         const checkboxAll = document.getElementById("checkbox-all-search");
         const overlay = document.getElementById("overlay");
         const content = document.getElementById("content");
@@ -213,7 +199,7 @@
             content.classList.toggle('translate-y-0');
             content.classList.toggle('sm:scale-100');
         }
-    </script>
+    </script> -->
 </body>
 
 </html>

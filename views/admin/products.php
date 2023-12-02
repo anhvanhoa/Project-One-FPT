@@ -13,8 +13,15 @@
     <div class="min-h-full">
         <?php include('partials/header.php') ?>
         <header class="bg-white shadow">
-            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex items-center justify-between">
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">Quản lý sản phẩm</h1>
+                <div class="flex gap-4">
+                    <form action="">
+                        <input type="hidden" name='act' value="products" class="bg-gray-100 rounded-md px-2 py-2" placeholder="Tìn kiếm danh nục">
+                        <input type="search" name='q' class="bg-gray-100 rounded-md px-2 py-2" placeholder="Tìn kiếm sản phẩm">
+                        <button type="submit" class="text-white bg-sky-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2">Tìm</button>
+                    </form>
+                </div>
             </div>
         </header>
         <main>
@@ -123,7 +130,7 @@
                                         </td>
                                         <td class="flex items-center px-6 py-4 sticky right-0 bg-white border-l">
                                             <a href="/admin?act=edit-product&id=<?= $id ?>" class="font-medium text-blue-600  hover:underline">Sửa</a>
-                                            <button type="button" id="delete-category" data-id="<?= $id ?>" class="font-medium text-red-600 hover:underline ms-3">Xóa</button>
+                                            <button type="button" id="delete-category" data-id="<?= $id ?>" class="font-medium text-red-600 hover:underline ms-3">Ẩn</button>
                                         </td>
                                     </tr>
                                 <?php
@@ -191,6 +198,11 @@
             }
         })
         btnDelete.onclick = () => {
+            let isCheck = false;
+            checkboxProducts.forEach(ele => {
+                if (ele.checked) isCheck = true;
+            });
+            if (!isCheck) return;
             agree.onclick = () => {
                 btnDeleteHidden.click()
             };

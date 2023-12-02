@@ -9,10 +9,13 @@ class Bills extends  ServicePdo
         $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER WHERE DATE > '$date' ORDER BY STATUS";
         return $this->pdo->query($sql)->fetchAll();
     }
-    public function getAll()
+    public function getAll($status = '')
     {
+        if ($status || $status == 0) {
+            $status = "WHERE STATUS = '$status'";
+        }
         $dbName = $this->dbName;
-        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER ORDER BY $dbName.ID DESC";
+        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER $status ORDER BY $dbName.ID DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function getDetail($id)
@@ -21,10 +24,13 @@ class Bills extends  ServicePdo
         $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER WHERE $dbName.ID = $id";
         return $this->pdo->query($sql)->fetch();
     }
-    public function getBillByUser($id)
+    public function getBillByUser($id, $status = '')
     {
+        if ($status || $status == 0) {
+            $status = "AND STATUS = '$status'";
+        }
         $dbName = $this->dbName;
-        $sql = "SELECT * FROM $dbName WHERE ID_USER = $id ORDER BY ID DESC";
+        $sql = "SELECT * FROM $dbName WHERE ID_USER = $id $status ORDER BY ID DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function checkReview($idBill, $idUser)
@@ -45,6 +51,35 @@ class Bills extends  ServicePdo
             }
         }
         return $productIds;
+    }
+    public function search($q)
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER WHERE DATE LIKE '%$q%' ORDER BY $dbName.ID DESC";
+        return $this->pdo->query($sql)->fetchAll();
+    }
+    public function analyticMoneyMonth()
+    {
+        $month = date('m');
+        $year = date('Y');
+        $dbName = $this->dbName;
+        $sql = "SELECT DATE(end_date) AS ngay, SUM(total) AS doanh_thu
+        FROM $dbName
+        WHERE MONTH(date) = '$month' AND YEAR(date) = '$year' AND STATUS = 5
+        GROUP BY ngay";
+        return $this->pdo->query($sql)->fetchAll();
+    }
+    public function analyticMoney()
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT id, total FROM $dbName WHERE STATUS = 5";
+        return $this->pdo->query($sql)->fetchAll();
+    }
+    public function analyticMoneyToday()
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT id, total FROM $dbName WHERE DATE(END_DATE) = DATE(NOW()) AND STATUS = 5";
+        return $this->pdo->query($sql)->fetchAll();
     }
     // handle
 }

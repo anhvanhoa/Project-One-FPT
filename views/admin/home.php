@@ -16,7 +16,7 @@
         <?php include('partials/header.php') ?>
         <header class="bg-white shadow">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Tổng quan</h1>
             </div>
         </header>
         <main>
@@ -136,69 +136,14 @@
                             </table>
                         </div>
                     </div>
-                    <div class="max-w-sm w-full bg-white rounded-lg shadow p-4 md:p-6">
-                        <div class="flex justify-between items-start w-full">
-                            <div class="flex-col items-center">
-                                <div class="flex items-center mb-1">
-                                    <h5 class="text-xl font-bold leading-none text-gray-900 me-1">Thống kê sản phẩm theo danh mục</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Line Chart -->
-                        <div class="py-6" id="pie-chart"></div>
+                    <div>
+                        <h2 class="text-xl font-bold">Thống kê</h2>
+                        <p class="mt-2 hover:text-indigo-500"><a href="?act=analytic-revenue">Thống kê doanh thu</a></p>
+                        <p class="mt-2 hover:text-indigo-500"><a href="?act=analytic-product">Thống kê sản phẩm</a></p>
+                        <p class="mt-2 hover:text-indigo-500"><a href=""></a></p>
                     </div>
                 </div>
             </div>
-            <script>
-                // ApexCharts options and config
-                const series = [],
-                    labels = [];
-                <?php
-                foreach ($analyticCategory as $analytic) {
-                    $count = $analytic['count_product'];
-                    $label = $analytic['name_category'];
-                    echo "series.push($count); labels.push('$label');";
-                }
-                ?>
-                window.addEventListener("load", function() {
-                    const getChartOptions = () => {
-                        return {
-                            series,
-                            colors: ["#1C64F2", "#16BDCA", "#9061F9", "#fcbf49", "#d62828", "#8338ec"],
-                            labels,
-                            chart: {
-                                height: 420,
-                                width: "100%",
-                                type: "pie",
-                            },
-                            stroke: {
-                                colors: ["white"]
-                            },
-                            dataLabels: {
-                                enabled: true,
-                                style: {
-                                    fontFamily: "Inter, sans-serif",
-                                },
-                            },
-                            legend: {
-                                position: "bottom",
-                                fontFamily: "Inter, sans-serif",
-                            },
-                            yaxis: {
-                                labels: {
-                                    formatter: function(value) {
-                                        return value + " Sản phẩm"
-                                    },
-                                },
-                            },
-                        }
-                    }
-                    if (document.getElementById("pie-chart") && typeof ApexCharts !== 'undefined') {
-                        const chart = new ApexCharts(document.getElementById("pie-chart"), getChartOptions());
-                        chart.render();
-                    }
-                });
-            </script>
         </main>
     </div>
 </body>

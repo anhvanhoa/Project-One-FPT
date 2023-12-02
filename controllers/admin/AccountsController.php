@@ -4,6 +4,9 @@ function controller_accounts(Req $req)
     $idUser = $_SESSION['user']['id'];
     $user = $req->usersService->findOne($idUser);
     $accounts = $req->usersService->getAccountsByRole($user['role']);
+    if (isset($_GET['q'])) {
+        $accounts = $req->usersService->search($_GET['q']);
+    }
     return viewAdmin('accounts', ['accounts' => $accounts, 'user' => $user]);
 }
 function controller_bin_account(Req $req)

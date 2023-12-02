@@ -6,6 +6,7 @@ include("../controllers/admin/CategoriesController.php");
 include("../controllers/admin/AccountsController.php");
 include("../controllers/admin/BillsController.php");
 include("../controllers/admin/VouchersController.php");
+include("../controllers/admin/AnalyticsController.php");
 
 
 $routes = [
@@ -37,5 +38,7 @@ $routes = [
     route('vouchers', "controller_vouchers"),
     route('add-voucher', "controller_add_voucher"),
     route('edit-voucher', "controller_edit_voucher"),
+    route('analytic-revenue', "controller_analytic_revenue"),
+    route('analytic-product', "controller_analytic_product"),
     // route('logout', "controller_logout"),
 ];

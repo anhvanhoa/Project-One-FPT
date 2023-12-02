@@ -5,7 +5,7 @@ class Users extends  ServicePdo
     public function login($email, $password)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT * FROM $dbName WHERE EMAIL = '$email' AND PASSWORD = '$password'";
+        $sql = "SELECT * FROM $dbName WHERE EMAIL = '$email' AND PASSWORD = '$password' AND IS_DELETED = false";
         $user = $this->pdo->query($sql)->fetch();
         if ($user) {
             $idUser = $user['id'];
@@ -65,6 +65,12 @@ class Users extends  ServicePdo
         $dbName = $this->dbName;
         if ($role == 1) $sql = "SELECT * FROM $dbName WHERE ROLE = 0";
         if ($role == 2)  $sql = "SELECT * FROM $dbName WHERE ROLE <> $role AND IS_DELETED = '$isDeleted' ORDER BY ROLE DESC";
+        return $this->pdo->query($sql)->fetchAll();
+    }
+    public function search($q)
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND FULL_NAME LIKE '%$q%' OR TELL LIKE '%$q%' OR EMAIL LIKE '%$q%'";
         return $this->pdo->query($sql)->fetchAll();
     }
     // handle

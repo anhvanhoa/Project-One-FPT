@@ -24,11 +24,17 @@
                     <div class="flex justify-between p-6 shadow-md my-3 bg-white">
                         <div>
                             <span class="font-semibold mr-1">Trạng thái:</span>
-                            <span><?= getStatus($bill['status'])['name'] ?></span>
+                            <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus($bill['status'])['color'] ?>"><?= getStatus($bill['status'])['name'] ?></span>
                         </div>
-                        <div>
-                            <a href="?act=status&id=<?= $bill['id'] ?>&status=<?= $bill['status'] + 1 ?>" class="text-blue-600 font-semibold <?= $bill['status'] == 0 || $bill['status'] == 5 ? 'hidden' : '' ?>">Cập nhập</a>
-                            <a href="?act=status&id=<?= $bill['id'] ?>&status=0" class="text-red-600 font-semibold ml-2 <?= $bill['status'] != 1 ? 'hidden' : '' ?>">Hủy</a>
+                        <div class="flex">
+                            <div class="<?= $bill['status'] == 0 || $bill['status'] == 5 ? 'hidden' : '' ?>">
+                                <a href="?act=status&id=<?= $bill['id'] ?>&status=<?= $bill['status'] + 1 ?>" class="text-blue-600 font-semibold">Cập nhập -> </a>
+                                <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset"><?= getStatus($bill['status'] + 1)['name'] ?></span>
+                            </div>
+                            <div class="<?= $bill['status'] != 1 ||  $bill['status'] == 5 ? 'hidden' : '' ?>">
+                                <span class="mx-3"> ||</span>
+                                <a href="?act=status&id=<?= $bill['id'] ?>&status=0" class="text-red-600 font-semibold ml-2">Hủy</a>
+                            </div>
                         </div>
                     </div>
                     <article class="shadow-none md:shadow-md md:rounded-md overflow-hidden">
@@ -57,7 +63,7 @@
                                             </div>
                                             <div>
                                                 <p class="font-medium text-sm text-gray-400"> Thời gian kết thúc </p>
-                                                <p> 57 630 182 446 </p>
+                                                <p> <?= $bill['end_date'] ?> </p>
                                             </div>
                                         </div>
                                     </div>

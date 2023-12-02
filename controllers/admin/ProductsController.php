@@ -2,6 +2,9 @@
 function controller_products(Req $req)
 {
     $products = $req->productsService->getAll();
+    if (isset($_GET['q'])) {
+        $products = $req->productsService->search($_GET['q']);
+    }
     return viewAdmin("products", ['products' => $products]);
 }
 function controller_bin_products(Req $req)
@@ -38,7 +41,7 @@ function controller_add_products(Req $req)
 }
 function controller_add_product_detail(Req $req)
 {
-    $product = $_SESSION['product'];
+    $product = isset($_SESSION['product']) ? $_SESSION['product'] : [];
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
     if ($id) $product = $req->productsService->findOne($id);
     if (!$product) header('location: ?act=products');

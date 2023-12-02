@@ -13,8 +13,19 @@
     <div class="bg-white flex flex-col min-h-screen">
         <?php include('partials/header.php') ?>
         <main class="flex-1">
-            <div class="bg-white mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div class="bg-white mx-auto max-w-2xl px-4 py-10 sm:px-6 lg:max-w-7xl lg:px-8 mt-10">
                 <h1 class="text-2xl font-semibold">Danh sách đơn hàng</h1>
+                <div class="flex items-center">
+                    <p class="text-xl pt-0.5 mr-2">Trạng thái</p>
+                    <nav>
+                        <a href="?act=orders&status=0" class="mt-3 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus(0)['color'] ?>"><?= getStatus(0)['name'] ?></a>
+                        <a href="?act=orders&status=1" class="mt-3 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus(1)['color'] ?>"><?= getStatus(1)['name'] ?></a>
+                        <a href="?act=orders&status=2" class="mt-3 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus(2)['color'] ?>"><?= getStatus(2)['name'] ?></a>
+                        <a href="?act=orders&status=3" class="mt-3 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus(3)['color'] ?>"><?= getStatus(3)['name'] ?></a>
+                        <a href="?act=orders&status=4" class="mt-3 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus(4)['color'] ?>"><?= getStatus(4)['name'] ?></a>
+                        <a href="?act=orders&status=5" class="mt-3 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus(5)['color'] ?>"><?= getStatus(5)['name'] ?></a>
+                    </nav>
+                </div>
                 <?php
                 if (count($bills) == 0) {
                 ?>

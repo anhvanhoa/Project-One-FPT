@@ -56,7 +56,7 @@
                 <div class="ml-4 flex lg:ml-0">
                     <a href="/">
                         <span class="sr-only">Your Company</span>
-                        <img class="h-9 sm:h-11 w-auto rounded-sm" src="/asset/images/logo.jpg" alt="" />
+                        <img class="h-9 sm:h-11 w-auto rounded-md" src="/asset/images/logo.jpg" alt="" />
                     </a>
                 </div>
 
@@ -98,6 +98,7 @@
                                 <a href="?act=account" class="text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Tài khoản</a>
                                 <a href="?act=change-password" class="text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Đổi mật khẩu</a>
                                 <a href="?act=orders" class="text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Đơn hàng</a>
+                                <a href="/admin" class="<?= $_SESSION['user']['role'] == 1 || $_SESSION['user']['role'] == 2 ? '' : 'hidden' ?> text-gray-700 hover:bg-gray-50 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Quản trị</a>
                                 <form method="POST" action="?act=logout" role="none">
                                     <button name="logout" type="submit" class="text-red-500 hover:bg-red-50 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Đăng xuất</button>
                                 </form>

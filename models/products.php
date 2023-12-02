@@ -28,7 +28,8 @@ class Products extends ServicePdo
         $productDetails = $this->pdo->query($sqlProductDetails)->fetchAll();
         $sqlStars = "SELECT AVG(STARS) avg_star FROM REVIEWS WHERE ID_PRODUCT = $id";
         $avgStar = $this->pdo->query($sqlStars)->fetch();
-        $sqlProductSuggests = "SELECT * FROM PRODUCTS WHERE ID <> $id AND ID_CATEGORY = " . $product['id_category'];
+        $idCate = $product['id_category'];
+        $sqlProductSuggests = "SELECT * FROM PRODUCTS WHERE ID <> $id AND ID_CATEGORY = $idCate AND IS_DELETED = false";
         $productSuggests = $this->pdo->query($sqlProductSuggests)->fetchAll();
         $product['reviews'] = $reviews;
         $product['avg_star'] = $avgStar['avg_star'];
@@ -43,7 +44,7 @@ class Products extends ServicePdo
         $dbName = $this->dbName;
         $sqlFilter = '';
         if ($max && $min) {
-            $sqlFilter .= "AND PRICE BETWEEN $min AND $max";
+            $sqlFilter .= "AND PRICE BETWEEN $min AND $max ";
         }
         if ($material) {
             $sqlFilter .= "AND MATERIAL IN ($material)";
@@ -60,7 +61,7 @@ class Products extends ServicePdo
         $productsByCategory['page'] = $countProduct['page'];
         $limit = $page * 9;
         $minimum =  $limit  - 9;
-        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND ID_CATEGORY = $id $sqlFilter ORDER BY $sqlSort LIMIT $minimum, $limit";
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND ID_CATEGORY = $id $sqlFilter AND AMOUNT > 0 ORDER BY $sqlSort LIMIT $minimum, $limit";
         $products = $this->pdo->query($sql)->fetchAll();
         $productsByCategory['products'] = $products;
         return $productsByCategory;
@@ -107,6 +108,18 @@ class Products extends ServicePdo
     {
         $dbName = $this->dbName;
         $sql = "SELECT * FROM $dbName WHERE IS_DELETED = '$is_deleted'";
+        return $this->pdo->query($sql)->fetchAll();
+    }
+    public function search($q)
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND NAME_PRODUCT LIKE '%$q%'";
+        return $this->pdo->query($sql)->fetchAll();
+    }
+    function analyticSold()
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false ORDER BY SOLD DESC LIMIT 0,5";
         return $this->pdo->query($sql)->fetchAll();
     }
     // ....
