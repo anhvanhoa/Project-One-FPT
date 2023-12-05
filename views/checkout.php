@@ -99,7 +99,7 @@
                             <p class="p-0.5 text-rose-500"><?= $error ?></p>
                             <div class="flex items-center justify-between mt-4">
                                 <p class="text-sm font-medium text-gray-900">Phương thức thanh toán:</p>
-                                <select name="" id="" class="p-2 rounded-sm">
+                                <select name="" id="methodPayment" class="p-2 rounded-sm">
                                     <option value="1">Thanh toán khi nhận hàng</option>
                                     <option value="2">Chuyển khoản</option>
                                 </select>
@@ -142,6 +142,7 @@
         <?php include('partials/footer.php') ?>
     </div>
     <script>
+        const methodPayment = document.querySelector("#methodPayment");
         const inputCode = document.querySelector("#code-discount");
         const formCheckout = document.querySelector("#form-checkout");
         const btn = document.querySelector("#btn-code");
@@ -157,6 +158,10 @@
         const stickyBanner = document.querySelector('#sticky-banner'),
             messageError2 = stickyBanner.querySelector('#message-error');
         orderForm.onsubmit = (e) => {
+            e.preventDefault()
+            if (methodPayment.value == 2) {
+                location.href = ""
+            };
             let isCheck = false
             required.forEach(item => {
                 if (!item.value) isCheck = true;

@@ -31,7 +31,7 @@
                         <div class="col-span-full">
                             <label for="photo" class="block text-sm font-medium leading-6 text-gray-900">Hình ảnh</label>
                             <div class="mt-6 flex items-center gap-x-3">
-                                <img id="avatar-user" src="/asset/images/<?= $user['avatar'] ? $user['avatar'] : 'avatar-default.jpg' ?>" class="w-16 aspect-square rounded-[50%]" alt="">
+                                <img id="avatar-user" src="/asset/images/<?= $user['avatar'] ? $user['avatar'] : 'avatar-default.jpg' ?>" class="w-16 aspect-square rounded-[50%] object-cover" alt="">
                                 <label for="avatar" class="cursor-pointer rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                                     Thay đổi
                                     <input accept="image/*" type="file" name="avatar" hidden id="avatar">
@@ -46,7 +46,7 @@
                         <div class="sm:col-span-3">
                             <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Họ & Tên</label>
                             <div class="mt-2">
-                                <input required max="200" value="<?= $user['full_name'] ?>" type="text" name="full-name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
+                                <input required maxlength="100" value="<?= $user['full_name'] ?>" type="text" name="full-name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
                             </div>
                         </div>
                         <div class="sm:col-span-3">
@@ -58,19 +58,19 @@
                         <div class="sm:col-span-4">
                             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
                             <div class="mt-2">
-                                <input value="<?= $user['email'] ?>" name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
+                                <input maxlength="50" value="<?= $user['email'] ?>" name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
                             </div>
                         </div>
                         <div class="sm:col-span-4">
                             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Số điện thoại</label>
                             <div class="mt-2">
-                                <input required value="<?= $user['tell'] ?>" max="11" name="tell" type="text" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
+                                <input required maxlength="15" value="<?= $user['tell'] ?>" name="tell" type="text" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
                             </div>
                         </div>
                         <div class="col-span-full">
                             <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Địa chỉ</label>
                             <div class="mt-2">
-                                <input required value="<?= $user['address'] ?>" type="text" name="address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
+                                <input maxlength="255" required value="<?= $user['address'] ?>" type="text" name="address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
                             </div>
                         </div>
                     </div>

@@ -49,7 +49,7 @@ class Products extends ServicePdo
         if ($material) {
             $sqlFilter .= "AND MATERIAL IN ($material)";
         }
-        $sqlSort = 'ID DESC';
+        $sqlSort = "$dbName.ID DESC";
         if ($sort == 'selling') $sqlSort = 'SOLD DESC';
         if ($sort == 'price-asc') $sqlSort = 'PRICE ASC';
         if ($sort == 'price-desc') $sqlSort = 'PRICE DESC';
@@ -61,7 +61,7 @@ class Products extends ServicePdo
         $productsByCategory['page'] = $countProduct['page'];
         $limit = $page * 9;
         $minimum =  $limit  - 9;
-        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND ID_CATEGORY = $id $sqlFilter AND AMOUNT > 0 ORDER BY $sqlSort LIMIT $minimum, $limit";
+        $sql = "SELECT DISTINCT $dbName.* FROM $dbName JOIN PRODUCTS_DETAIL ON $dbName.ID = PRODUCTS_DETAIL.ID_PRODUCT WHERE IS_DELETED = false AND ID_CATEGORY = $id $sqlFilter AND PRODUCTS_DETAIL.AMOUNT > 0 ORDER BY $sqlSort LIMIT $minimum, $limit";
         $products = $this->pdo->query($sql)->fetchAll();
         $productsByCategory['products'] = $products;
         return $productsByCategory;

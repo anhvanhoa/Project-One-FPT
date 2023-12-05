@@ -14,13 +14,17 @@ function controller_bin_products(Req $req)
 }
 function controller_add_products(Req $req)
 {
+    $error = '';
+    if (isset($_GET['error'])) {
+        $error = $_GET['error'];
+    }
     $categories = $req->categoriesService->getAll();
     if (isset($_POST['add-product'])) {
         $name_product = $_POST['name-product'];
         $price = $_POST['price'];
         $origin_price = $_POST['origin-price'];
         $material = $_POST['material'];
-        $created_at = $_POST['date'];
+        $created_at = date('Y-m-d');
         $id_category = $_POST['id-category'];
         $description = $_POST['description'];
         $thumbnail = $_FILES['thumbnail'];
@@ -37,28 +41,43 @@ function controller_add_products(Req $req)
         $_SESSION['product'] = $product;
         header('location: ?act=add-detail-product');
     }
-    return viewAdmin("addProduct", ['categories' => $categories]);
+    return viewAdmin("addProduct", ['categories' => $categories, 'error' => $error]);
 }
 function controller_add_product_detail(Req $req)
 {
+    $error = '';
     $product = isset($_SESSION['product']) ? $_SESSION['product'] : [];
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
     if ($id) $product = $req->productsService->findOne($id);
     if (!$product) header('location: ?act=products');
     if (isset($_POST['add-product']) || isset($_POST['save&add-new'])) {
-        $productDetail = [
-            'amount' => $_POST['amount'],
-            'size' => $_POST['size'],
-            'color' => $_POST['color'],
-            'code_color' => $_POST['code-color'],
-            'image' => uploadImage($_FILES['image']),
-            'id_product' => null,
-        ];
+        $image = uploadImage($_FILES['image']);
+        if (!$image[0] && $_FILES['image']['name']) {
+            $error = $image[1];
+            return viewAdmin("addProductDetail", ['pro' => $product, 'error' => $error]);
+        } else {
+            $productDetail = [
+                'amount' => $_POST['amount'],
+                'size' => $_POST['size'],
+                'color' => $_POST['color'],
+                'code_color' => $_POST['code-color'],
+                'image' => $image[1],
+                'id_product' => null,
+            ];
+        }
     }
     if (isset($_POST['add-product'])) {
         if (!$id) {
-            $product['thumbnail'] = uploadImage($product['thumbnail']);
-            $id = $req->productsService->insertOne($product);
+            $thumbnail = uploadImage($product['thumbnail']);
+            if (!$thumbnail[0] && $product['thumbnail']['name']) {
+                $error = $thumbnail[1];
+                header("location: ?act=add-product&error=$error");
+                return;
+            } else {
+                $product['thumbnail'] = $thumbnail[1];
+                $id = $req->productsService->insertOne($product);
+                return;
+            }
         }
         $productDetail['id_product'] = $id;
         header("location: ?act=add-detail-product&id=$id");
@@ -75,8 +94,16 @@ function controller_add_product_detail(Req $req)
     }
     if (isset($_POST['save&add-new'])) {
         if (!$id) {
-            $product['thumbnail'] = uploadImage($product['thumbnail']);
-            $id = $req->productsService->insertOne($product);
+            $thumbnail = uploadImage($product['thumbnail']);
+            if (!$thumbnail[0] && $product['thumbnail']['name']) {
+                $error = $thumbnail[1];
+                header("location: ?act=add-product&error=$error");
+                return;
+            } else {
+                $product['thumbnail'] = $thumbnail[1];
+                $id = $req->productsService->insertOne($product);
+                return;
+            }
         }
         $productDetail['id_product'] = $id;
         $idDetail =  $req->productsDetailService->insertOne($productDetail);
@@ -90,10 +117,11 @@ function controller_add_product_detail(Req $req)
         $_SESSION['product'] = null;
         header("location: ?act=add-detail-product&id=$id");
     }
-    return viewAdmin("addProductDetail", ['pro' => $product]);
+    return viewAdmin("addProductDetail", ['pro' => $product, 'error' => $error]);
 }
 function controller_edit_products(Req $req)
 {
+    $error = '';
     $id = $_GET['id'];
     if (!$id) error();
     $categories = $req->categoriesService->getAll();
@@ -104,30 +132,37 @@ function controller_edit_products(Req $req)
         $price = $_POST['price'];
         $origin_price = $_POST['origin-price'];
         $material = $_POST['material'];
-        $created_at = $_POST['date'];
+        // $created_at = $_POST['date'];
         $id_category = $_POST['id-category'];
         $description = $_POST['description'];
-        $thumbnail = uploadImage($_FILES['thumbnail']) ? uploadImage($_FILES['thumbnail']) : $product['thumbnail'];
-        $productNew = [
-            'name_product' => $name_product,
-            'price' => $price,
-            'origin_price' => $origin_price,
-            'material' => $material,
-            'description' => $description,
-            'id_category' => $id_category,
-            'thumbnail' => $thumbnail,
-        ];
-        $isSuccess = $req->productsService->updateOne($productNew, $id);
-        header('location: ?act=products');
+        $isImage = uploadImage($_FILES['thumbnail']);
+        if (!$isImage[0] && $_FILES['thumbnail']['name']) {
+            $error = $isImage[1];
+        } else {
+            $thumbnail = $isImage[0] ? $isImage[1] : $product['thumbnail'];
+            $productNew = [
+                'name_product' => $name_product,
+                'price' => $price,
+                'origin_price' => $origin_price,
+                'material' => $material,
+                'description' => $description,
+                'id_category' => $id_category,
+                'thumbnail' => $thumbnail,
+            ];
+            $isSuccess = $req->productsService->updateOne($productNew, $id);
+            header('location: ?act=products');
+        }
     }
     return viewAdmin("editProduct", [
         'product' => $product,
         'categories' => $categories,
-        'productsDetail' => $productsDetail
+        'productsDetail' => $productsDetail,
+        'error' => $error
     ]);
 }
 function controller_edit_product_detail(Req $req)
 {
+    $error = '';
     $id = $_GET['id'];
     $idPro = $_GET['id-pro'];
     if (!$id || !$idPro) header('location: ?act=products');
@@ -135,34 +170,40 @@ function controller_edit_product_detail(Req $req)
     $productDetail = $req->productsDetailService->findOne($id);
     $images = $req->imagesService->getAll($id);
     if (isset($_POST['update-product'])) {
-        $productDetail = [
-            'amount' => $_POST['amount'],
-            'size' => $_POST['size'],
-            'color' => $_POST['color'],
-            'code_color' => $_POST['code-color'],
-            'image' => uploadImage($_FILES['image']) ? uploadImage($_FILES['image']) : $productDetail['image'],
-            'id_product' => $product['id'],
-        ];
-        $isSuccess = $req->productsDetailService->updateOne($productDetail, $id);
-        $listImage = uploadImageMultiple($_FILES['images']);
-        if ($listImage) {
-            foreach ($listImage as $image) {
-                $req->imagesService->insertOne([
-                    'image' => $image,
-                    'id_product_detail' => $id,
-                ]);
+        $image = uploadImage($_FILES['image']);
+        if (!$image[0] && $_FILES['image']['name']) {
+            $error = $image[1];
+        } else {
+            $productDetail = [
+                'amount' => $_POST['amount'],
+                'size' => $_POST['size'],
+                'color' => $_POST['color'],
+                'code_color' => $_POST['code-color'],
+                'image' => $image[0] ? $image[1] : $productDetail['image'],
+                'id_product' => $product['id'],
+            ];
+            $isSuccess = $req->productsDetailService->updateOne($productDetail, $id);
+            $listImage = uploadImageMultiple($_FILES['images']);
+            if ($listImage) {
+                foreach ($listImage as $image) {
+                    $req->imagesService->insertOne([
+                        'image' => $image,
+                        'id_product_detail' => $id,
+                    ]);
+                }
+                foreach ($images as $image) {
+                    extract($image);
+                    $req->imagesService->deleteOne($id_product_detail);
+                }
             }
-            foreach ($images as $image) {
-                extract($image);
-                $req->imagesService->deleteOne($id_product_detail);
-            }
+            header('location: ?act=products');
         }
-        header('location: ?act=products');
     }
     return viewAdmin("editProductDetail", [
         'pro' => $product,
         'productDetail' => $productDetail,
-        'listImage' => $images
+        'listImage' => $images,
+        'error' => $error
     ]);
 }
 function controller_delete_products(Req $req)

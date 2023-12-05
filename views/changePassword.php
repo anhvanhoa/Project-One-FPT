@@ -30,17 +30,17 @@
                         <div class="sm:col-span-4">
                             <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Mật khẩu hiện tại</label>
                             <div class="mt-2">
-                                <input required type="password" name="pass-current" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
+                                <input maxlength="50" required type="password" name="pass-current" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
                             </div>
                         </div>
                         <div class="sm:col-span-4">
-                            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Mật khẩu mới</label>
+                            <label for="email" maxlength="50" class="block text-sm font-medium leading-6 text-gray-900">Mật khẩu mới</label>
                             <div class="mt-2">
                                 <input required name="pass" type="password" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
                             </div>
                         </div>
                         <div class="sm:col-span-4">
-                            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Nhập lại mật khẩu</label>
+                            <label for="email" maxlength="50" class="block text-sm font-medium leading-6 text-gray-900">Nhập lại mật khẩu</label>
                             <div class="mt-2">
                                 <input required name="pass-confirm" type="password" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
                             </div>

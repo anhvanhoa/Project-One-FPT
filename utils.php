@@ -9,25 +9,38 @@ function checkTypeImage($type)
     return strstr($type, 'image');
 }
 
+function checkSize($size)
+{
+    $mb = $size / (1024 * 1024);
+    if ($mb > 4) return false;
+    return true;
+}
+
 function uploadImage($file)
 {
     $name = $file['name'];
     $tmp = $file['tmp_name'];
     $path = dirname(__FILE__) . "/asset/images/";
     $isType = checkTypeImage($file['type']);
-    if (!$isType) return false;
+    if (!$isType) return [false, "Định dạng file không đúng."];
+    if (!checkSize($file['size'])) return [false, 'File không vượt quá 4MB'];
     $isSuccess = move_uploaded_file($tmp, $path . $name);
     // return $isSuccess ? $name : '';
-    return $name;
+    return [true, $name];
 }
 
 function uploadImageMultiple($files)
 {
     $names = $files['name'];
     $tmp_names = $files['tmp_name'];
+    $types = $files['type'];
+    $sizes = $files['size'];
     $linkImages = [];
     foreach ($names as $i => $name) {
         $tmp = $tmp_names[$i];
+        $isType = checkTypeImage($types[$i]);
+        if (!$isType) return false;
+        // if (!checkSize($sizes[$i])) return false;
         $path = dirname(__FILE__) . "/asset/images/";
         $isSuccess = move_uploaded_file($tmp, $path . $name);
         if ($isSuccess) array_push($linkImages, $name);

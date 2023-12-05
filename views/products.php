@@ -280,13 +280,6 @@
                                 <div class="mx-auto max-w-2xl px-4 py-6 sm:px-6 lg:max-w-7xl">
                                     <h2 class="sr-only">Products</h2>
                                     <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8">
-                                        <!-- <?php
-                                                // foreach ($products as $product) {
-                                                //     extract($product);
-                                                ?>
-                                        <?php
-                                        // }
-                                        ?> -->
                                         <?php include('components/product.php') ?>
                                     </div>
                                 </div>

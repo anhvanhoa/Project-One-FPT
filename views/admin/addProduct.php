@@ -19,6 +19,14 @@
         </header>
         <main>
             <div class="mx-auto px-4 max-w-6xl py-6 sm:px-6 lg:px-8">
+                <div id="alert-border-2" class="<?= $error ? 'flex' : 'hidden' ?> items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50" role="alert">
+                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <div class="ms-3 text-sm font-medium">
+                        <?= $error ?>
+                    </div>
+                </div>
                 <form action="?act=add-product" method="POST" enctype="multipart/form-data">
                     <div class="space-y-12">
                         <div class="border-b border-gray-900/10 pb-12">
@@ -28,33 +36,33 @@
                                         <div class="sm:col-span-3">
                                             <label class="block text-sm font-medium leading-6 text-gray-900">Tên sản phẩm</label>
                                             <div class="mt-2">
-                                                <input required type="text" name="name-product" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input maxlength="255" required type="text" name="name-product" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                         <div class="sm:col-span-3">
                                             <label class="block text-sm font-medium leading-6 text-gray-900">Giá bán</label>
                                             <div class="mt-2">
-                                                <input required type="number" name="price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input min="1" required type="number" name="price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                         <div class="sm:col-span-3">
                                             <label class="block text-sm font-medium leading-6 text-gray-900">Giá gốc</label>
                                             <div class="mt-2">
-                                                <input required type="number" name="origin-price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input min="1" required type="number" name="origin-price" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
                                         <div class="sm:col-span-3">
                                             <label class="block text-sm font-medium leading-6 text-gray-900">Vật liệu</label>
                                             <div class="mt-2">
-                                                <input required type="text" name="material" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
+                                                <input maxlength="100" required type="text" name="material" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
                                         </div>
-                                        <div class="sm:col-span-3">
+                                        <!-- <div class="sm:col-span-3">
                                             <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Ngày đăng</label>
                                             <div class="mt-2">
                                                 <input required type="date" name="date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2">
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="sm:col-span-3">
                                             <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Danh mục</label>
                                             <div class="mt-2">

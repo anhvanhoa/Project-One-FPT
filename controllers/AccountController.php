@@ -12,8 +12,11 @@ function controller_account(Req $req)
         $tell = $_POST['tell'];
         $address = $_POST['address'];
         $image = uploadImage($_FILES['avatar']);
-        if (!$image) $error = 'Định dạng file không đúng.';
-        $isSuccess = $req->usersService->update($image, $email, $birthday, $fullName, $address, $tell, $idUser);
+        if (!$image[0] && $_FILES['avatar']['name']) {
+            $error = $image[1];
+            $image[1] = $user['avatar'];
+        }
+        $isSuccess = $req->usersService->update($image[1], $email, $birthday, $fullName, $address, $tell, $idUser);
         if ($isSuccess) {
             $count_cart = $_SESSION['user']['count_cart'];
             $id_cart = $_SESSION['user']['id_cart'];
@@ -103,7 +106,11 @@ function controller_change_pass(Req $req)
             $isSuccess = $req->usersService->changePass($passNew, $idUser);
             if ($isSuccess) {
                 $_SESSION['user'] = $req->usersService->findOne($idUser);
+                $count_cart = $_SESSION['user']['count_cart'];
+                $id_cart = $_SESSION['user']['id_cart'];
                 header('location: /');
+                $_SESSION['user']['id_cart'] =  $id_cart;
+                $_SESSION['user']['count_cart'] =  $count_cart;
             } else $error = 'Không thành công !!';
         }
     }
