@@ -1,5 +1,5 @@
 <?php
-class Bills extends  ServicePdo
+class Bills extends ServicePdo
 {
     public function getAllToday()
     {

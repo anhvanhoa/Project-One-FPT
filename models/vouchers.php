@@ -1,5 +1,5 @@
 <?php
-class Vouchers extends  ServicePdo
+class Vouchers extends ServicePdo
 {
     public function getVouchersNew($limit = 4)
     {
@@ -10,7 +10,7 @@ class Vouchers extends  ServicePdo
     public function getVoucherByCode($code)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT * FROM $dbName WHERE CODE = '$code' AND END > DATE(NOW())";
+        $sql = "SELECT * FROM $dbName WHERE CODE = '$code' AND END >= DATE(NOW())";
         return $this->pdo->query($sql)->fetch();
     }
     // handle

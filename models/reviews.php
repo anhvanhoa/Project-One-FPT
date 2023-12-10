@@ -1,5 +1,5 @@
 <?php
-class Reviews extends  ServicePdo
+class Reviews extends ServicePdo
 {
     // handle
 }

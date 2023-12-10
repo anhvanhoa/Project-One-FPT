@@ -1,5 +1,5 @@
 <?php
-class ProductsBill extends  ServicePdo
+class ProductsBill extends ServicePdo
 {
     public function getProductsByBill($idBill)
     {

@@ -14,7 +14,8 @@
     <div class="">
         <?php include('partials/header.php') ?>
         <main>
-            <div id="sticky-banner" tabindex="-1" class="hidden border-orange-400 bg-orange-100 fixed bottom-0 start-0 z-50 justify-between w-full p-4 border-t">
+            <div id="sticky-banner" tabindex="-1"
+                class="hidden border-orange-400 bg-orange-100 fixed bottom-0 start-0 z-50 justify-between w-full p-4 border-t">
                 <div class="flex items-center mx-auto">
                     <p class="flex items-center text-base text-orange-600 font-semibold">
                         <span id="message-error"></span>
@@ -36,7 +37,7 @@
                                         <ul role="list" class="-my-6 divide-y divide-gray-200">
                                             <?php if (count($carts) == 0) { ?>
                                                 <h4 class="py-8 text-center text-red-600 font-semibold">Giỏi hàng trống</h4>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                             <div class="grid grid-cols-6 items-center py-6 gap-6 font-semibold text-lg">
@@ -49,37 +50,62 @@
                                             <?php
                                             foreach ($carts as $cart) {
                                                 extract($cart);
-                                            ?>
-                                                <li class="grid grid-cols-6 items-center py-6 gap-6">
+                                                ?>
+                                                <li
+                                                    class="grid grid-cols-6 items-center py-6 gap-6 <?= $amount == 0 ? 'pointer-events-none opacity-50 select-none' : '' ?>">
                                                     <div class="flex col-span-2">
-                                                        <p class="hidden"><?= $price * $amount_buy ?></p>
-                                                        <input id="checkbox-<?= $id ?>" type="checkbox" name="id-cart-detail[]" value="<?= $id ?>" class="mr-4 w-4" />
-                                                        <input type="checkbox" hidden name="amount-buy[]" value="<?= $amount_buy ?>" />
-                                                        <label for="checkbox-<?= $id ?>" class="h-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                            <img src="/asset/images/<?= $image ?>" alt="<?= $name_product ?>" class="h-full w-full aspect-square object-contain object-center" />
+                                                        <p class="hidden">
+                                                            <?= $price * $amount_buy ?>
+                                                        </p>
+                                                        <input id="checkbox-<?= $id ?>" type="checkbox"
+                                                            name="id-cart-detail[]" value="<?= $id ?>" class="mr-4 w-4" />
+                                                        <input type="checkbox" hidden name="amount-buy[]"
+                                                            value="<?= $amount_buy ?>" />
+                                                        <label for="checkbox-<?= $id ?>"
+                                                            class="h-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                                            <img src="/asset/images/<?= $image ?>"
+                                                                alt="<?= $name_product ?>"
+                                                                class="h-full w-full aspect-square object-contain object-center" />
                                                         </label>
                                                         <h3 class="ml-2 flex-1 text-lg font-semibold">
-                                                            <a href="#"><?= $name_product ?></a>
+                                                            <a href="#">
+                                                                <?= $name_product ?>
+                                                            </a>
                                                         </h3>
                                                     </div>
                                                     <div class="flex pt-1 gap-1">
-                                                        <p class="mt-1 text-sm w-4 h-4 rounded-lg" style="background-color: <?= $code_color ?>;"></p>
-                                                        <p class="text-sm capitalize"><?= $color ?></p>
+                                                        <p class="mt-1 text-sm w-4 h-4 rounded-lg"
+                                                            style="background-color: <?= $code_color ?>;"></p>
+                                                        <p class="text-sm capitalize">
+                                                            <?= $color ?>
+                                                        </p>
                                                     </div>
-                                                    <div class="bg-gray-100 mt-2 rounded-md text-sm px-1 py-0.5 max-w-[150px] grid grid-cols-3">
-                                                        <input min="1" max="<?= $amount ?>" id='amount' class="pl-1" type="number" value="<?= $amount_buy ?>">
-                                                        <a data-id="<?= $id ?>" href="#" class="col-span-2 text-center text-gray-600 cursor-pointer hover:text-indigo-600 p-1">
+                                                    <div
+                                                        class="bg-gray-100 mt-2 rounded-md text-sm px-1 py-0.5 max-w-[150px] grid grid-cols-3">
+                                                        <input <?= $amount == 0 ? 'disabled' : '' ?> min="1"
+                                                            max="<?= $amount ?>" id='amount' class="pl-1" type="number"
+                                                            value="<?= $amount_buy ?>">
+                                                        <a data-id="<?= $id ?>" href="#"
+                                                            class="col-span-2 text-center text-gray-600 cursor-pointer hover:text-indigo-600 p-1">
                                                             Xác nhận
                                                         </a>
+                                                        <p
+                                                            class="col-span-2 text-[10px] <?= $amount_buy > $amount ? '' : 'hidden' ?>">
+                                                            Chỉ còn
+                                                            <?= $amount ?> sản phẩm
+                                                        </p>
                                                     </div>
                                                     <div class="flex justify-between text-base font-medium text-gray-900">
-                                                        <p class=""><?= number_format($price * $amount_buy, 0, '.', '.') ?> &#8363;</p>
+                                                        <p class="">
+                                                            <?= number_format($price * $amount_buy, 0, '.', '.') ?> &#8363;
+                                                        </p>
                                                     </div>
-                                                    <a href="?act=delete-cart&id=<?= $id ?>" class="px-2 font-medium text-red-600 hover:text-red-400">
+                                                    <a href="?act=delete-cart&id=<?= $id ?>"
+                                                        class="px-2 font-medium text-red-600 hover:text-red-400">
                                                         Xóa
                                                     </a>
                                                 </li>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                         </ul>
@@ -92,7 +118,8 @@
                                         <p>Tổng tiền</p>
                                         <p><span id="total">0</span> &#8363;</p>
                                     </div>
-                                    <p class="mt-0.5 text-sm text-gray-500">Vận chuyển và thuế được tính khi thanh toán.</p>
+                                    <p class="mt-0.5 text-sm text-gray-500">Vận chuyển và thuế được tính khi thanh toán.
+                                    </p>
                                     <div class="flex justify-end text-center text-sm text-gray-500">
                                         <a href="/" class="font-medium text-sky-500 hover:text-sky-600">
                                             Tiếp tục mua sắm
@@ -101,8 +128,11 @@
                                     </div>
                                 </div>
                                 <div id="action" class="flex gap-5 pointer-events-none opacity-70">
-                                    <button name="btn-delete" type="submit" class="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700">Xóa</button>
-                                    <button name="btn-checkout" type="submit" class="flex flex-1 items-center justify-center rounded-md border border-transparent bg-sky-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-sky-600">Thanh toán</button>
+                                    <button name="btn-delete" type="submit"
+                                        class="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700">Xóa</button>
+                                    <button name="btn-checkout" type="submit"
+                                        class="flex flex-1 items-center justify-center rounded-md border border-transparent bg-sky-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-sky-600">Thanh
+                                        toán</button>
                                 </div>
                             </div>
                         </form>

@@ -69,21 +69,22 @@ function controller_checkout(Req $req)
             array_push($products, $product);
             $cartUser['total_sub'] = $cartUser['total'] += $product['price'] * $listAmount[$i];
         }
-        if (isset($_GET['code-discount'])) {
-            $code = $_GET['code-discount'];
-            $voucher = $req->vouchersService->getVoucherByCode($code);
-            if (!$voucher) {
-                $error = "Mã giảm giá không hợp lệ";
-            }
-            if ($voucher) {
-                $discount = $cartUser['total'] * $voucher['discount'] / 100;
-                $cartUser['total'] -= $discount;
-                $cartUser['code'] = $code;
-                $cartUser['discount'] = $discount;
-                $cartUser['id_voucher'] = $voucher['id'];
-            }
+    } else
+        header('location: ?act=cart');
+    if (isset($_GET['code-discount'])) {
+        $code = $_GET['code-discount'];
+        $voucher = $req->vouchersService->getVoucherByCode($code);
+        if (!$voucher) {
+            $error = "Mã giảm giá không hợp lệ";
         }
-    } else header('location: ?act=cart');
+        if ($voucher) {
+            $discount = $cartUser['total'] * $voucher['discount'] / 100;
+            $cartUser['total'] -= $discount;
+            $cartUser['code'] = $code;
+            $cartUser['discount'] = $discount;
+            $cartUser['id_voucher'] = $voucher['id'];
+        }
+    }
     return view("checkout", [
         "categories" => $categories,
         'user' => $user,
@@ -114,7 +115,8 @@ function controller_success_order(Req $req)
             unset($info[$key]);
         } elseif ($key == 'id_voucher') {
             $info[$key] = json_decode($_POST[$key]);
-        } else $info[$key] = $_POST[$key];
+        } else
+            $info[$key] = $_POST[$key];
     }
     $idBill = $req->billsService->insertOne($info);
     if ($idBill) {

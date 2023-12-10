@@ -1,5 +1,5 @@
 <?php
-class Users extends  ServicePdo
+class Users extends ServicePdo
 {
 
     public function login($email, $password)
@@ -19,7 +19,8 @@ class Users extends  ServicePdo
             }
             $user['id_cart'] = $cartUser['id'];
         }
-        if ($user && $user['email'] === $email && $password === $user['password']) return $user;
+        if ($user && $user['email'] === $email && $password === $user['password'])
+            return $user;
         return false;
     }
     public function register($email, $password, $fullName)
@@ -36,8 +37,10 @@ class Users extends  ServicePdo
     {
         $dbName = $this->dbName;
         $sql = '';
-        if ($type == "email") $sql = "SELECT ID FROM $dbName WHERE EMAIL = '$emailOrTell'";
-        if ($type == "tell") $sql = "SELECT ID FROM $dbName WHERE TELL = '$emailOrTell'";
+        if ($type == "email")
+            $sql = "SELECT ID FROM $dbName WHERE EMAIL = '$emailOrTell'";
+        if ($type == "tell")
+            $sql = "SELECT ID FROM $dbName WHERE TELL = '$emailOrTell'";
         $result = $this->pdo->query($sql)->fetch();
         return is_array($result) ? true : false;
     }
@@ -49,9 +52,12 @@ class Users extends  ServicePdo
         $user = $this->pdo->query($sql)->fetch();
         $avatar = $image ? ",AVATAR = '$image'" : '';
         $sqlUpdate = "UPDATE $dbName SET EMAIL = '$email', BIRTHDAY = '$birthday', FULL_NAME = '$fullName', TELL = '$tell', ADDRESS = '$address' $avatar WHERE ID = $idUser";
-        if (!$user) return $this->pdo->prepare($sqlUpdate)->fetch();
-        if ($user['id'] != $idUser) return false;
-        else return $this->pdo->prepare($sqlUpdate)->execute();
+        if (!$user)
+            return $this->pdo->prepare($sqlUpdate)->fetch();
+        if ($user['id'] != $idUser)
+            return false;
+        else
+            return $this->pdo->prepare($sqlUpdate)->execute();
     }
 
     public function changePass($pass, $id)
@@ -63,8 +69,10 @@ class Users extends  ServicePdo
     public function getAccountsByRole($role = 1, $isDeleted = false)
     {
         $dbName = $this->dbName;
-        if ($role == 1) $sql = "SELECT * FROM $dbName WHERE ROLE = 0";
-        if ($role == 2)  $sql = "SELECT * FROM $dbName WHERE ROLE <> $role AND IS_DELETED = '$isDeleted' ORDER BY ROLE DESC";
+        if ($role == 1)
+            $sql = "SELECT * FROM $dbName WHERE ROLE = 0";
+        if ($role == 2)
+            $sql = "SELECT * FROM $dbName WHERE ROLE <> $role AND IS_DELETED = '$isDeleted' ORDER BY ROLE DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function search($q)
@@ -72,6 +80,12 @@ class Users extends  ServicePdo
         $dbName = $this->dbName;
         $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND FULL_NAME LIKE '%$q%' OR TELL LIKE '%$q%' OR EMAIL LIKE '%$q%'";
         return $this->pdo->query($sql)->fetchAll();
+    }
+    public function findByEmail(string $email)
+    {
+        $dbName = $this->dbName;
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND EMAIL = '$email'";
+        return $this->pdo->query($sql)->fetch();
     }
     // handle
 }

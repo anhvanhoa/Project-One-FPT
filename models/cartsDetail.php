@@ -1,5 +1,5 @@
 <?php
-class CartsDetail extends  ServicePdo
+class CartsDetail extends ServicePdo
 {
     public function addCart($idProduct, $idCart, $amountBuy)
     {

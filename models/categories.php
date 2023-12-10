@@ -1,5 +1,5 @@
 <?php
-class Categories extends  ServicePdo
+class Categories extends ServicePdo
 {
     public function getAll($is_deleted = false)
     {

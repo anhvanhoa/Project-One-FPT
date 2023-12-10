@@ -48,8 +48,10 @@ function controller_add_product_detail(Req $req)
     $error = '';
     $product = isset($_SESSION['product']) ? $_SESSION['product'] : [];
     $id = isset($_GET['id']) ? $_GET['id'] : 0;
-    if ($id) $product = $req->productsService->findOne($id);
-    if (!$product) header('location: ?act=products');
+    if ($id)
+        $product = $req->productsService->findOne($id);
+    if (!$product)
+        header('location: ?act=products');
     if (isset($_POST['add-product']) || isset($_POST['save&add-new'])) {
         $image = uploadImage($_FILES['image']);
         if (!$image[0] && $_FILES['image']['name']) {
@@ -81,7 +83,7 @@ function controller_add_product_detail(Req $req)
         }
         $productDetail['id_product'] = $id;
         header("location: ?act=add-detail-product&id=$id");
-        $idDetail =  $req->productsDetailService->insertOne($productDetail);
+        $idDetail = $req->productsDetailService->insertOne($productDetail);
         $listImage = uploadImageMultiple($_FILES['images']);
         foreach ($listImage as $image) {
             $req->imagesService->insertOne([
@@ -106,7 +108,7 @@ function controller_add_product_detail(Req $req)
             }
         }
         $productDetail['id_product'] = $id;
-        $idDetail =  $req->productsDetailService->insertOne($productDetail);
+        $idDetail = $req->productsDetailService->insertOne($productDetail);
         $listImage = uploadImageMultiple($_FILES['images']);
         foreach ($listImage as $image) {
             $req->imagesService->insertOne([
@@ -123,7 +125,8 @@ function controller_edit_products(Req $req)
 {
     $error = '';
     $id = $_GET['id'];
-    if (!$id) error();
+    if (!$id)
+        error();
     $categories = $req->categoriesService->getAll();
     $product = $req->productsService->findOne($id);
     $productsDetail = $req->productsDetailService->getAllProduct($id);
@@ -165,7 +168,8 @@ function controller_edit_product_detail(Req $req)
     $error = '';
     $id = $_GET['id'];
     $idPro = $_GET['id-pro'];
-    if (!$id || !$idPro) header('location: ?act=products');
+    if (!$id || !$idPro)
+        header('location: ?act=products');
     $product = $req->productsService->findOne($idPro);
     $productDetail = $req->productsDetailService->findOne($id);
     $images = $req->imagesService->getAll($id);
@@ -243,4 +247,16 @@ function controller_restore_products(Req $req)
         }
     }
     header("location: ?act=products");
+}
+function controller_image(Req $req)
+{
+    if (isset($_GET['id-img']) && $_GET['id-img']) {
+        $id = $_GET['id-img'];
+        $req->imagesService->deleteOne($id);
+        $idDetail = $_GET['id'];
+        $idPro = $_GET['id-pro'];
+        header("location: ?act=edit-detail-product&id=$idDetail&id-pro=$idPro");
+    } else {
+        header("location: ?act=");
+    }
 }

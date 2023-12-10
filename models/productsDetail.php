@@ -1,5 +1,5 @@
 <?php
-class ProductDetail extends  ServicePdo
+class ProductDetail extends ServicePdo
 {
     public function getAllProduct($idProduct)
     {

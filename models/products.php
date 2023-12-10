@@ -19,7 +19,8 @@ class Products extends ServicePdo
         $dbName = $this->dbName;
         $sqlProduct = "SELECT * FROM CATEGORIES JOIN $dbName ON $dbName.id_category = CATEGORIES.ID WHERE $dbName.id = $id";
         $product = $this->pdo->query($sqlProduct)->fetch();
-        if (!$product) return $product;
+        if (!$product)
+            return $product;
         $sqlReviews = "SELECT * FROM REVIEWS JOIN USERS ON REVIEWS.ID_USER = USERS.ID  WHERE ID_PRODUCT = $id";
         $reviews = $this->pdo->query($sqlReviews)->fetchAll();
         $sqlImages = "SELECT IMAGES.image FROM $dbName JOIN PRODUCTS_DETAIL ON $dbName.ID = PRODUCTS_DETAIL.ID_PRODUCT JOIN IMAGES ON IMAGES.ID_PRODUCT_DETAIL = PRODUCTS_DETAIL.ID WHERE $dbName.ID = $id";
@@ -50,17 +51,21 @@ class Products extends ServicePdo
             $sqlFilter .= "AND MATERIAL IN ($material)";
         }
         $sqlSort = "$dbName.ID DESC";
-        if ($sort == 'selling') $sqlSort = 'SOLD DESC';
-        if ($sort == 'price-asc') $sqlSort = 'PRICE ASC';
-        if ($sort == 'price-desc') $sqlSort = 'PRICE DESC';
-        if ($sort == 'discount') $sqlSort = '(ORIGIN_PRICE - PRICE) DESC ';
+        if ($sort == 'selling')
+            $sqlSort = 'SOLD DESC';
+        if ($sort == 'price-asc')
+            $sqlSort = 'PRICE ASC';
+        if ($sort == 'price-desc')
+            $sqlSort = 'PRICE DESC';
+        if ($sort == 'discount')
+            $sqlSort = '(ORIGIN_PRICE - PRICE) DESC ';
         $sqlPage = "SELECT FLOOR(COUNT(ID) / 9) + 1 AS page  FROM $dbName WHERE IS_DELETED = false AND ID_CATEGORY = $id";
         $countProduct = $this->pdo->query($sqlPage)->fetch();
         $productsByCategory = [];
         $productsByCategory['current_page'] = $page;
         $productsByCategory['page'] = $countProduct['page'];
         $limit = $page * 9;
-        $minimum =  $limit  - 9;
+        $minimum = $limit - 9;
         $sql = "SELECT DISTINCT $dbName.* FROM $dbName JOIN PRODUCTS_DETAIL ON $dbName.ID = PRODUCTS_DETAIL.ID_PRODUCT WHERE IS_DELETED = false AND ID_CATEGORY = $id $sqlFilter AND PRODUCTS_DETAIL.AMOUNT > 0 ORDER BY $sqlSort LIMIT $minimum, $limit";
         $products = $this->pdo->query($sql)->fetchAll();
         $productsByCategory['products'] = $products;
@@ -70,17 +75,21 @@ class Products extends ServicePdo
     {
         $dbName = $this->dbName;
         $sqlSort = 'ID DESC';
-        if ($sort == 'selling') $sqlSort = 'SOLD DESC';
-        if ($sort == 'price-asc') $sqlSort = 'PRICE ASC';
-        if ($sort == 'price-desc') $sqlSort = 'PRICE DESC';
-        if ($sort == 'discount') $sqlSort = '(ORIGIN_PRICE - PRICE) DESC';
+        if ($sort == 'selling')
+            $sqlSort = 'SOLD DESC';
+        if ($sort == 'price-asc')
+            $sqlSort = 'PRICE ASC';
+        if ($sort == 'price-desc')
+            $sqlSort = 'PRICE DESC';
+        if ($sort == 'discount')
+            $sqlSort = '(ORIGIN_PRICE - PRICE) DESC';
         $sqlPage = "SELECT FLOOR(COUNT(ID) / 9) + 1 AS page  FROM $dbName WHERE IS_DELETED = false AND NAME_PRODUCT LIKE '%$keyword%'";
         $countProduct = $this->pdo->query($sqlPage)->fetch();
         $productsSearch = [];
         $productsSearch['current_page'] = $page;
         $productsSearch['page'] = $countProduct['page'];
         $limit = $page * 9;
-        $minimum =  $limit  - 9;
+        $minimum = $limit - 9;
         $sql = "SELECT * FROM $dbName WHERE IS_DELETED = false AND NAME_PRODUCT LIKE '%$keyword%' OR DESCRIPTION LIKE '%$keyword%' ORDER BY $sqlSort LIMIT $minimum, $limit";
         $products = $this->pdo->query($sql)->fetchAll();
         $productsSearch['products'] = $products;

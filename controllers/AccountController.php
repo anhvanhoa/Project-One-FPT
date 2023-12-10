@@ -1,4 +1,7 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 function controller_account(Req $req)
 {
     $error = '';
@@ -21,8 +24,8 @@ function controller_account(Req $req)
             $count_cart = $_SESSION['user']['count_cart'];
             $id_cart = $_SESSION['user']['id_cart'];
             $user = $_SESSION['user'] = $req->usersService->findOne($idUser);
-            $_SESSION['user']['count_cart'] =  $count_cart;
-            $_SESSION['user']['id_cart'] =  $id_cart;
+            $_SESSION['user']['count_cart'] = $count_cart;
+            $_SESSION['user']['id_cart'] = $id_cart;
         }
     }
     return view("account", ["categories" => $categories, 'user' => $user, 'error' => $error]);
@@ -40,7 +43,8 @@ function controller_login(Req $req)
             $user['count_cart'] = $countCart[0];
             $_SESSION['user'] = $user;
             header('location: /');
-        } else $error = 'Email hoặc mật khẩu không đúng !';
+        } else
+            $error = 'Email hoặc mật khẩu không đúng !';
     }
     return view("login", ['error' => $error]);
 }
@@ -52,11 +56,14 @@ function controller_register(Req $req)
         $fullName = $_POST['full-name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $confirmPassword  = $_POST['confirm-password'];
-        if ($password != $confirmPassword) $error = 'xác nhận mật khẩu không chính xác !';
+        $confirmPassword = $_POST['confirm-password'];
+        if ($password != $confirmPassword)
+            $error = 'xác nhận mật khẩu không chính xác !';
         $uniqueEmail = $req->usersService->uniqueEmailOrTell($email);
-        if ($uniqueEmail) $error = 'Email đã tồn tại !';
-        if (strlen($password) < 6) $error = 'Mật khẩu phải lớn hơn 6 ký tự';
+        if ($uniqueEmail)
+            $error = 'Email đã tồn tại !';
+        if (strlen($password) < 6)
+            $error = 'Mật khẩu phải lớn hơn 6 ký tự';
         if (!$error) {
             $req->usersService->register($email, $password, $fullName);
             header('location: /?act=login');
@@ -68,17 +75,36 @@ function controller_register(Req $req)
 function controller_forgot_password(Req $req)
 {
     $error = "";
+    // if (isset($_POST['forgot'])) {
+    //     $name = 'abc';
+    //     $email = htmlentities($_POST['email']);
+    //     echo $email;
+    //     $subject = "Grant password";
+    //     $message = "Cấp lại mật mẩu cho website nội thất";
+    //     $mail = new PHPMailer(true);
+    //     $mail->isSMTP();
+    //     $mail->Host = 'smtp.gmail.com';
+    //     $mail->SMTPAuth = true;
+    //     $mail->Username = 'toplaiphaiwin@gmail.com';
+    //     $mail->Password = 'bncx wvnn dckt mldy';
+    //     $mail->Port = 465;
+    //     $mail->SMTPSecure = 'ssl';
+    //     $mail->isHTML(true);
+    //     $mail->setFrom($email, $name);
+    //     $mail->addAddress($email);
+    //     $mail->Subject = ("$email ($subject)");
+    //     $mail->Body = $message;
+    //     $mail->send();
+    //     header("Location: ./index.php?act=login");
+    // }
     if (isset($_POST['forgot'])) {
         $email = $_POST['email'];
         $uniqueEmail = $req->usersService->uniqueEmailOrTell($email);
-        if (!$uniqueEmail) $error = 'Email không tồn tại !';
+        if (!$uniqueEmail)
+            $error = 'Email không tồn tại !';
         else {
-            $subject = 'the subject';
-            $message = 'hello';
-            $headers = 'From: webmaster@example.com'       . "\r\n" .
-                'Reply-To: webmaster@example.com' . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-            mail($email, $subject, $message, $headers);
+            $user = $req->usersService->findByEmail($email);
+            sendMail($user['email'], $user['password']);
         }
     }
     return view("forgotPassword", ['error' => $error]);
@@ -98,9 +124,12 @@ function controller_change_pass(Req $req)
         $passCurrent = $_POST['pass-current'];
         $passNew = $_POST['pass'];
         $passConfirm = $_POST['pass-confirm'];
-        if ($passCurrent !== $_SESSION['user']['password']) $error = 'Mật khẩu hiện tại không đúng !!';
-        if (strlen($passNew) < 6) $error = 'Mật khẩu phải lớn hơn 6 ký tự !!';
-        if ($passNew != $passConfirm) $error = 'Mật khẩu không trùng khớp !!';
+        if ($passCurrent !== $_SESSION['user']['password'])
+            $error = 'Mật khẩu hiện tại không đúng !!';
+        if (strlen($passNew) < 6)
+            $error = 'Mật khẩu phải lớn hơn 6 ký tự !!';
+        if ($passNew != $passConfirm)
+            $error = 'Mật khẩu không trùng khớp !!';
         if (!$error) {
             $idUser = $_SESSION['user']['id'];
             $isSuccess = $req->usersService->changePass($passNew, $idUser);
@@ -109,9 +138,10 @@ function controller_change_pass(Req $req)
                 $count_cart = $_SESSION['user']['count_cart'];
                 $id_cart = $_SESSION['user']['id_cart'];
                 header('location: /');
-                $_SESSION['user']['id_cart'] =  $id_cart;
-                $_SESSION['user']['count_cart'] =  $count_cart;
-            } else $error = 'Không thành công !!';
+                $_SESSION['user']['id_cart'] = $id_cart;
+                $_SESSION['user']['count_cart'] = $count_cart;
+            } else
+                $error = 'Không thành công !!';
         }
     }
     $categories = $req->categoriesService->getAll();

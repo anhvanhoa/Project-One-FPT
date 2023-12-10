@@ -1,5 +1,5 @@
 <?php
-class Images extends  ServicePdo
+class Images extends ServicePdo
 {
     public function getAll($id)
     {

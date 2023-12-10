@@ -1,4 +1,7 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 function error()
 {
     header('location: /');
@@ -12,7 +15,8 @@ function checkTypeImage($type)
 function checkSize($size)
 {
     $mb = $size / (1024 * 1024);
-    if ($mb > 4) return false;
+    if ($mb > 4)
+        return false;
     return true;
 }
 
@@ -22,8 +26,10 @@ function uploadImage($file)
     $tmp = $file['tmp_name'];
     $path = dirname(__FILE__) . "/asset/images/";
     $isType = checkTypeImage($file['type']);
-    if (!$isType) return [false, "Định dạng file không đúng."];
-    if (!checkSize($file['size'])) return [false, 'File không vượt quá 4MB'];
+    if (!$isType)
+        return [false, "Định dạng file không đúng."];
+    if (!checkSize($file['size']))
+        return [false, 'File không vượt quá 4MB'];
     $isSuccess = move_uploaded_file($tmp, $path . $name);
     // return $isSuccess ? $name : '';
     return [true, $name];
@@ -39,14 +45,18 @@ function uploadImageMultiple($files)
     foreach ($names as $i => $name) {
         $tmp = $tmp_names[$i];
         $isType = checkTypeImage($types[$i]);
-        if (!$isType) return false;
+        if (!$isType)
+            return false;
         // if (!checkSize($sizes[$i])) return false;
         $path = dirname(__FILE__) . "/asset/images/";
         $isSuccess = move_uploaded_file($tmp, $path . $name);
-        if ($isSuccess) array_push($linkImages, $name);
+        if ($isSuccess)
+            array_push($linkImages, $name);
     }
-    if (empty($linkImages)) return false;
-    else return $linkImages;
+    if (empty($linkImages))
+        return false;
+    else
+        return $linkImages;
 }
 
 function getRole($role = 0)
@@ -95,4 +105,29 @@ function getStatus($status = 1)
                 'color' => 'text-red-700 ring-red-600/10 bg-red-50',
             ];
     }
+}
+
+
+function sendMail(string $email, string $pass)
+{
+    $name = 'Website Nha Xinh';
+    $email = htmlentities($email);
+    echo $email;
+    $subject = "Grant password";
+    $message = "Cấp lại mật mẩu cho website nội thất. Mật khẩu của bạn là: $pass";
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'toplaiphaiwin@gmail.com';
+    $mail->Password = 'bncx wvnn dckt mldy';
+    $mail->Port = 465;
+    $mail->SMTPSecure = 'ssl';
+    $mail->isHTML(true);
+    $mail->setFrom($email, $name);
+    $mail->addAddress($email);
+    $mail->Subject = $subject;
+    $mail->Body = $message;
+    $mail->send();
+    header("Location: ./index.php?act=login");
 }

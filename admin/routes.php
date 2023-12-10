@@ -40,5 +40,5 @@ $routes = [
     route('edit-voucher', "controller_edit_voucher"),
     route('analytic-revenue', "controller_analytic_revenue"),
     route('analytic-product', "controller_analytic_product"),
-    // route('logout', "controller_logout"),
+    route('delete-image', "controller_image"),
 ];

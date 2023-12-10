@@ -14,7 +14,8 @@
     <div class="bg-white">
         <?php include('partials/header.php') ?>
         <main>
-            <div id="sticky-banner" tabindex="-1" class="hidden border-orange-400 bg-orange-100 fixed bottom-0 start-0 z-50 justify-between w-full p-4 border-t">
+            <div id="sticky-banner" tabindex="-1"
+                class="hidden border-orange-400 bg-orange-100 fixed bottom-0 start-0 z-50 justify-between w-full p-4 border-t">
                 <div class="flex items-center mx-auto">
                     <p class="flex items-center text-base text-orange-600 font-semibold">
                         <span id="message-error"></span>
@@ -33,21 +34,30 @@
                                 foreach ($products as $product) {
                                     $i++;
                                     extract($product);
-                                ?>
+                                    ?>
                                     <input type="hidden" value="<?= $id ?>" name="id-cart-detail[]">
                                     <input type="hidden" value="<?= $amount_buy ?>" name="amount-buy[]">
                                     <div class="flex flex-col rounded-lg bg-white sm:flex-row">
-                                        <img class="m-2 h-24 w-28 rounded-md border object-contain object-center" src="/asset/images/<?= $image ?>" alt="" />
+                                        <img class="m-2 h-24 w-28 rounded-md border object-contain object-center"
+                                            src="/asset/images/<?= $image ?>" alt="" />
                                         <div class="flex w-full flex-col px-4 py-4">
-                                            <span class="font-semibold"><?= $name_product ?></span>
-                                            <span class="float-right text-gray-500 capitalize"><?= $color ?></span>
+                                            <span class="font-semibold">
+                                                <?= $name_product ?>
+                                            </span>
+                                            <span class="float-right text-gray-500 capitalize">
+                                                <?= $color ?>
+                                            </span>
                                             <div class="flex justify-between">
-                                                <p class="text-lg font-semibold"><?= number_format($price * $amount_buy, 0, '.', '.') ?> &#8363;</p>
-                                                <p><?= $amount_buy ?></p>
+                                                <p class="text-lg font-semibold">
+                                                    <?= number_format($price * $amount_buy, 0, '.', '.') ?> &#8363;
+                                                </p>
+                                                <p>
+                                                    <?= $amount_buy ?>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                                 <input type="submit" name="btn-checkout" hidden>
@@ -57,8 +67,11 @@
                         <div class="mt-5 grid gap-6">
                             <div class="relative">
                                 <input class="peer hidden" id="radio_1" type="radio" name="radio" checked />
-                                <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
-                                <label class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" for="radio_1">
+                                <span
+                                    class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                                <label
+                                    class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
+                                    for="radio_1">
                                     <img class="w-14 object-contain" src="asset/images/van-chuyen.jpg" alt="" />
                                     <div class="ml-5">
                                         <span class="mt-2 font-semibold">Hình thức vận chuyển tiêu chuẩn</span>
@@ -74,29 +87,47 @@
                         <div class="">
                             <label for="email" class="mt-4 mb-2 block text-sm font-medium">Email</label>
                             <div class="relative">
-                                <input id="required" required value="<?= $email ?>" type="email" class="pointer-events-none w-full rounded-md border border-gray-200 px-4 py-3 pl-2 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="your.email@gmail.com" />
+                                <input id="required" required value="<?= $email ?>" type="email"
+                                    class="pointer-events-none w-full rounded-md border border-gray-200 px-4 py-3 pl-2 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                                    placeholder="your.email@gmail.com" />
                             </div>
                             <div class="flex flex-col sm:flex-row gap-2">
                                 <div class="flex-1">
-                                    <label for="billing-address" class="mt-4 mb-2 block text-sm font-medium">Tên đặt hàng</label>
-                                    <input id="required" required value="<?= $full_name ?>" type="text" class="pointer-events-none w-full rounded-md border border-gray-200 px-4 py-3 pl-2 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="Street Address" />
+                                    <label for="billing-address" class="mt-4 mb-2 block text-sm font-medium">Tên đặt
+                                        hàng</label>
+                                    <input id="required" required value="<?= $full_name ?>" type="text"
+                                        class="pointer-events-none w-full rounded-md border border-gray-200 px-4 py-3 pl-2 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                                        placeholder="Street Address" />
                                 </div>
                                 <div>
-                                    <label for="billing-address" class="mt-4 mb-2 block text-sm font-medium">Số điện thoại</label>
-                                    <input id="required" value="<?= $tell ?>" type="text" name="billing-zip" class="pointer-events-none flex-1 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" required />
+                                    <label for="billing-address" class="mt-4 mb-2 block text-sm font-medium">Số điện
+                                        thoại</label>
+                                    <input id="required" value="<?= $tell ?>" type="text" name="billing-zip"
+                                        class="pointer-events-none flex-1 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                                        required />
                                 </div>
                             </div>
                             <label for="card-no" class="mt-4 mb-2 block text-sm font-medium">Địa chỉ</label>
                             <div class="flex">
-                                <input id="required" value="<?= $address ?>" type="text" id="card-no" name="card-no" class="pointer-events-none w-full rounded-md border border-gray-200 px-2 py-3 pl-2 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" required />
+                                <input id="required" value="<?= $address ?>" type="text" id="card-no" name="card-no"
+                                    class="pointer-events-none w-full rounded-md border border-gray-200 px-2 py-3 pl-2 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                                    required />
                             </div>
                             <label for="card-holder" class="mt-4 mb-2 block text-sm font-medium">Mã giảm giá</label>
                             <div class="relative flex items-center gap-3">
-                                <input type="text" id="code-discount" maxlength="8" class="uppercase w-full rounded-md border border-gray-200 px-4 py-3 pl-2 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="NHAXINH20" />
-                                <button id="btn-code" class="w-1/5 rounded-md bg-gray-900 py-2 text-center font-medium text-white">Áp dụng</button>
+                                <input type="text" id="code-discount" maxlength="8"
+                                    class="uppercase w-full rounded-md border border-gray-200 px-4 py-3 pl-2 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                                    placeholder="NHAXINH20" />
+                                <button id="btn-code"
+                                    class="w-1/5 rounded-md bg-gray-900 py-2 text-center font-medium text-white">Áp
+                                    dụng</button>
                             </div>
-                            <p class="ml-1 uppercase"><?= $cartUser['code'] ?></p>
-                            <p class="p-0.5 text-rose-500"><?= $error ?></p>
+                            <p class="ml-1 uppercase">
+                                <?= $cartUser['code'] ?>
+                            </p>
+                            <p class="p-0.5 text-rose-500">
+                                <?= $error ?>
+                            </p>
                             <div class="flex items-center justify-between mt-4">
                                 <p class="text-sm font-medium text-gray-900">Phương thức thanh toán:</p>
                                 <select name="" id="methodPayment" class="p-2 rounded-sm">
@@ -107,11 +138,16 @@
                             <div class="mt-6 border-t border-b py-2">
                                 <div class="flex items-center justify-between">
                                     <p class="text-sm font-medium text-gray-900">Tổng tiền đơn hàng</p>
-                                    <p class="font-semibold text-gray-900"><?= number_format($cartUser['total_sub'], 0, '.', '.') ?> &#8363;</p>
+                                    <p class="font-semibold text-gray-900">
+                                        <?= number_format($cartUser['total_sub'], 0, '.', '.') ?> &#8363;
+                                    </p>
                                 </div>
-                                <div class="flex items-center justify-between mt-2 <?= $cartUser['discount'] ? '' : 'hidden' ?>">
+                                <div
+                                    class="flex items-center justify-between mt-2 <?= $cartUser['discount'] ? '' : 'hidden' ?>">
                                     <p class="text-sm font-medium text-gray-900">Giảm giá</p>
-                                    <p class="font-semibold text-gray-900">- <?= number_format($cartUser['discount'], 0, '.', '.') ?> &#8363;</p>
+                                    <p class="font-semibold text-gray-900">-
+                                        <?= number_format($cartUser['discount'], 0, '.', '.') ?> &#8363;
+                                    </p>
                                 </div>
                                 <div class="flex items-center justify-between mt-2">
                                     <p class="text-sm font-medium text-gray-900">Vận chuyển</p>
@@ -120,20 +156,25 @@
                             </div>
                             <div class="mt-6 flex items-center justify-between">
                                 <p class="text-sm font-medium text-gray-900">Tổng</p>
-                                <p class="text-2xl font-semibold text-gray-900"><?= number_format($cartUser['total'], 0, '.', '.') ?> &#8363;</p>
+                                <p class="text-2xl font-semibold text-gray-900">
+                                    <?= number_format($cartUser['total'], 0, '.', '.') ?> &#8363;
+                                </p>
                             </div>
                         </div>
                         <form id="order-form" action="?act=success-order" method="POST">
                             <?php
                             foreach ($cartUser as $key => $value) {
-                                if (is_array($value))  $value = json_encode($value);
-                                if ($value == null)  $value = json_encode($value);
-                            ?>
+                                if (is_array($value))
+                                    $value = json_encode($value);
+                                if ($value == null)
+                                    $value = json_encode($value);
+                                ?>
                                 <input type="hidden" value='<?= $value ?>' name="<?= $key ?>">
-                            <?php
+                                <?php
                             }
                             ?>
-                            <button class="mt-4 mb-8 w-full rounded-md bg-sky-500 px-6 py-3 font-medium text-white">Đặt hàng</button>
+                            <button class="mt-4 mb-8 w-full rounded-md bg-sky-500 px-6 py-3 font-medium text-white">Đặt
+                                hàng</button>
                         </form>
                     </div>
                 </div>
@@ -158,8 +199,8 @@
         const stickyBanner = document.querySelector('#sticky-banner'),
             messageError2 = stickyBanner.querySelector('#message-error');
         orderForm.onsubmit = (e) => {
-            e.preventDefault()
             if (methodPayment.value == 2) {
+                e.preventDefault()
                 location.href = ""
             };
             let isCheck = false

@@ -3,6 +3,9 @@ session_start();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 function bootstrap()
 {
+    require './PHPMailer/src/Exception.php';
+    require './PHPMailer/src/PHPMailer.php';
+    require './PHPMailer/src/SMTP.php';
     include("./routes.php");
     include("./database/service.php");
     include("./models/categories.php");
@@ -29,8 +32,10 @@ function bootstrap()
         $images,
         $reviews,
     );
-    if (!isset($_GET['act'])) $act = check_path('');
-    else $act = check_path($_GET['act']);
+    if (!isset($_GET['act']))
+        $act = check_path('');
+    else
+        $act = check_path($_GET['act']);
     foreach ($routes as $route) {
         if ($act == $route['path'] && $user) {
             if ($route['role'] == 2) {
