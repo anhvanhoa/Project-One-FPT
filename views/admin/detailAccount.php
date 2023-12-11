@@ -8,6 +8,7 @@
     <title>Manage Categories</title>
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/asset/css/style.css">
 </head>
 
 <body>
@@ -26,16 +27,22 @@
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Họ & Tên</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    <p><?= $full_name ?></p>
+                                    <p>
+                                        <?= $full_name ?>
+                                    </p>
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Email</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex">
-                                    <input name="email" class="bg-white pl-2 pointer-events-none" type="text" value="<?= $email ?>">
+                                    <input name="email" class="bg-white pl-2 pointer-events-none" type="text"
+                                        value="<?= $email ?>">
                                     <div class="p-2 cursor-pointer hover:text-indigo-600" id="edit-input">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 21 21">
-                                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M17 4a2.121 2.121 0 0 1 0 3l-9.5 9.5l-4 1l1-3.944l9.504-9.552a2.116 2.116 0 0 1 2.864-.125zm-1.5 2.5l1 1" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 21 21">
+                                            <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M17 4a2.121 2.121 0 0 1 0 3l-9.5 9.5l-4 1l1-3.944l9.504-9.552a2.116 2.116 0 0 1 2.864-.125zm-1.5 2.5l1 1" />
                                         </svg>
                                     </div>
                                 </dd>
@@ -43,10 +50,14 @@
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Mật khẩu</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex">
-                                    <input name="password" class="bg-white pl-2 pointer-events-none" type="text" value="<?= $password ?>">
+                                    <input name="password" class="bg-white pl-2 pointer-events-none" type="text"
+                                        value="<?= $password ?>">
                                     <div class="p-2 cursor-pointer hover:text-indigo-600" id="edit-input">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 21 21">
-                                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M17 4a2.121 2.121 0 0 1 0 3l-9.5 9.5l-4 1l1-3.944l9.504-9.552a2.116 2.116 0 0 1 2.864-.125zm-1.5 2.5l1 1" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 21 21">
+                                            <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M17 4a2.121 2.121 0 0 1 0 3l-9.5 9.5l-4 1l1-3.944l9.504-9.552a2.116 2.116 0 0 1 2.864-.125zm-1.5 2.5l1 1" />
                                         </svg>
                                     </div>
                                 </dd>
@@ -54,10 +65,14 @@
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Số điện thoại</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex">
-                                    <input name="tell" class="bg-white pl-2 pointer-events-none" type="text" value="<?= $tell ?>">
+                                    <input name="tell" class="bg-white pl-2 pointer-events-none" type="text"
+                                        value="<?= $tell ?>">
                                     <div class="p-2 cursor-pointer hover:text-indigo-600" id="edit-input">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 21 21">
-                                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M17 4a2.121 2.121 0 0 1 0 3l-9.5 9.5l-4 1l1-3.944l9.504-9.552a2.116 2.116 0 0 1 2.864-.125zm-1.5 2.5l1 1" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 21 21">
+                                            <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M17 4a2.121 2.121 0 0 1 0 3l-9.5 9.5l-4 1l1-3.944l9.504-9.552a2.116 2.116 0 0 1 2.864-.125zm-1.5 2.5l1 1" />
                                         </svg>
                                     </div>
                                 </dd>
@@ -65,30 +80,42 @@
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Địa chỉ</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    <p><?= $address ?></p>
+                                    <p>
+                                        <?= $address ?>
+                                    </p>
                                     <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Vai trò</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    <p><?= $role ?></p>
+                                    <p>
+                                        <?= $role ?>
+                                    </p>
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Ngày sinh</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    <p><?= $birthday ?></p>
+                                    <p>
+                                        <?= $birthday ?>
+                                    </p>
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Đại diện</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    <p><?= $avatar ?></p>
+                                    <p>
+                                        <?= $avatar ?>
+                                    </p>
                                 </dd>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt class="text-sm font-medium leading-6 text-gray-900">Hành động</dt>
                                 <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0 flex gap-10">
-                                    <button name="update" type="submit" class="text-base text-indigo-600 font-medium hover:underline underline-offset-2">Cập nhập</button>
-                                    <a href="?act=accounts" class="text-base text-orange-500 font-medium hover:underline underline-offset-2">Danh sách</a>
+                                    <button name="update" type="submit"
+                                        class="text-base text-indigo-600 font-medium hover:underline underline-offset-2">Cập
+                                        nhập</button>
+                                    <a href="?act=accounts"
+                                        class="text-base text-orange-500 font-medium hover:underline underline-offset-2">Danh
+                                        sách</a>
                                 </dd>
                             </div>
                         </dl>

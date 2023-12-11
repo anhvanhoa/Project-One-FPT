@@ -7,6 +7,7 @@
     <title>Dashboard Nhà Xinh</title>
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/asset/css/style.css">
     <script src="/asset/js/apexcharts.js"></script>
 </head>
 
@@ -29,7 +30,9 @@
                                 $total += $money['total'];
                             } ?>
                             <div>
-                                <h5 class="leading-none text-3xl font-bold text-gray-900 pb-2"><?= number_format($total, 0, '.', '.') ?> &#8363;</h5>
+                                <h5 class="leading-none text-3xl font-bold text-gray-900 pb-2">
+                                    <?= number_format($total, 0, '.', '.') ?> &#8363;
+                                </h5>
                                 <p class="text-base font-normal text-gray-500">Tổng doanh thu</p>
                             </div>
                         </div>
@@ -43,7 +46,9 @@
                                 $total2 += $today['total'];
                             } ?>
                             <div>
-                                <h5 class="leading-none text-3xl font-bold text-gray-900 pb-2"><?= number_format($total2, 0, '.', '.') ?> &#8363;</h5>
+                                <h5 class="leading-none text-3xl font-bold text-gray-900 pb-2">
+                                    <?= number_format($total2, 0, '.', '.') ?> &#8363;
+                                </h5>
                                 <p class="text-base font-normal text-gray-500">Doanh số hôm nay</p>
                             </div>
                         </div>
@@ -52,7 +57,9 @@
                     <div class="h-full max-w-sm w-full bg-white rounded-lg shadow p-4 md:p-6 mt-10">
                         <div class="flex justify-between mb-5">
                             <div>
-                                <h5 class="leading-none text-3xl font-bold text-gray-900 pb-2"><?= number_format($totalMoney, 0, '.', '.') ?> &#8363;</h5>
+                                <h5 class="leading-none text-3xl font-bold text-gray-900 pb-2">
+                                    <?= number_format($totalMoney, 0, '.', '.') ?> &#8363;
+                                </h5>
                                 <p class="text-base font-normal text-gray-500">Doanh số tháng này</p>
                             </div>
                         </div>
@@ -60,13 +67,13 @@
                     </div>
                 </div>
                 <script>
-                    window.addEventListener("load", function() {
+                    window.addEventListener("load", function () {
                         let options = {
                             series: [{
                                 name: "Tổng tiền / ngày",
                                 data: <?= json_encode($dataMoney) ?>,
                                 color: "#1A56DB",
-                            }, ],
+                            },],
                             chart: {
                                 mxHeight: "300",
                                 maxWidth: "300",
@@ -127,7 +134,7 @@
                             yaxis: {
                                 show: false,
                                 labels: {
-                                    formatter: function(value) {
+                                    formatter: function (value) {
                                         return Intl.NumberFormat('vi').format(value) + ' &#8363;';
                                     }
                                 }
@@ -138,15 +145,15 @@
                             chart.render();
                         }
                     });
-                    window.addEventListener("load", function() {
+                    window.addEventListener("load", function () {
                         let options = {
                             series: [{
                                 name: "Tiền / Đơn",
                                 data: [<?php foreach ($moneysToday as $today) {
-                                            echo $today['total'] . ',';
-                                        } ?>],
+                                    echo $today['total'] . ',';
+                                } ?>],
                                 color: "#1A56DB",
-                            }, ],
+                            },],
                             chart: {
                                 mxHeight: "300",
                                 maxWidth: "300",
@@ -194,8 +201,8 @@
                             },
                             xaxis: {
                                 categories: [<?php foreach ($moneysToday as $today) {
-                                                    echo $today['id'] . ',';
-                                                } ?>],
+                                    echo $today['id'] . ',';
+                                } ?>],
                                 labels: {
                                     show: false,
                                 },
@@ -209,7 +216,7 @@
                             yaxis: {
                                 show: false,
                                 labels: {
-                                    formatter: function(value) {
+                                    formatter: function (value) {
                                         return Intl.NumberFormat('vi').format(value) + ' &#8363;';
                                     }
                                 }
@@ -220,15 +227,15 @@
                             chart.render();
                         }
                     });
-                    window.addEventListener("load", function() {
+                    window.addEventListener("load", function () {
                         let options = {
                             series: [{
                                 name: "Tiền / Đơn",
                                 data: [<?php foreach ($moneys as $money) {
-                                            echo $money['total'] . ',';
-                                        } ?>],
+                                    echo $money['total'] . ',';
+                                } ?>],
                                 color: "#226f54",
-                            }, ],
+                            },],
                             chart: {
                                 mxHeight: "300",
                                 maxWidth: "100%",
@@ -276,9 +283,9 @@
                             },
                             xaxis: {
                                 categories: [<?php foreach ($moneys as $money) {
-                                                    $id = $money['id'];
-                                                    echo "'$id' ,";
-                                                } ?>],
+                                    $id = $money['id'];
+                                    echo "'$id' ,";
+                                } ?>],
                                 labels: {
                                     show: false,
                                 },
@@ -292,7 +299,7 @@
                             yaxis: {
                                 show: false,
                                 labels: {
-                                    formatter: function(value) {
+                                    formatter: function (value) {
                                         return Intl.NumberFormat('vi').format(value) + ' &#8363;';
                                     }
                                 }

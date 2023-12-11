@@ -7,6 +7,7 @@
     <title>Dashboard Nhà Xinh</title>
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/asset/css/style.css">
     <script src="/asset/js/apexcharts.js"></script>
 </head>
 

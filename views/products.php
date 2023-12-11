@@ -7,7 +7,7 @@
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
     <title><?= $typeProduct['name_category'] ?> - Nhà Xinh</title>
     <!-- <link rel="stylesheet" href="/asset/css/style.css" /> -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="/asset/css/style.css">
 </head>
 
 <body class="bg-gray-100">
@@ -257,12 +257,12 @@
                                             <?php
                                             foreach ($materials as $key => $materia) {
                                                 extract($materia);
-                                            ?>
-                                                <div class="flex items-center">
-                                                    <input id="filter-category-<?= $key ?>" name="material[]" value="<?= $material ?>" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                    <label for="filter-category-<?= $key ?>" class="ml-3 text-sm text-gray-600 truncate"><?= $material ?></label>
-                                                </div>
-                                            <?php
+                                                ?>
+                                                    <div class="flex items-center">
+                                                        <input id="filter-category-<?= $key ?>" name="material[]" value="<?= $material ?>" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                                                        <label for="filter-category-<?= $key ?>" class="ml-3 text-sm text-gray-600 truncate"><?= $material ?></label>
+                                                    </div>
+                                                <?php
                                             }
                                             ?>
                                         </div>
@@ -310,9 +310,9 @@
                                 if (($products_page['current_page'] - 3 < $i && $i <= $products_page['current_page']) || ($i > $products_page['current_page'] && $i < $products_page['current_page'] + 3)) {
                                     $default = "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0";
                                     $active = "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
-                            ?>
-                                    <a style="" href="/?act=products&id=<?= $_GET['id'] ?>&page=<?= $i  ?>" aria-current="page" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold <?= $products_page['current_page'] == $i  ? $active : $default ?>"> <?= $i ?> </a>
-                            <?php
+                                    ?>
+                                            <a style="" href="/?act=products&id=<?= $_GET['id'] ?>&page=<?= $i ?>" aria-current="page" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold <?= $products_page['current_page'] == $i ? $active : $default ?>"> <?= $i ?> </a>
+                                    <?php
                                 }
                             }
                             ?>

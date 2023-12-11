@@ -7,6 +7,7 @@
     <title>Dashboard Nhà Xinh</title>
     <link rel="icon" href="/asset/images/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/asset/css/style.css">
 </head>
 
 <body>
@@ -24,16 +25,24 @@
                     <div class="flex justify-between p-6 shadow-md my-3 bg-white">
                         <div>
                             <span class="font-semibold mr-1">Trạng thái:</span>
-                            <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus($bill['status'])['color'] ?>"><?= getStatus($bill['status'])['name'] ?></span>
+                            <span
+                                class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <?= getStatus($bill['status'])['color'] ?>">
+                                <?= getStatus($bill['status'])['name'] ?>
+                            </span>
                         </div>
                         <div class="flex">
                             <div class="<?= $bill['status'] == 0 || $bill['status'] == 5 ? 'hidden' : '' ?>">
-                                <a href="?act=status&id=<?= $bill['id'] ?>&status=<?= $bill['status'] + 1 ?>" class="text-blue-600 font-semibold">Cập nhập -> </a>
-                                <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset"><?= getStatus($bill['status'] + 1)['name'] ?></span>
+                                <a href="?act=status&id=<?= $bill['id'] ?>&status=<?= $bill['status'] + 1 ?>"
+                                    class="text-blue-600 font-semibold">Cập nhập -> </a>
+                                <span
+                                    class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset">
+                                    <?= getStatus($bill['status'] + 1)['name'] ?>
+                                </span>
                             </div>
-                            <div class="<?= $bill['status'] != 1 ||  $bill['status'] == 5 ? 'hidden' : '' ?>">
+                            <div class="<?= $bill['status'] != 1 || $bill['status'] == 5 ? 'hidden' : '' ?>">
                                 <span class="mx-3"> ||</span>
-                                <a href="?act=status&id=<?= $bill['id'] ?>&status=0" class="text-red-600 font-semibold ml-2">Hủy</a>
+                                <a href="?act=status&id=<?= $bill['id'] ?>&status=0"
+                                    class="text-red-600 font-semibold ml-2">Hủy</a>
                             </div>
                         </div>
                     </div>
@@ -48,22 +57,34 @@
                                             </div>
                                             <div>
                                                 <p class="font-medium text-sm text-gray-400 mb-1"> Thông tin </p>
-                                                <p> <?= $bill['full_name'] ?> </p>
-                                                <p> <?= $bill['tell'] ?> </p>
-                                                <p> <?= $bill['address'] ?> </p>
+                                                <p>
+                                                    <?= $bill['full_name'] ?>
+                                                </p>
+                                                <p>
+                                                    <?= $bill['tell'] ?>
+                                                </p>
+                                                <p>
+                                                    <?= $bill['address'] ?>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="space-y-2">
                                             <div>
-                                                <p class="font-bold text-lg"> #<?= $bill['id'] ?> </p>
+                                                <p class="font-bold text-lg"> #
+                                                    <?= $bill['id'] ?>
+                                                </p>
                                             </div>
                                             <div>
                                                 <p class="font-medium text-sm text-gray-400  mb-1"> Thời gian đặt </p>
-                                                <p> <?= $bill['date'] ?> </p>
+                                                <p>
+                                                    <?= $bill['date'] ?>
+                                                </p>
                                             </div>
                                             <div>
                                                 <p class="font-medium text-sm text-gray-400"> Thời gian kết thúc </p>
-                                                <p> <?= $bill['end_date'] ?> </p>
+                                                <p>
+                                                    <?= $bill['end_date'] ?>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -72,10 +93,13 @@
                             <table class="w-full divide-y divide-gray-200 text-sm">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="px-9 py-4 text-left font-semibold text-gray-400"> Tên sản phẩm </th>
+                                        <th scope="col" class="px-9 py-4 text-left font-semibold text-gray-400"> Tên sản
+                                            phẩm </th>
                                         <th scope="col" class="py-3 text-left font-semibold text-gray-400"> </th>
-                                        <th scope="col" class="py-3 text-left font-semibold text-gray-400"> Số lượng </th>
-                                        <th scope="col" class="py-3 text-left font-semibold text-gray-400"> Giá tiền </th>
+                                        <th scope="col" class="py-3 text-left font-semibold text-gray-400"> Số lượng
+                                        </th>
+                                        <th scope="col" class="py-3 text-left font-semibold text-gray-400"> Giá tiền
+                                        </th>
                                         <th scope="col" class="py-3 text-left font-semibold text-gray-400"></th>
                                     </tr>
                                 </thead>
@@ -83,21 +107,29 @@
                                     <?php
                                     foreach ($products as $product) {
                                         extract($product);
-                                    ?>
+                                        ?>
                                         <tr>
                                             <td class="px-9 py-5 whitespace-nowrap space-x-1 flex items-center">
                                                 <div>
-                                                    <p><?= $name_product ?></p>
+                                                    <p>
+                                                        <?= $name_product ?>
+                                                    </p>
                                                     <div class="flex gap-x-2">
-                                                        <p class="text-sm text-gray-400 capitalize"> <?= $color ?> </p>
+                                                        <p class="text-sm text-gray-400 capitalize">
+                                                            <?= $color ?>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="whitespace-nowrap text-gray-600 truncate"></td>
-                                            <td class="whitespace-nowrap text-gray-600 truncate"> <?= $amount_buy ?> </td>
-                                            <td class="whitespace-nowrap text-gray-600 truncate"> <?= number_format($price, 0, '.', '.') ?> &#8363; </td>
+                                            <td class="whitespace-nowrap text-gray-600 truncate">
+                                                <?= $amount_buy ?>
+                                            </td>
+                                            <td class="whitespace-nowrap text-gray-600 truncate">
+                                                <?= number_format($price, 0, '.', '.') ?> &#8363;
+                                            </td>
                                         </tr>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </tbody>
@@ -108,13 +140,18 @@
                                         <div>
                                             <p class="text-gray-500 text-sm"> Tổng tiền đơn hàng </p>
                                         </div>
-                                        <p class="text-gray-500 text-sm"> <?= number_format($bill['total'] + $bill['discount'], 0, '.', '.') ?> &#8363; </p>
+                                        <p class="text-gray-500 text-sm">
+                                            <?= number_format($bill['total'] + $bill['discount'], 0, '.', '.') ?>
+                                            &#8363;
+                                        </p>
                                     </div>
                                     <div class="flex justify-between">
                                         <div>
                                             <p class="text-gray-500 text-sm"> Giảm giá </p>
                                         </div>
-                                        <p class="text-gray-500 text-sm"> - <?= number_format($bill['discount'], 0, '.', '.') ?> &#8363; </p>
+                                        <p class="text-gray-500 text-sm"> -
+                                            <?= number_format($bill['discount'], 0, '.', '.') ?> &#8363;
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +161,9 @@
                                         <div>
                                             <p class="font-bold text-black text-lg"> Thành tiền </p>
                                         </div>
-                                        <p class="font-bold text-black text-lg"> <?= number_format($bill['total'], 0, '.', '.') ?> &#8363;</p>
+                                        <p class="font-bold text-black text-lg">
+                                            <?= number_format($bill['total'], 0, '.', '.') ?> &#8363;
+                                        </p>
                                     </div>
                                 </div>
                             </div>
