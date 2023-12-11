@@ -75,28 +75,6 @@ function controller_register(Req $req)
 function controller_forgot_password(Req $req)
 {
     $error = "";
-    // if (isset($_POST['forgot'])) {
-    //     $name = 'abc';
-    //     $email = htmlentities($_POST['email']);
-    //     echo $email;
-    //     $subject = "Grant password";
-    //     $message = "Cấp lại mật mẩu cho website nội thất";
-    //     $mail = new PHPMailer(true);
-    //     $mail->isSMTP();
-    //     $mail->Host = 'smtp.gmail.com';
-    //     $mail->SMTPAuth = true;
-    //     $mail->Username = 'toplaiphaiwin@gmail.com';
-    //     $mail->Password = 'bncx wvnn dckt mldy';
-    //     $mail->Port = 465;
-    //     $mail->SMTPSecure = 'ssl';
-    //     $mail->isHTML(true);
-    //     $mail->setFrom($email, $name);
-    //     $mail->addAddress($email);
-    //     $mail->Subject = ("$email ($subject)");
-    //     $mail->Body = $message;
-    //     $mail->send();
-    //     header("Location: ./index.php?act=login");
-    // }
     if (isset($_POST['forgot'])) {
         $email = $_POST['email'];
         $uniqueEmail = $req->usersService->uniqueEmailOrTell($email);

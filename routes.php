@@ -35,4 +35,6 @@ $routes = [
     route('checkout', "controller_checkout", 1),
     route('success-order', "controller_success_order", 1),
     route('account', "controller_account", 1),
+    route('vnpay', "controller_vnpay", 1),
+    route('vnpay-return', "controller_vnpay_return", 1),
 ];

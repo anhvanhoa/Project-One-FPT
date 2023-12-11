@@ -87,8 +87,8 @@
                                             <label for="file-upload"
                                                 class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                 <span>Tải ảnh lên</span>
-                                                <input required id="file-upload" name="thumbnail" type="file"
-                                                    class="sr-only pl-2">
+                                                <input required id="file-upload" name="image" type="file"
+                                                    class="sr-only pl-2" accept="image/́">
                                             </label>
                                         </div>
                                         <img class="w-1/2 h-72 object-cover" id="image" alt="">

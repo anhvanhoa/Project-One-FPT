@@ -112,7 +112,6 @@ function sendMail(string $email, string $pass)
 {
     $name = 'Website Nha Xinh';
     $email = htmlentities($email);
-    echo $email;
     $subject = "Grant password";
     $message = "Cấp lại mật mẩu cho website nội thất. Mật khẩu của bạn là: $pass";
     $mail = new PHPMailer(true);
@@ -130,4 +129,11 @@ function sendMail(string $email, string $pass)
     $mail->Body = $message;
     $mail->send();
     header("Location: ./index.php?act=login");
+}
+
+function method_payment(int $type)
+{
+    if ($type === 2)
+        return "Chuyển khoản";
+    return "Thanh toán khi nhận hàng";
 }

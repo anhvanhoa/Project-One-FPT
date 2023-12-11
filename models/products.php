@@ -103,7 +103,6 @@ class Products extends ServicePdo
         WHERE $dbName.IS_DELETED = false AND PRODUCTS_DETAIL.ID = $id";
         return $this->pdo->query($sql)->fetch();
     }
-
     public function getFilter($id)
     {
         $dbName = $this->dbName;
@@ -116,7 +115,7 @@ class Products extends ServicePdo
     public function getAll($is_deleted = false)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = '$is_deleted'";
+        $sql = "SELECT * FROM $dbName WHERE IS_DELETED = '$is_deleted' ORDER BY ID DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function search($q)

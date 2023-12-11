@@ -78,7 +78,6 @@ function controller_add_product_detail(Req $req)
             } else {
                 $product['thumbnail'] = $thumbnail[1];
                 $id = $req->productsService->insertOne($product);
-                return;
             }
         }
         $productDetail['id_product'] = $id;
@@ -104,7 +103,6 @@ function controller_add_product_detail(Req $req)
             } else {
                 $product['thumbnail'] = $thumbnail[1];
                 $id = $req->productsService->insertOne($product);
-                return;
             }
         }
         $productDetail['id_product'] = $id;
@@ -175,6 +173,15 @@ function controller_edit_product_detail(Req $req)
     $images = $req->imagesService->getAll($id);
     if (isset($_POST['update-product'])) {
         $image = uploadImage($_FILES['image']);
+        if ($_POST['amount'] < 0) {
+            $error = 'Số lượng phải lớn hơn 1';
+            return viewAdmin("editProductDetail", [
+                'pro' => $product,
+                'productDetail' => $productDetail,
+                'listImage' => $images,
+                'error' => $error
+            ]);
+        }
         if (!$image[0] && $_FILES['image']['name']) {
             $error = $image[1];
         } else {

@@ -107,7 +107,8 @@
                                         ?>
                                         <div>
                                             <p><a class="text-red-700"
-                                                    href="?act=delete-image&id-img=<?= $id ?>&id=9&id-pro=10">Xóa ảnh</a>
+                                                    href="?act=delete-image&id-img=<?= $id ?>&id=<?= $productDetail['id'] ?>&id-pro=<?= $pro['id'] ?>">Xóa
+                                                    ảnh</a>
                                             </p>
                                             <img src="/asset/images/<?= $image ?>" alt=""
                                                 class="aspect-[9/6] w-28 object-cover">

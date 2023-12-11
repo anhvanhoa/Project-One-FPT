@@ -17,6 +17,8 @@ function controller_order_detail(Req $req)
     isset($_GET['id']) ? $id = $_GET['id'] : header('location: /');
     $categories = $req->categoriesService->getAll();
     $bill = $req->billsService->findOne($id);
+    if (empty($bill))
+        header('location: /');
     $productBills = $req->productsBillService->getProductsByBill($bill['id']);
     $products = [];
     foreach ($productBills as $productBill) {
@@ -36,11 +38,12 @@ function controller_order_detail(Req $req)
 
 function controller_cancel_order(Req $req)
 {
-    if (isset($_GET['id'])) {
+    if (isset($_GET['id']) && $_GET['id']) {
         $id = $_GET['id'];
         $req->billsService->updateOne([
             'status' => 0
         ], $id);
         header("location: ?act=order&id=$id");
-    } else header('location: /');
+    } else
+        header('location: /');
 }

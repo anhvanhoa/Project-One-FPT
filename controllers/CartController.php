@@ -44,7 +44,7 @@ function controller_checkout(Req $req)
     $cartUser = [
         'total' => 0,
         'total_sub' => 0,
-        'payment_method' => 'Thanh toán khi nhận hàng',
+        'payment_method' => 1,
         'transfer_method' => 'Giao hàng tiêu chuẩn',
         'status' => 1,
         'date' => date('Y-m-d H:i:s'),
@@ -96,10 +96,12 @@ function controller_checkout(Req $req)
 
 function controller_success_order(Req $req)
 {
+    if (!isset($_POST['btn-payment']))
+        return header('location: /');
     $categories = $req->categoriesService->getAll();
     $keys = [
         'total' => 0,
-        'payment_method' => '',
+        'payment_method' => 1,
         'transfer_method' => '',
         'status' => 1,
         'date' => '',
@@ -135,4 +137,141 @@ function controller_success_order(Req $req)
         }
     }
     return view("successOrder", ["categories" => $categories]);
+}
+
+function controller_vnpay(Req $req)
+{
+    if (!isset($_POST['btn-payment']))
+        return header('location: /');
+    $keys = [
+        'total' => 0,
+        'payment_method' => 1,
+        'transfer_method' => '',
+        'status' => 1,
+        'date' => '',
+        'discount' => 0,
+        'id_voucher' => null,
+        'id_user' => 0,
+        'carts' => []
+    ];
+    $carts = [];
+    foreach ($keys as $key => $_) {
+        if ($key == 'carts') {
+            $carts = json_decode($_POST[$key]);
+            unset($info[$key]);
+        } elseif ($key == 'id_voucher') {
+            $info[$key] = json_decode($_POST[$key]);
+        } else
+            $info[$key] = $_POST[$key];
+    }
+    $idBill = $req->billsService->insertOne($info);
+    if (!$idBill)
+        return header('location: /');
+    if ($idBill) {
+        foreach ($carts as $value) {
+            $product = $req->cartsService->getProductById($value->id_cart_detail);
+            $req->cartsService->deleteOne($value->id_cart_detail);
+            $idProductDetail = $product['id_product_detail'];
+            $idCart = $_SESSION['user']['id_cart'];
+            $carts = $req->cartsService->getAllProductInCart($idCart);
+            $_SESSION['user']['count_cart'] = $req->cartsService->countProductInCart($idCart)[0];
+            $req->productsBillService->insertOne([
+                'id_product_detail' => $idProductDetail,
+                'amount_buy' => $value->amount_buy,
+                "id_bill" => $idBill
+            ]);
+        }
+    }
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+    require_once("./config.php");
+    $vnp_TxnRef = $idBill;
+    $vnp_Amount = $_POST['total'];
+    $vnp_Locale = 'vi';
+    $vnp_BankCode = '';
+    $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+    $inputData = array(
+        "vnp_Version" => "2.1.0",
+        "vnp_TmnCode" => $vnp_TmnCode,
+        "vnp_Amount" => $vnp_Amount * 100,
+        "vnp_Command" => "pay",
+        "vnp_CreateDate" => date('YmdHis'),
+        "vnp_CurrCode" => "VND",
+        "vnp_IpAddr" => $vnp_IpAddr,
+        "vnp_Locale" => $vnp_Locale,
+        "vnp_OrderInfo" => "Thanh toan GD:" . $vnp_TxnRef,
+        "vnp_OrderType" => "other",
+        "vnp_ReturnUrl" => $vnp_Returnurl,
+        "vnp_TxnRef" => $vnp_TxnRef,
+        "vnp_ExpireDate" => $expire
+    );
+    if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+        $inputData['vnp_BankCode'] = $vnp_BankCode;
+    }
+    ksort($inputData);
+    $query = "";
+    $i = 0;
+    $hashData = "";
+    foreach ($inputData as $key => $value) {
+        if ($i == 1) {
+            $hashData .= '&' . urlencode($key) . "=" . urlencode($value);
+        } else {
+            $hashData .= urlencode($key) . "=" . urlencode($value);
+            $i = 1;
+        }
+        $query .= urlencode($key) . "=" . urlencode($value) . '&';
+    }
+    $vnp_Url = $vnp_Url . "?" . $query;
+    if (isset($vnp_HashSecret)) {
+        $vnpSecureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret); //  
+        $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+    }
+    header('Location: ' . $vnp_Url);
+    die();
+}
+
+function controller_vnpay_return(Req $req)
+{
+    $categories = $req->categoriesService->getAll();
+    require_once("./config.php");
+    $vnp_SecureHash = $_GET['vnp_SecureHash'];
+    $inputData = array();
+    foreach ($_GET as $key => $value) {
+        if (substr($key, 0, 4) == "vnp_") {
+            $inputData[$key] = $value;
+        }
+    }
+    unset($inputData['vnp_SecureHash']);
+    ksort($inputData);
+    $i = 0;
+    $hashData = "";
+    foreach ($inputData as $key => $value) {
+        if ($i == 1) {
+            $hashData = $hashData . '&' . urlencode($key) . "=" . urlencode($value);
+        } else {
+            $hashData = $hashData . urlencode($key) . "=" . urlencode($value);
+            $i = 1;
+        }
+    }
+    $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
+    if ($secureHash != $vnp_SecureHash)
+        header('location: /');
+    $idBill = $_GET['vnp_TxnRef'];
+    if ($_GET['vnp_ResponseCode'] != '00')
+        return header("location: ?act=cancel-order&id=$idBill");
+    $dataVnPay = [
+        'vnp_ResponseCode' => $_GET['vnp_ResponseCode'],
+        'vnp_TxnRef' => $_GET['vnp_TxnRef'],
+        'vnp_Amount' => $_GET['vnp_Amount'],
+        'vnp_OrderInfo' => $_GET['vnp_OrderInfo'],
+        'vnp_TransactionNo' => $_GET['vnp_TransactionNo'],
+        'vnp_BankCode' => $_GET['vnp_BankCode'],
+        'vnp_PayDate' => $_GET['vnp_PayDate'],
+    ];
+    view('payReturn', [
+        'categories' => $categories,
+        'vnp_SecureHash' => $vnp_SecureHash,
+        'secureHash' => $secureHash,
+        'dataVnPay' => $dataVnPay
+    ]);
 }

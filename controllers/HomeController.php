@@ -1,7 +1,7 @@
 <?php
 function controller_home(Req $req)
 {
-    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $page = isset($_GET['limit']) ? $_GET['limit'] : 1;
     $categories = $req->categoriesService->getAll();
     $products = $req->productsService->getProductsLimit($page);
     $productsSelling = $req->productsService->getSelling();

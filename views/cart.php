@@ -51,8 +51,8 @@
                                             foreach ($carts as $cart) {
                                                 extract($cart);
                                                 ?>
-                                                <li
-                                                    class="grid grid-cols-6 items-center py-6 gap-6 <?= $amount == 0 ? 'pointer-events-none opacity-50 select-none' : '' ?>">
+                                                <li class="relative grid grid-cols-6 items-center py-6 gap-6">
+                                                    <?= $amount == 0 ? '<div class="absolute inset-0 bg-gray-50 opacity-50"></div>' : '' ?>
                                                     <div class="flex col-span-2">
                                                         <p class="hidden">
                                                             <?= $price * $amount_buy ?>
@@ -101,7 +101,7 @@
                                                         </p>
                                                     </div>
                                                     <a href="?act=delete-cart&id=<?= $id ?>"
-                                                        class="px-2 font-medium text-red-600 hover:text-red-400">
+                                                        class="px-2 font-medium text-red-600 hover:text-red-400 relative <?= $amount == 0 ? 'z-20' : '' ?>">
                                                         Xóa
                                                     </a>
                                                 </li>

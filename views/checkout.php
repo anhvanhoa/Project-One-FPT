@@ -130,7 +130,7 @@
                             </p>
                             <div class="flex items-center justify-between mt-4">
                                 <p class="text-sm font-medium text-gray-900">Phương thức thanh toán:</p>
-                                <select name="" id="methodPayment" class="p-2 rounded-sm">
+                                <select id="methodPayment" class="p-2 rounded-sm">
                                     <option value="1">Thanh toán khi nhận hàng</option>
                                     <option value="2">Chuyển khoản</option>
                                 </select>
@@ -173,7 +173,8 @@
                                 <?php
                             }
                             ?>
-                            <button class="mt-4 mb-8 w-full rounded-md bg-sky-500 px-6 py-3 font-medium text-white">Đặt
+                            <button name="btn-payment" type="submit"
+                                class="mt-4 mb-8 w-full rounded-md bg-sky-500 px-6 py-3 font-medium text-white">Đặt
                                 hàng</button>
                         </form>
                     </div>
@@ -183,6 +184,7 @@
         <?php include('partials/footer.php') ?>
     </div>
     <script>
+        const method = document.querySelector("input[name='payment_method']");
         const methodPayment = document.querySelector("#methodPayment");
         const inputCode = document.querySelector("#code-discount");
         const formCheckout = document.querySelector("#form-checkout");
@@ -195,14 +197,18 @@
         inputCode.oninput = () => {
             formCheckout.action = '?act=checkout&code-discount=' + inputCode.value
         }
+        methodPayment.onchange = ({ target }) => {
+            method.value = target.value
+            if (target.value == 2) {
+                orderForm.action = '?act=vnpay'
+            } else {
+                orderForm.action = '?act=success-order'
+            }
+        }
         const required = document.querySelectorAll('input[id="required"]');
         const stickyBanner = document.querySelector('#sticky-banner'),
             messageError2 = stickyBanner.querySelector('#message-error');
         orderForm.onsubmit = (e) => {
-            if (methodPayment.value == 2) {
-                e.preventDefault()
-                location.href = ""
-            };
             let isCheck = false
             required.forEach(item => {
                 if (!item.value) isCheck = true;

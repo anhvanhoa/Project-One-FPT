@@ -6,8 +6,8 @@ class ServicePdo
     protected $dbName;
     public function __construct($nameDB)
     {
-        $this->dbName  = $nameDB;
-        $this->pdo  = connect();
+        $this->dbName = $nameDB;
+        $this->pdo = connect();
     }
     public function findAll()
     {
@@ -56,13 +56,14 @@ class ServicePdo
             $sqlFirst = join(',', $sqlFirst);
             $values = "";
             foreach ($sqlLast as $i => $value) {
-                if ($i == 0) $values .= "'$value'";
-                else $values .= ",'$value'";
+                if ($i == 0)
+                    $values .= "'$value'";
+                else
+                    $values .= ",'$value'";
             }
-            $sql .=  "$dbName($sqlFirst) VALUES($values)";
-            // echo $sql;
+            $sql .= "$dbName($sqlFirst) VALUES($values)";
             $isSuccess = $this->pdo->exec($sql);
-            return $isSuccess ?  $this->pdo->lastInsertId() : 0;
+            return $isSuccess ? $this->pdo->lastInsertId() : 0;
         } catch (\Throwable $th) {
             return $th;
         }
@@ -77,7 +78,8 @@ class ServicePdo
                 if ($i === 0) {
                     $i++;
                     $sqlFirst .= "$key = '$value'";
-                } else $sqlFirst .= ", $key = '$value'";
+                } else
+                    $sqlFirst .= ", $key = '$value'";
             }
             $sql = "UPDATE $dbName SET $sqlFirst WHERE ID = $id";
             return $this->pdo->exec($sql);
