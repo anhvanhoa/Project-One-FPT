@@ -9,11 +9,11 @@ class Users extends ServicePdo
         $user = $this->pdo->query($sql)->fetch();
         if ($user) {
             $idUser = $user['id'];
-            $sqlCart = "SELECT id FROM CARTS WHERE ID_USER =  $idUser";
+            $sqlCart = "SELECT id FROM carts WHERE ID_USER =  $idUser";
             $cartUser = $this->pdo->query($sqlCart)->fetch();
             if (!$cartUser) {
                 $idUser = $user['id'];
-                $sqlCart = "INSERT INTO CARTS(id_user) VALUES($idUser)";
+                $sqlCart = "INSERT INTO carts(id_user) VALUES($idUser)";
                 $this->pdo->exec($sqlCart);
                 $cartUser = $this->pdo->query($sqlCart)->fetch();
             }

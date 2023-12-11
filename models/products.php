@@ -23,7 +23,7 @@ class Products extends ServicePdo
             return $product;
         $sqlReviews = "SELECT * FROM reviews JOIN users ON reviews.ID_USER = users.ID  WHERE ID_PRODUCT = $id";
         $reviews = $this->pdo->query($sqlReviews)->fetchAll();
-        $sqlImages = "SELECT IMAGES.image FROM $dbName JOIN products_detail ON $dbName.ID = products_detail.ID_PRODUCT JOIN IMAGES ON IMAGES.ID_PRODUCT_DETAIL = products_detail.ID WHERE $dbName.ID = $id";
+        $sqlImages = "SELECT images.image FROM $dbName JOIN products_detail ON $dbName.ID = products_detail.ID_PRODUCT JOIN images ON images.ID_PRODUCT_DETAIL = products_detail.ID WHERE $dbName.ID = $id";
         $images = $this->pdo->query($sqlImages)->fetchAll();
         $sqlProductDetails = "SELECT * FROM products_detail WHERE ID_PRODUCT = $id";
         $productDetails = $this->pdo->query($sqlProductDetails)->fetchAll();
