@@ -1957,6 +1957,10 @@ video {
   background-position: center;
 }
 
+.fill-gray-500 {
+  fill: #6b7280;
+}
+
 .object-contain {
   -o-object-fit: contain;
      object-fit: contain;
@@ -2146,6 +2150,10 @@ video {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
 }
 
 .pb-12 {
@@ -2961,6 +2969,12 @@ video {
 
 :is([dir="rtl"] .rtl\:text-right) {
   text-align: right;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark\:fill-gray-400 {
+    fill: #9ca3af;
+  }
 }
 
 @media (min-width: 640px) {
