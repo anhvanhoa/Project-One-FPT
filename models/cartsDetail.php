@@ -23,13 +23,13 @@ class CartsDetail extends ServicePdo
     public function getAllProductInCart($idCart)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT *, $dbName.id id  FROM $dbName JOIN PRODUCTS_DETAIL ON PRODUCTS_DETAIL.ID = $dbName.ID_PRODUCT_DETAIL JOIN PRODUCTS ON PRODUCTS.ID = PRODUCTS_DETAIL.ID_PRODUCT WHERE ID_CART = $idCart";
+        $sql = "SELECT *, $dbName.id id  FROM $dbName JOIN products_detail ON products_detail.ID = $dbName.ID_PRODUCT_DETAIL JOIN PRODUCTS ON PRODUCTS.ID = products_detail.ID_PRODUCT WHERE ID_CART = $idCart";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function getProductById($id)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT *, $dbName.id id  FROM $dbName JOIN PRODUCTS_DETAIL ON PRODUCTS_DETAIL.ID = $dbName.ID_PRODUCT_DETAIL JOIN PRODUCTS ON PRODUCTS.ID = PRODUCTS_DETAIL.ID_PRODUCT WHERE $dbName.ID = $id";
+        $sql = "SELECT *, $dbName.id id  FROM $dbName JOIN products_detail ON products_detail.ID = $dbName.ID_PRODUCT_DETAIL JOIN PRODUCTS ON PRODUCTS.ID = products_detail.ID_PRODUCT WHERE $dbName.ID = $id";
         return $this->pdo->query($sql)->fetch();
     }
     // handle

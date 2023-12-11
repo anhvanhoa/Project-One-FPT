@@ -6,7 +6,7 @@ class Bills extends ServicePdo
         $dbName = $this->dbName;
         $date = date('Y-m-d');
         $date .= " 00:00:00";
-        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER WHERE DATE > '$date' ORDER BY STATUS";
+        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN users ON users.ID = $dbName.ID_USER WHERE DATE > '$date' ORDER BY STATUS";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function getAll($status = '')
@@ -15,13 +15,13 @@ class Bills extends ServicePdo
             $status = "WHERE STATUS = '$status'";
         }
         $dbName = $this->dbName;
-        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER $status ORDER BY $dbName.ID DESC";
+        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN users ON users.ID = $dbName.ID_USER $status ORDER BY $dbName.ID DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function getDetail($id)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER WHERE $dbName.ID = $id";
+        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN users ON users.ID = $dbName.ID_USER WHERE $dbName.ID = $id";
         return $this->pdo->query($sql)->fetch();
     }
     public function getBillByUser($id, $status = '')
@@ -40,11 +40,11 @@ class Bills extends ServicePdo
         $status = $this->pdo->query($sql)->fetch();
         $productIds = [];
         if ($status) {
-            $sql = "SELECT id_product_detail FROM PRODUCTS_BILL WHERE ID_BILL = $idBill";
+            $sql = "SELECT id_product_detail FROM products_bill WHERE ID_BILL = $idBill";
             $detailIds = $this->pdo->query($sql)->fetchAll();
             foreach ($detailIds as $detailId) {
                 extract($detailId);
-                $sql = "SELECT id_product FROM PRODUCTS_DETAIL WHERE ID = $id_product_detail";
+                $sql = "SELECT id_product FROM products_detail WHERE ID = $id_product_detail";
                 $id = $this->pdo->query($sql)->fetch();
                 $id['status'] = $status['status'];
                 array_push($productIds, $id);
@@ -55,7 +55,7 @@ class Bills extends ServicePdo
     public function search($q)
     {
         $dbName = $this->dbName;
-        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN USERS ON USERS.ID = $dbName.ID_USER WHERE DATE LIKE '%$q%' ORDER BY $dbName.ID DESC";
+        $sql = "SELECT *, $dbName.ID id FROM $dbName JOIN users ON users.ID = $dbName.ID_USER WHERE DATE LIKE '%$q%' ORDER BY $dbName.ID DESC";
         return $this->pdo->query($sql)->fetchAll();
     }
     public function analyticMoneyMonth()

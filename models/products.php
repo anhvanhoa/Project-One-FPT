@@ -17,20 +17,20 @@ class Products extends ServicePdo
     public function getProductsDetail($id)
     {
         $dbName = $this->dbName;
-        $sqlProduct = "SELECT * FROM CATEGORIES JOIN $dbName ON $dbName.id_category = CATEGORIES.ID WHERE $dbName.id = $id";
+        $sqlProduct = "SELECT * FROM categories JOIN $dbName ON $dbName.id_category = categories.ID WHERE $dbName.id = $id";
         $product = $this->pdo->query($sqlProduct)->fetch();
         if (!$product)
             return $product;
-        $sqlReviews = "SELECT * FROM REVIEWS JOIN USERS ON REVIEWS.ID_USER = USERS.ID  WHERE ID_PRODUCT = $id";
+        $sqlReviews = "SELECT * FROM reviews JOIN users ON reviews.ID_USER = users.ID  WHERE ID_PRODUCT = $id";
         $reviews = $this->pdo->query($sqlReviews)->fetchAll();
-        $sqlImages = "SELECT IMAGES.image FROM $dbName JOIN PRODUCTS_DETAIL ON $dbName.ID = PRODUCTS_DETAIL.ID_PRODUCT JOIN IMAGES ON IMAGES.ID_PRODUCT_DETAIL = PRODUCTS_DETAIL.ID WHERE $dbName.ID = $id";
+        $sqlImages = "SELECT IMAGES.image FROM $dbName JOIN products_detail ON $dbName.ID = products_detail.ID_PRODUCT JOIN IMAGES ON IMAGES.ID_PRODUCT_DETAIL = products_detail.ID WHERE $dbName.ID = $id";
         $images = $this->pdo->query($sqlImages)->fetchAll();
-        $sqlProductDetails = "SELECT * FROM PRODUCTS_DETAIL WHERE ID_PRODUCT = $id";
+        $sqlProductDetails = "SELECT * FROM products_detail WHERE ID_PRODUCT = $id";
         $productDetails = $this->pdo->query($sqlProductDetails)->fetchAll();
-        $sqlStars = "SELECT AVG(STARS) avg_star FROM REVIEWS WHERE ID_PRODUCT = $id";
+        $sqlStars = "SELECT AVG(STARS) avg_star FROM reviews WHERE ID_PRODUCT = $id";
         $avgStar = $this->pdo->query($sqlStars)->fetch();
         $idCate = $product['id_category'];
-        $sqlProductSuggests = "SELECT * FROM PRODUCTS WHERE ID <> $id AND ID_CATEGORY = $idCate AND IS_DELETED = false";
+        $sqlProductSuggests = "SELECT * FROM products WHERE ID <> $id AND ID_CATEGORY = $idCate AND IS_DELETED = false";
         $productSuggests = $this->pdo->query($sqlProductSuggests)->fetchAll();
         $product['reviews'] = $reviews;
         $product['avg_star'] = $avgStar['avg_star'];
@@ -66,7 +66,7 @@ class Products extends ServicePdo
         $productsByCategory['page'] = $countProduct['page'];
         $limit = $page * 9;
         $minimum = $limit - 9;
-        $sql = "SELECT DISTINCT $dbName.* FROM $dbName JOIN PRODUCTS_DETAIL ON $dbName.ID = PRODUCTS_DETAIL.ID_PRODUCT WHERE IS_DELETED = false AND ID_CATEGORY = $id $sqlFilter AND PRODUCTS_DETAIL.AMOUNT > 0 ORDER BY $sqlSort LIMIT $minimum, $limit";
+        $sql = "SELECT DISTINCT $dbName.* FROM $dbName JOIN products_detail ON $dbName.ID = products_detail.ID_PRODUCT WHERE IS_DELETED = false AND ID_CATEGORY = $id $sqlFilter AND products_detail.AMOUNT > 0 ORDER BY $sqlSort LIMIT $minimum, $limit";
         $products = $this->pdo->query($sql)->fetchAll();
         $productsByCategory['products'] = $products;
         return $productsByCategory;
@@ -99,8 +99,8 @@ class Products extends ServicePdo
     {
         $dbName = $this->dbName;
         $sql = "SELECT $dbName.ID as id, name_product, price, code_color, color, image
-        FROM $dbName JOIN PRODUCTS_DETAIL ON PRODUCTS_DETAIL.ID_PRODUCT = $dbName.ID 
-        WHERE $dbName.IS_DELETED = false AND PRODUCTS_DETAIL.ID = $id";
+        FROM $dbName JOIN products_detail ON products_detail.ID_PRODUCT = $dbName.ID 
+        WHERE $dbName.IS_DELETED = false AND products_detail.ID = $id";
         return $this->pdo->query($sql)->fetch();
     }
     public function getFilter($id)
