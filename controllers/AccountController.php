@@ -14,10 +14,20 @@ function controller_account(Req $req)
         $fullName = $_POST['full-name'];
         $tell = $_POST['tell'];
         $address = $_POST['address'];
-        $image = uploadImage($_FILES['avatar']);
+        if (!$_FILES['avatar']['name']) {
+            $image[0] = true;
+            $image[1] = $user['avatar'];
+        } else {
+            $image = uploadImage($_FILES['avatar']);
+        }
         if (!$image[0] && $_FILES['avatar']['name']) {
             $error = $image[1];
             $image[1] = $user['avatar'];
+        }
+        $isTell = preg_match('/(84|0[3|5|7|8|9])+([0-9]{8})\b/', $tell);
+        if (!$isTell) {
+            $error = 'Định dạng số điện thoại sai';
+            return view("account", ["categories" => $categories, 'user' => $user, 'error' => $error]);
         }
         $isSuccess = $req->usersService->update($image[1], $email, $birthday, $fullName, $address, $tell, $idUser);
         if ($isSuccess) {

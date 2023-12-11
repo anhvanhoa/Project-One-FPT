@@ -41,4 +41,6 @@ $routes = [
     route('analytic-revenue', "controller_analytic_revenue"),
     route('analytic-product', "controller_analytic_product"),
     route('delete-image', "controller_image"),
+    route('reviews', "controller_reviews"),
+    route('hidden-review', "controller_hidden_review"),
 ];

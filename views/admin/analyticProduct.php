@@ -21,7 +21,7 @@
         <main>
             <div class="max-w-7xl mx-auto px-8">
                 <div class="flex gap-10">
-                    <div class="max-w-sm w-full bg-white rounded-lg shadow p-4 md:p-6 mt-10">
+                    <!-- <div class="max-w-sm w-full bg-white rounded-lg shadow p-4 md:p-6 mt-10">
                         <div class="flex justify-between mb-5">
                             <?php
                             // $total = 0;
@@ -35,7 +35,126 @@
                             </div>
                         </div>
                         <div id="legend-chart-2"></div>
+                    </div> -->
+
+                    <div class="max-w-sm mt-10 w-full bg-white rounded-lg shadow p-4 md:p-6">
+                        <div class="flex justify-between pb-4 mb-4 border-b border-gray-200">
+                            <div class="flex items-center">
+                                <div>
+                                    <h5 class="leading-none text-2xl font-bold text-gray-900 pb-1">
+                                        <?php
+                                        $init = 0;
+                                        foreach ($productSold as $soldS) {
+                                            extract($soldS);
+                                            $init += (int) $sold;
+                                        }
+                                        echo $init;
+                                        ?>
+                                    </h5>
+                                    <p class="text-sm font-normal ">Tổng lượt bán</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="column-chart"></div>
                     </div>
+
+                    <script>
+                        // ApexCharts options and config
+                        window.addEventListener("load", function () {
+                            const options = {
+                                colors: ["#1A56DB", "#FDBA8C"],
+                                series: [
+                                    {
+                                        name: "Lượt bán",
+                                        color: "#1A56DB",
+                                        data: [<?php foreach ($productSold as $soldS) {
+                                            extract($soldS);
+                                            echo "{x: '$name_product',y: $sold}" . ',';
+                                        } ?>],
+                                    },
+                                ],
+                                chart: {
+                                    type: "bar",
+                                    height: "320px",
+                                    fontFamily: "Inter, sans-serif",
+                                    toolbar: {
+                                        show: false,
+                                    },
+                                },
+                                plotOptions: {
+                                    bar: {
+                                        horizontal: false,
+                                        columnWidth: "70%",
+                                        borderRadiusApplication: "end",
+                                        borderRadius: 8,
+                                    },
+                                },
+                                tooltip: {
+                                    shared: true,
+                                    intersect: false,
+                                    style: {
+                                        fontFamily: "Inter, sans-serif",
+                                    },
+                                },
+                                states: {
+                                    hover: {
+                                        filter: {
+                                            type: "darken",
+                                            value: 1,
+                                        },
+                                    },
+                                },
+                                stroke: {
+                                    show: true,
+                                    width: 0,
+                                    colors: ["transparent"],
+                                },
+                                grid: {
+                                    show: false,
+                                    strokeDashArray: 4,
+                                    padding: {
+                                        left: 2,
+                                        right: 2,
+                                        top: -14
+                                    },
+                                },
+                                dataLabels: {
+                                    enabled: false,
+                                },
+                                legend: {
+                                    show: false,
+                                },
+                                xaxis: {
+                                    floating: false,
+                                    labels: {
+                                        show: true,
+                                        style: {
+                                            fontFamily: "Inter, sans-serif",
+                                            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                                        }
+                                    },
+                                    axisBorder: {
+                                        show: false,
+                                    },
+                                    axisTicks: {
+                                        show: false,
+                                    },
+                                },
+                                yaxis: {
+                                    show: false,
+                                },
+                                fill: {
+                                    opacity: 1,
+                                },
+                            }
+
+                            if (document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
+                                const chart = new ApexCharts(document.getElementById("column-chart"), options);
+                                chart.render();
+                            }
+                        });
+                    </script>
+
                     <!-- <div class="h-full max-w-sm w-full bg-white rounded-lg shadow p-4 md:p-6 mt-10">
                         <div class="flex justify-between mb-5">
                             <?php
@@ -61,13 +180,13 @@
                     </div> -->
                 </div>
                 <script>
-                    window.addEventListener("load", function() {
+                    window.addEventListener("load", function () {
                         let options = {
                             series: [{
                                 name: "Tổng tiền / ngày",
                                 data: [],
                                 color: "#1A56DB",
-                            }, ],
+                            },],
                             chart: {
                                 mxHeight: "300",
                                 maxWidth: "300",
@@ -128,7 +247,7 @@
                             yaxis: {
                                 show: false,
                                 labels: {
-                                    formatter: function(value) {
+                                    formatter: function (value) {
                                         return Intl.NumberFormat('vi').format(value) + ' &#8363;';
                                     }
                                 }
@@ -139,13 +258,13 @@
                             chart.render();
                         }
                     });
-                    window.addEventListener("load", function() {
+                    window.addEventListener("load", function () {
                         let options = {
                             series: [{
                                 name: "Tiền / Đơn",
                                 data: [],
                                 color: "#1A56DB",
-                            }, ],
+                            },],
                             chart: {
                                 mxHeight: "300",
                                 maxWidth: "300",
@@ -206,7 +325,7 @@
                             yaxis: {
                                 show: false,
                                 labels: {
-                                    formatter: function(value) {
+                                    formatter: function (value) {
                                         return Intl.NumberFormat('vi').format(value) + ' &#8363;';
                                     }
                                 }
@@ -217,15 +336,15 @@
                             chart.render();
                         }
                     });
-                    window.addEventListener("load", function() {
+                    window.addEventListener("load", function () {
                         let options = {
                             series: [{
                                 name: "Lượt bán",
                                 data: [<?php foreach ($productSold as $sold) {
-                                            echo $sold['sold'] . ',';
-                                        }  ?>],
+                                    echo $sold['sold'] . ',';
+                                } ?>],
                                 color: "#226f54",
-                            }, ],
+                            },],
                             chart: {
                                 mxHeight: "300",
                                 maxWidth: "100%",
@@ -273,9 +392,9 @@
                             },
                             xaxis: {
                                 categories: [<?php foreach ($productSold as $sold) {
-                                                    extract($sold);
-                                                    echo "'$name_product',";
-                                                }  ?>],
+                                    extract($sold);
+                                    echo "'$name_product',";
+                                } ?>],
                                 labels: {
                                     show: false,
                                 },
@@ -289,7 +408,7 @@
                             yaxis: {
                                 show: false,
                                 labels: {
-                                    formatter: function(value) {
+                                    formatter: function (value) {
                                         return Intl.NumberFormat('vi').format(value) + ' lượt';
                                     }
                                 }

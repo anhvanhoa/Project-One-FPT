@@ -217,7 +217,10 @@
                 e.preventDefault()
                 stickyBanner.classList.toggle('hidden');
                 stickyBanner.classList.toggle('flex');
-                messageError2.innerHTML = "Vui lòng cập nhật đầy đủ thông tin tài khoản";
+                messageError2.innerHTML = "Vui lòng cập nhật đầy đủ thông tin tài khoản | chuyển hướng sau 2 giây";
+                setTimeout(() => {
+                    location.href = '?act=account'
+                }, 2000)
                 setTimeout(() => {
                     stickyBanner.classList.toggle('hidden');
                     stickyBanner.classList.toggle('flex');

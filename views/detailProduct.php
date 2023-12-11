@@ -416,7 +416,7 @@
         });
 
         const stars = document.querySelectorAll('#star');
-        // const cancelReview = document.querySelector("#cancel-review");
+        const cancelReview = document.querySelector("#cancel-review");
         const review = document.querySelector('#review');
         const inputStar = document.querySelector('input[name="stars"]');
         const messageError = document.querySelector('#message-error');
@@ -430,17 +430,17 @@
                 }
             };
         });
-        // cancelReview.onclick = () => {
-        //     stars.forEach((item) => item.classList.remove('text-orange-500'));
-        //     inputStar.value = 0;
-        // };
+        cancelReview.onclick = () => {
+            stars.forEach((item) => item.classList.remove('text-orange-500'));
+            inputStar.value = 0;
+        };
 
-        // review.onclick = (e) => {
-        //     if (!inputStar.value) {
-        //         e.preventDefault();
-        //         messageError.innerText = 'Vui lòng chọn sao';
-        //     }
-        // };
+        review.onclick = (e) => {
+            if (!inputStar.value) {
+                e.preventDefault();
+                messageError.innerText = 'Vui lòng chọn sao';
+            }
+        };
 
         plus.onclick = () => {
             if (Number(amount.innerText) >= amountBuy) return;
@@ -450,7 +450,7 @@
         minus.onclick = () => {
             if (Number(amount.innerText) <= 1) return;
             amount.innerText = Number(amount.innerText) - 1;
-            inputAmount.value = Number(amount.innerText) - 1;
+            inputAmount.value = amount.innerText;
         };
 
         const stickyBanner = document.querySelector('#sticky-banner'),

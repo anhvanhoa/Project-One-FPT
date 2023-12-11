@@ -267,3 +267,18 @@ function controller_image(Req $req)
         header("location: ?act=");
     }
 }
+
+function controller_reviews(Req $req)
+{
+    $reviews = $req->reviewsService->getAllReview();
+    return viewAdmin('reviews', [
+        'reviews' => $reviews
+    ]);
+}
+function controller_hidden_review(Req $req)
+{
+    if (!isset($_GET['id']) || !isset($_GET['status']))
+        return header('location: ?act=');
+    $req->reviewsService->updateOne(['is_deleted' => $_GET['status']], $_GET['id']);
+    header('location: ?act=reviews');
+}
